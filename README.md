@@ -5,7 +5,6 @@
 A responsive, interactive HTML/CSS/JS calculator to compare API costs for various AI models (including custom ones), designed for easy embedding (e.g., via Elementor). Features LiveBench scores, a calculated Price-Performance (Preis-Leistung) rating, request multiplier, and multilingual support (German/English).
 
 ![Calculator Screenshot](screenshot.png)
-<!-- IMPORTANT: Replace 'screenshot.png' with the actual path/filename after uploading your screenshot -->
 
 ## Features
 
