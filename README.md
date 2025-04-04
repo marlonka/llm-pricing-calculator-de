@@ -1,4 +1,4 @@
-# AI Model Pricing Calculator
+# LLM (AI Model) Pricing Calculator in German and English
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
