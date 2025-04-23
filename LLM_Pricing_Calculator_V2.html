@@ -15,172 +15,359 @@
         /* --- CSS Start --- */
 
         /* --- Reset & Base --- */
+        /* Basic reset for consistent styling across browsers */
         .ai-pricing-calc-wrapper * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* Set base font size */
         .ai-pricing-calc-wrapper html { font-size: 16px; }
-        .ai-pricing-calc-wrapper { font-family: 'Roboto', 'Google Sans', sans-serif; background-color: #f8f9fa; color: #3c4043; line-height: 1.5; padding: 1rem; min-height: 100vh; border: 1px solid #e0e0e0; border-radius: 8px; }
-        .ai-pricing-calc-wrapper .container { background-color: #ffffff; padding: 1.5rem 2rem; border-radius: 12px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08); width: 100%; max-width: 1400px; margin: 0 auto; animation: ai-calc-fadeIn 0.7s ease-out; display: flex; flex-direction: column; }
+        /* Main wrapper styles: Font, background, color, spacing */
+        .ai-pricing-calc-wrapper {
+            font-family: 'Roboto', 'Google Sans', sans-serif; /* Google Sans preferred, Roboto as fallback */
+            background-color: #f8f9fa; /* Light grey background */
+            color: #3c4043; /* Standard Google text color */
+            line-height: 1.5;
+            padding: 1rem; /* Padding around the entire calculator */
+            min-height: 100vh; /* Ensure it takes at least full viewport height */
+            border: 1px solid #e0e0e0; /* Subtle border */
+            border-radius: 8px; /* Rounded corners */
+        }
+        /* Container for the main content: White background, padding, rounded corners, shadow */
+        .ai-pricing-calc-wrapper .container {
+            background-color: #ffffff;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08); /* Soft shadow */
+            width: 100%;
+            max-width: 1400px; /* Limit maximum width */
+            margin: 0 auto; /* Center the container */
+            animation: ai-calc-fadeIn 0.7s ease-out; /* Fade-in animation on load */
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Stack children vertically */
+        }
+        /* Fade-in animation keyframes */
         @keyframes ai-calc-fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- Header --- */
-        .ai-pricing-calc-wrapper header { text-align: center; margin-bottom: 1.5rem; flex-shrink: 0; }
-        .ai-pricing-calc-wrapper header h1 { font-family: 'Google Sans', sans-serif; font-size: clamp(1.6em, 3.5vw, 2.0em); color: #1a73e8; margin-bottom: 0.8em; font-weight: 700; line-height: 1.3; position: relative; }
-        .ai-pricing-calc-wrapper header h1 span.wave-word { display: inline-block; animation: ai-calc-wave-color 3s linear infinite; margin-right: 0.15em; }
-        @keyframes ai-calc-wave-color { 0%   { color: #1a73e8; } 25%  { color: #8ab4f8; } 50%  { color: #1558b0; } 75%  { color: #8ab4f8; } 100% { color: #1a73e8; } }
+        /* Center header content, add bottom margin */
+        .ai-pricing-calc-wrapper header { text-align: center; margin-bottom: 1.5rem; flex-shrink: 0; /* Prevent header from shrinking */ }
+        /* Main title styling: Font, size, color, weight */
+        .ai-pricing-calc-wrapper header h1 {
+            font-family: 'Google Sans', sans-serif;
+            font-size: clamp(1.6em, 3.5vw, 2.0em); /* Responsive font size */
+            color: #1a73e8; /* Google Blue */
+            margin-bottom: 0.8em;
+            font-weight: 700;
+            line-height: 1.3;
+            position: relative;
+        }
+        /* Styling for individual words in the animated title */
+        .ai-pricing-calc-wrapper header h1 span.wave-word {
+            display: inline-block; /* Needed for animation */
+            animation: ai-calc-wave-color 3s linear infinite; /* Apply color wave animation */
+            margin-right: 0.15em; /* Space between words */
+        }
+        /* Keyframes for the title word color animation */
+        @keyframes ai-calc-wave-color {
+            0%   { color: #1a73e8; } /* Start Blue */
+            25%  { color: #8ab4f8; } /* Light Blue */
+            50%  { color: #1558b0; } /* Darker Blue */
+            75%  { color: #8ab4f8; } /* Light Blue */
+            100% { color: #1a73e8; } /* End Blue */
+        }
 
          /* Language Toggle */
+        /* Center language buttons, add spacing */
         .ai-pricing-calc-wrapper .lang-toggle { display: flex; justify-content: center; gap: 0.8rem; margin-top: -0.5em; margin-bottom: 1em; }
+        /* Language button styling: Transparent background, font size, cursor */
         .ai-pricing-calc-wrapper .lang-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; opacity: 0.6; transition: opacity 0.2s ease, transform 0.2s ease; padding: 0; line-height: 1; }
+        /* Hover and active state for language buttons */
         .ai-pricing-calc-wrapper .lang-btn:hover { opacity: 1; transform: scale(1.1); }
-        .ai-pricing-calc-wrapper .lang-btn.active { opacity: 1; transform: scale(1.1); }
+        .ai-pricing-calc-wrapper .lang-btn.active { opacity: 1; transform: scale(1.1); } /* Style for the currently selected language */
 
         /* --- Configurator Layout --- */
+        /* Margin below the token configuration section */
         .ai-pricing-calc-wrapper .configurator { margin-bottom: 0.5rem; }
+        /* Flex row for the configurator header (title and controls) */
         .ai-pricing-calc-wrapper .config-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+        /* Configurator section title styling */
         .ai-pricing-calc-wrapper .config-header-row h2 { font-family: 'Google Sans', sans-serif; font-size: clamp(1.2em, 3vw, 1.4em); color: #3c4043; margin-bottom: 0; border-bottom: 2px solid #1a73e8; padding-bottom: 0.4em; display: inline-block; white-space: nowrap; margin-top: 0; line-height: 1.3; flex-shrink: 0; }
+        /* Container for the input controls (sliders, numbers, multiplier) */
         .ai-pricing-calc-wrapper .config-controls-container { display: flex; flex-direction: column; flex-grow: 1; gap: 0.8rem; }
+        /* Row containing the input/output token groups */
         .ai-pricing-calc-wrapper .config-controls-container .input-row { display: flex; gap: 1.5rem; flex-grow: 1; flex-wrap: wrap; }
-        .ai-pricing-calc-wrapper .config-controls-container .input-group { flex-grow: 1; flex-basis: 250px; }
+        /* Individual input group (label + slider/number) */
+        .ai-pricing-calc-wrapper .config-controls-container .input-group { flex-grow: 1; flex-basis: 250px; /* Minimum width before wrapping */ }
+        /* Label styling */
         .ai-pricing-calc-wrapper .config-controls-container label { display: block; font-weight: 500; font-size: 0.9em; margin-bottom: 0.4em; color: #3c4043; }
-        /* Token Slider/Number Input Adjustments */
+        /* Slider/Number Input Adjustments */
+        /* Container for aligning slider and number input */
         .ai-pricing-calc-wrapper .config-controls-container .slider-container { display: flex; align-items: center; gap: 0.8rem; width: 100%; }
+        /* Range slider styling */
         .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"] { flex-grow: 1; min-width: 100px; cursor: pointer; appearance: none; height: 6px; background: linear-gradient(to right, #1a73e8, #8ab4f8); border-radius: 3px; outline: none; transition: background 0.3s ease; }
+        /* Slider thumb styling (WebKit) */
         .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; background: #1a73e8; border-radius: 50%; cursor: pointer; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); transition: background 0.3s ease; }
+        /* Slider thumb styling (Mozilla) */
         .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; background: #1a73e8; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); transition: background 0.3s ease; }
+        /* Active state for slider thumb */
         .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]:active::-webkit-slider-thumb { background: #1558b0; }
         .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]:active::-moz-range-thumb { background: #1558b0; }
-        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="number"] { width: 85px; /* Slightly wider for more digits */ flex-shrink: 0; padding: 5px 7px; border: 1px solid #dadce0; border-radius: 6px; font-size: 0.85em; text-align: right; transition: border-color 0.3s ease, box-shadow 0.3s ease; -moz-appearance: textfield; /* Hide spinner */ }
+        /* Number input styling */
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="number"] { width: 85px; /* Slightly wider for more digits */ flex-shrink: 0; padding: 5px 7px; border: 1px solid #dadce0; border-radius: 6px; font-size: 0.85em; text-align: right; transition: border-color 0.3s ease, box-shadow 0.3s ease; -moz-appearance: textfield; /* Hide spinner in Firefox */ }
+        /* Hide spinners in WebKit browsers */
         .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="number"]::-webkit-outer-spin-button,
-        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; /* Hide spinner */ }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        /* Focus state for number input */
         .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="number"]:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.15); }
-        .ai-pricing-calc-wrapper .word-estimate { display: block; font-size: 0.8em; color: #5f6368; margin-top: 4px; text-align: right; padding-right: 25px; }
+        /* Estimated word count display */
+        .ai-pricing-calc-wrapper .word-estimate { display: block; font-size: 0.8em; color: #5f6368; margin-top: 4px; text-align: right; padding-right: 25px; /* Align roughly under number input */ }
+        /* Container for request multiplier buttons */
         .ai-pricing-calc-wrapper .request-multiplier-buttons { display: flex; justify-content: center; gap: 0.5rem; padding-left: 0; align-items: center; width: 100%; }
+        /* Label for multiplier buttons */
         .ai-pricing-calc-wrapper .multiplier-label { font-size: 0.85em; color: #5f6368; margin-right: 0.5rem; font-weight: 500; }
+        /* Multiplier button styling */
         .ai-pricing-calc-wrapper .multiplier-btn { padding: 4px 10px; font-size: 0.8em; font-weight: 500; border: 1px solid #ccc; background-color: #f9f9f9; color: #444; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; min-width: 50px; text-align: center; }
+        /* Hover state for multiplier buttons */
         .ai-pricing-calc-wrapper .multiplier-btn:hover { background-color: #f0f0f0; border-color: #bbb; }
+        /* Active state for multiplier buttons */
         .ai-pricing-calc-wrapper .multiplier-btn.active { background-color: #e8f0fe; border-color: #1a73e8; color: #1a73e8; box-shadow: 0 0 0 1px #1a73e8; }
+        /* Explanation text about tokens */
         .ai-pricing-calc-wrapper .token-explanation { font-size: 0.85em; color: #5f6368; margin-top: 0.5rem; text-align: center; padding-bottom: 0.8rem; border-bottom: 1px solid #e8eaed; margin-bottom: 1rem; }
 
         /* --- Two Column Layout --- */
-        .ai-pricing-calc-wrapper .content-columns { flex-grow: 1; display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 0; }
-        @media (min-width: 992px) { .ai-pricing-calc-wrapper .content-columns { grid-template-columns: repeat(2, 1fr); align-items: start; } }
+        /* Grid layout for model selection and results */
+        .ai-pricing-calc-wrapper .content-columns { flex-grow: 1; display: grid; grid-template-columns: 1fr; /* Single column by default */ gap: 1.5rem; margin-top: 0; }
+        /* Two columns on larger screens (desktops) */
+        @media (min-width: 992px) { .ai-pricing-calc-wrapper .content-columns { grid-template-columns: repeat(2, 1fr); align-items: start; /* Align items to the top */ } }
 
         /* --- Model Selection --- */
+        /* Header for the model selection section (title + select all button) */
         .ai-pricing-calc-wrapper .model-selection .section-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        /* Model selection section title */
         .ai-pricing-calc-wrapper .model-selection .section-header h2 { margin-bottom: 0; font-family: 'Google Sans', sans-serif; font-size: clamp(1.2em, 3vw, 1.4em); color: #3c4043; border-bottom: 2px solid #1a73e8; padding-bottom: 0.4em; display: inline-block; }
+        /* Select/Deselect All button styling */
         .ai-pricing-calc-wrapper .select-all-btn { padding: 5px 12px; font-size: 0.8em; font-weight: 500; border: 1px solid #dadce0; background-color: #f8f9fa; color: #5f6368; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease; flex-shrink: 0; }
+        /* Hover/Active states for select all button */
         .ai-pricing-calc-wrapper .select-all-btn:hover { background-color: #f1f3f4; border-color: #c6c6c6; }
         .ai-pricing-calc-wrapper .select-all-btn:active { background-color: #e8eaed; }
+        /* Container for all provider groups */
         .ai-pricing-calc-wrapper #model-groups-container { display: flex; flex-direction: column; gap: 1.2rem; }
-        .ai-pricing-calc-wrapper .provider-group h3 { font-family: 'Google Sans', sans-serif; font-size: 1.1em; color: var(--ai-calc-provider-color, #5f6368); margin-bottom: 0.6rem; padding-bottom: 0.3em; border-bottom: 1px solid #eee; }
-        .ai-pricing-calc-wrapper .provider-group.google h3 { --ai-calc-provider-color: #4285F4; } .ai-pricing-calc-wrapper .provider-group.openai h3 { --ai-calc-provider-color: #10a37f; } .ai-pricing-calc-wrapper .provider-group.anthropic h3 { --ai-calc-provider-color: #d97706; } .ai-pricing-calc-wrapper .provider-group.benutzerdefiniert h3 { --ai-calc-provider-color: #6c757d; }
-        .ai-pricing-calc-wrapper .model-items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.6rem; }
-        .ai-pricing-calc-wrapper .model-item { background-color: #fff; border: 1px solid #dadce0; border-radius: 6px; padding: 0.6rem 0.8rem; cursor: pointer; transition: all 0.25s ease; position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 55px; border-left: 4px solid var(--ai-calc-provider-color-item, #dadce0); }
+        /* Styling for each provider group (Google, OpenAI, etc.) */
+        .ai-pricing-calc-wrapper .provider-group h3 { font-family: 'Google Sans', sans-serif; font-size: 1.1em; color: var(--ai-calc-provider-color, #5f6368); /* Use CSS variable for color */ margin-bottom: 0.6rem; padding-bottom: 0.3em; border-bottom: 1px solid #eee; }
+        /* Setting provider-specific colors using CSS variables */
+        .ai-pricing-calc-wrapper .provider-group.google h3 { --ai-calc-provider-color: #4285F4; } /* Google Blue */
+        .ai-pricing-calc-wrapper .provider-group.openai h3 { --ai-calc-provider-color: #10a37f; } /* OpenAI Green */
+        .ai-pricing-calc-wrapper .provider-group.anthropic h3 { --ai-calc-provider-color: #d97706; } /* Anthropic Orange */
+        .ai-pricing-calc-wrapper .provider-group.benutzerdefiniert h3 { --ai-calc-provider-color: #6c757d; } /* Custom Grey */
+        /* Grid layout for model items within a provider group */
+        .ai-pricing-calc-wrapper .model-items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Responsive grid */ gap: 0.6rem; }
+        /* Individual model item styling */
+        .ai-pricing-calc-wrapper .model-item { background-color: #fff; border: 1px solid #dadce0; border-radius: 6px; padding: 0.6rem 0.8rem; cursor: pointer; transition: all 0.25s ease; position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 55px; border-left: 4px solid var(--ai-calc-provider-color-item, #dadce0); /* Left border color based on provider */ }
+        /* Hover effect for model item */
         .ai-pricing-calc-wrapper .model-item:hover { transform: translateY(-2px); box-shadow: 0 3px 6px rgba(0,0,0,0.07); }
+        /* Selected state for model item */
         .ai-pricing-calc-wrapper .model-item.selected { border-color: #1a73e8; background-color: #e8f0fe; box-shadow: 0 2px 4px rgba(26, 115, 232, 0.15); border-left-color: #1a73e8; }
+        /* Model name styling */
         .ai-pricing-calc-wrapper .model-item h4 { font-family: 'Google Sans', sans-serif; font-size: 0.95em; margin-bottom: 0.2em; color: #202124; font-weight: 500; line-height: 1.3; }
-        .ai-pricing-calc-wrapper .model-item .details { font-size: 0.75em; color: #5f6368; display: flex; flex-wrap: wrap; gap: 0 8px; align-items: center; }
+        /* Container for model details (context, score, cutoff) */
+        .ai-pricing-calc-wrapper .model-item .details { font-size: 0.75em; color: #5f6368; display: flex; flex-wrap: wrap; gap: 0 8px; /* Horizontal gap only */ align-items: center; }
+        /* Ensure details don't wrap unnecessarily */
         .ai-pricing-calc-wrapper .model-item .details span { white-space: nowrap; }
-        .ai-pricing-calc-wrapper .model-item .details .livebench-score { font-weight: 500; color: #34a853; }
-        .ai-pricing-calc-wrapper .model-item .details .livebench-score.na { color: #9aa0a6; font-weight: 400;}
-        .ai-pricing-calc-wrapper .model-item .details .knowledge-cutoff {}
+        /* LiveBench score styling */
+        .ai-pricing-calc-wrapper .model-item .details .livebench-score { font-weight: 500; color: #34a853; /* Google Green */ }
+        /* Styling for N/A score */
+        .ai-pricing-calc-wrapper .model-item .details .livebench-score.na { color: #9aa0a6; font-weight: 400; }
+        /* Knowledge cutoff styling (if present) */
+        .ai-pricing-calc-wrapper .model-item .details .knowledge-cutoff {} /* No specific style needed now */
+        /* Placeholder/button for adding a custom model */
         .ai-pricing-calc-wrapper .add-model-placeholder { display: block; width: 100%; margin-top: 1rem; padding: 0.6rem; font-size: 0.9em; font-weight: 500; text-align: center; border: 1px dashed #adb5bd; background-color: #f8f9fa; color: #5f6368; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease; }
+        /* Hover state for add model button */
         .ai-pricing-calc-wrapper .add-model-placeholder:hover { background-color: #f1f3f4; border-color: #9aa0a6; }
 
         /* --- Results --- */
+        /* Results section container */
         .ai-pricing-calc-wrapper .results {}
+        /* Header for the results section (title + sort controls) */
         .ai-pricing-calc-wrapper .results .results-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-bottom: 1rem; }
+        /* Results section title */
         .ai-pricing-calc-wrapper .results .results-header h2 { margin-bottom: 0; font-family: 'Google Sans', sans-serif; font-size: clamp(1.2em, 3vw, 1.4em); color: #3c4043; border-bottom: 2px solid #1a73e8; padding-bottom: 0.4em; display: inline-block; }
         /* Sorting Controls */
+        /* Container for sort label and buttons */
         .ai-pricing-calc-wrapper .sort-controls { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;}
+        /* Label for sort buttons */
         .ai-pricing-calc-wrapper .sort-label { font-size: 0.85em; color: #5f6368; font-weight: 500; margin-right: 0.3rem; }
+        /* Sort button styling */
         .ai-pricing-calc-wrapper .sort-btn { padding: 4px 10px; font-size: 0.8em; font-weight: 500; border: 1px solid #ccc; background-color: #f9f9f9; color: #444; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+        /* Hover state for sort buttons */
         .ai-pricing-calc-wrapper .sort-btn:hover { background-color: #f0f0f0; border-color: #bbb; }
+        /* Active state for sort buttons */
         .ai-pricing-calc-wrapper .sort-btn.active { background-color: #e8f0fe; border-color: #1a73e8; color: #1a73e8; box-shadow: 0 0 0 1px #1a73e8; }
 
-        .ai-pricing-calc-wrapper .results-list-container { display: flex; flex-direction: column; gap: 0.6rem; min-height: 60px; position: relative; }
+        /* Container for the list of result cards */
+        .ai-pricing-calc-wrapper .results-list-container { display: flex; flex-direction: column; gap: 0.6rem; min-height: 60px; /* Prevent collapse when empty */ position: relative; }
+        /* Placeholder text when no models are selected/calculated */
         .ai-pricing-calc-wrapper .results-list-container .placeholder { position: absolute; top: 30px; left: 0; right: 0; margin: 0 auto; width: fit-content; color: #9aa0a6; font-style: italic; text-align: center; font-size: 0.85em; }
-        .ai-pricing-calc-wrapper .result-card { background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 0.6rem 0.8rem; animation: ai-calc-resultFadeIn 0.4s ease-out forwards; opacity: 0; transform: scale(0.95); position: relative; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; align-items: flex-start; gap: 0.8rem; }
+        /* Individual result card styling */
+        .ai-pricing-calc-wrapper .result-card { background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 0.6rem 0.8rem; animation: ai-calc-resultFadeIn 0.4s ease-out forwards; opacity: 0; transform: scale(0.95); position: relative; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; align-items: flex-start; /* Align rank indicator with top of content */ gap: 0.8rem; }
+        /* Hover effect for result card */
         .ai-pricing-calc-wrapper .result-card:hover { transform: scale(1.01); box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
-        .ai-pricing-calc-wrapper .result-card.highlight { border-left: 4px solid #34a853; } /* Highlight best cost */
-        .ai-pricing-calc-wrapper .result-card.highlight-intelligence { border-left: 4px solid #fbbc05; } /* Highlight best intelligence */
-        .ai-pricing-calc-wrapper .result-card.highlight-value { border-left: 4px solid #1a73e8; } /* Highlight best value */
+        /* Highlight style for the best card based on sorting */
+        .ai-pricing-calc-wrapper .result-card.highlight { border-left: 4px solid #34a853; } /* Green for best cost */
+        .ai-pricing-calc-wrapper .result-card.highlight-intelligence { border-left: 4px solid #fbbc05; } /* Yellow for best intelligence */
+        .ai-pricing-calc-wrapper .result-card.highlight-value { border-left: 4px solid #1a73e8; } /* Blue for best value */
+        /* Fade-in animation for result cards */
         @keyframes ai-calc-resultFadeIn { from { opacity: 0; transform: scale(0.95) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        .ai-pricing-calc-wrapper .result-card .rank-indicator { font-size: 1em; font-weight: 700; color: #5f6368; text-align: center; min-width: 35px; padding-top: 0; }
-        .ai-pricing-calc-wrapper .result-card .rank-indicator .trophy { font-size: 1.2em; color: #fbbc05; } /* Default trophy for #1 */
-        .ai-pricing-calc-wrapper .result-card .rank-indicator .multiplier { display: block; font-size: 0.8em; font-weight: 400; color: #d93025; margin-top: 2px; }
+        /* Rank indicator styling (e.g., "1st", "2nd") */
+        .ai-pricing-calc-wrapper .result-card .rank-indicator { font-size: 1em; font-weight: 700; color: #5f6368; text-align: center; min-width: 35px; padding-top: 0; /* Adjusted from previous version if needed */ }
+        /* Trophy icon for the #1 ranked item */
+        .ai-pricing-calc-wrapper .result-card .rank-indicator .trophy { font-size: 1.2em; color: #fbbc05; /* Gold/Yellow */ }
+        /* Multiplier text (e.g., "1.5x more") */
+        .ai-pricing-calc-wrapper .result-card .rank-indicator .multiplier { display: block; font-size: 0.8em; font-weight: 400; color: #d93025; /* Red for cost difference */ margin-top: 2px; min-height: 1em; /* Reserve space even if empty */ }
+        /* Main content area within the result card */
         .ai-pricing-calc-wrapper .result-card .content-area { flex-grow: 1; }
-        .ai-pricing-calc-wrapper .result-card .content-area h4 { font-family: 'Google Sans', sans-serif; font-size: 0.9em; margin-bottom: 0.2rem; color: var(--ai-calc-provider-color-result, #3c4043); padding-bottom: 0.25em; border-bottom: 1px solid #eee; font-weight: 500; line-height: 1.3; }
+        /* Model name and provider in result card */
+        .ai-pricing-calc-wrapper .result-card .content-area h4 { font-family: 'Google Sans', sans-serif; font-size: 0.9em; margin-bottom: 0.2rem; color: var(--ai-calc-provider-color-result, #3c4043); /* Provider color */ padding-bottom: 0.25em; border-bottom: 1px solid #eee; font-weight: 500; line-height: 1.3; }
+        /* Provider name styling (lighter weight) */
         .ai-pricing-calc-wrapper .result-card .content-area h4 span { font-size: 0.9em; color: #5f6368; font-weight: 400; }
-        .ai-pricing-calc-wrapper .result-card .preis-leistung {
-            font-size: 0.8em; color: #5f6368; margin-top: 0.2rem; margin-bottom: 0.3rem;
-            display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: help; flex-wrap: wrap;
-        }
+        /* Price-performance and LiveBench score row */
+        .ai-pricing-calc-wrapper .result-card .preis-leistung { font-size: 0.8em; color: #5f6368; margin-top: 0.2rem; margin-bottom: 0.3rem; display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: help; /* Indicate tooltip */ flex-wrap: wrap; }
+        /* Label for Price-Performance score */
         .ai-pricing-calc-wrapper .result-card .pl-label { font-weight: 500; margin-right: 4px; }
+        /* Price-Performance score value */
         .ai-pricing-calc-wrapper .result-card .pl-score { font-weight: 700; color: #3c4043; background-color: #e8eaed; padding: 1px 5px; border-radius: 4px; min-width: 25px; text-align: center; }
+        /* Styling for N/A Price-Performance score */
         .ai-pricing-calc-wrapper .result-card .pl-score.na { background-color: transparent; color: #5f6368; font-weight: 400; font-style: italic; }
+        /* LiveBench score display in results */
         .ai-pricing-calc-wrapper .result-card .livebench-result-score { text-align: right; font-weight: 500; }
+        /* Label for LiveBench score */
         .ai-pricing-calc-wrapper .result-card .livebench-result-score .lb-label { font-size: 0.9em; color: #5f6368; margin-right: 3px; }
+        /* LiveBench score value */
         .ai-pricing-calc-wrapper .result-card .livebench-result-score .lb-value { font-weight: 700; color: #34a853; }
+        /* Styling for N/A LiveBench score */
         .ai-pricing-calc-wrapper .result-card .livebench-result-score.na .lb-value { color: #9aa0a6; font-weight: 400; font-style: italic; }
 
-        /* *** UPDATED: Cost breakdown display *** */
+        /* Cost breakdown display (Prompt/Antwort costs) */
         .ai-pricing-calc-wrapper .result-card .content-area p.cost-breakdown {
             font-size: 0.8em; margin-bottom: 0.1rem; margin-top: 0.4rem;
-            display: flex; /* Keep flex */
-            justify-content: space-between; /* Keep space between left/right groups */
+            display: flex;
+            justify-content: space-between; /* Space input/output groups */
             align-items: baseline;
             color: #5f6368; line-height: 1.4;
-            flex-wrap: wrap; /* Allow wrapping */
-            gap: 8px; /* Gap if they wrap */
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            gap: 8px; /* Gap if items wrap */
         }
-        /* Wrapper for each cost item (Prompt/Antwort) */
+        /* Wrapper for each cost item (e.g., "Prompt: $0.01") */
         .ai-pricing-calc-wrapper .result-card .content-area .cost-item {
-            display: inline-flex; /* Use flex for label + value */
+            display: inline-flex; /* Align label and value nicely */
             align-items: baseline;
             gap: 4px; /* Space between label and value */
-            flex-basis: 48%; /* Approx half width, allows space-between to work */
+            flex-basis: 48%; /* Roughly half width, allows space-between */
         }
+        /* Align output cost item to the right */
         .ai-pricing-calc-wrapper .result-card .content-area .cost-item.cost-output {
-             justify-content: flex-end; /* Push output content (label+value) to the right within its flex basis */
-             text-align: right; /* Align text inside to right */
+             justify-content: flex-end; /* Push content to the right within its flex basis */
+             text-align: right;
         }
+        /* Align input cost item to the left (default) */
         .ai-pricing-calc-wrapper .result-card .content-area .cost-item.cost-input {
-             justify-content: flex-start; /* Default, but explicit */
+             justify-content: flex-start;
              text-align: left;
         }
-        /* Style for the label itself */
+        /* Style for the cost label ("Prompt:", "Antwort:") */
         .ai-pricing-calc-wrapper .result-card .content-area .cost-label {
              font-weight: 500;
              color: #5f6368;
-             white-space: nowrap; /* Prevent label wrapping */
+             white-space: nowrap; /* Prevent label from wrapping */
         }
-        /* Cost values */
+        /* Style for the cost value (e.g., "$0.01") */
         .ai-pricing-calc-wrapper .result-card .content-area .cost-value {
             font-weight: 500;
-            color: #202124;
-            cursor: help;
+            color: #202124; /* Darker text for value */
+            cursor: help; /* Indicate tooltip */
         }
 
+        /* Total cost display */
         .ai-pricing-calc-wrapper .result-card .content-area .total-cost { font-size: 1.05em; font-weight: 700; color: #1a73e8; margin-top: 0.3rem; padding-top: 0.3rem; border-top: 1px solid #e0e0e0; text-align: right; display: flex; justify-content: space-between; }
+        /* Label part of the total cost */
         .ai-pricing-calc-wrapper .result-card .content-area .total-cost span:first-child { color: #3c4043; font-weight: 500; font-size: 0.8em; margin-right: 4px; }
 
         /* --- Modal Styles --- */
-        .ai-pricing-calc-wrapper .modal-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1050; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; } .ai-pricing-calc-wrapper .modal-overlay:not([hidden]) { opacity: 1; visibility: visible; } .ai-pricing-calc-wrapper .modal-content { background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); width: 90%; max-width: 500px; transform: scale(0.95); transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; } .ai-pricing-calc-wrapper .modal-overlay:not([hidden]) .modal-content { transform: scale(1); } .ai-pricing-calc-wrapper .modal-content h2 { font-family: 'Google Sans', sans-serif; font-size: 1.5em; color: #3c4043; margin-top: 0; margin-bottom: 1.5rem; text-align: center; } .ai-pricing-calc-wrapper .modal-content .form-group { margin-bottom: 1rem; } .ai-pricing-calc-wrapper .modal-content label { display: block; font-size: 0.9em; font-weight: 500; margin-bottom: 0.3rem; color: #3c4043; } .ai-pricing-calc-wrapper .modal-content input[type="text"], .ai-pricing-calc-wrapper .modal-content input[type="number"] { width: 100%; padding: 0.6rem 0.8rem; border: 1px solid #dadce0; border-radius: 6px; font-size: 0.95em; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .ai-pricing-calc-wrapper .modal-content input:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.15); } .ai-pricing-calc-wrapper .modal-actions { margin-top: 2rem; display: flex; justify-content: flex-end; gap: 0.8rem; } .ai-pricing-calc-wrapper .modal-actions button { padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.95em; font-weight: 500; border: none; cursor: pointer; transition: background-color 0.2s ease, box-shadow 0.2s ease; } .ai-pricing-calc-wrapper .modal-actions .btn-primary { background-color: #1a73e8; color: white; } .ai-pricing-calc-wrapper .modal-actions .btn-primary:hover { background-color: #1558b0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); } .ai-pricing-calc-wrapper .modal-actions .btn-secondary { background-color: #f1f3f4; color: #5f6368; border: 1px solid #dadce0; } .ai-pricing-calc-wrapper .modal-actions .btn-secondary:hover { background-color: #e8eaed; }
+        /* Overlay for the modal */
+        .ai-pricing-calc-wrapper .modal-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1050; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        /* Show modal when not hidden */
+        .ai-pricing-calc-wrapper .modal-overlay:not([hidden]) { opacity: 1; visibility: visible; }
+        /* Modal content container */
+        .ai-pricing-calc-wrapper .modal-content { background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); width: 90%; max-width: 500px; transform: scale(0.95); transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; }
+        /* Animate modal scale-in */
+        .ai-pricing-calc-wrapper .modal-overlay:not([hidden]) .modal-content { transform: scale(1); }
+        /* Modal title */
+        .ai-pricing-calc-wrapper .modal-content h2 { font-family: 'Google Sans', sans-serif; font-size: 1.5em; color: #3c4043; margin-top: 0; margin-bottom: 1.5rem; text-align: center; }
+        /* Form group styling */
+        .ai-pricing-calc-wrapper .modal-content .form-group { margin-bottom: 1rem; }
+        /* Modal label styling */
+        .ai-pricing-calc-wrapper .modal-content label { display: block; font-size: 0.9em; font-weight: 500; margin-bottom: 0.3rem; color: #3c4043; }
+        /* Modal input styling */
+        .ai-pricing-calc-wrapper .modal-content input[type="text"], .ai-pricing-calc-wrapper .modal-content input[type="number"] { width: 100%; padding: 0.6rem 0.8rem; border: 1px solid #dadce0; border-radius: 6px; font-size: 0.95em; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        /* Focus state for modal inputs */
+        .ai-pricing-calc-wrapper .modal-content input:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.15); }
+        /* Container for modal action buttons */
+        .ai-pricing-calc-wrapper .modal-actions { margin-top: 2rem; display: flex; justify-content: flex-end; gap: 0.8rem; }
+        /* General modal button styling */
+        .ai-pricing-calc-wrapper .modal-actions button { padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.95em; font-weight: 500; border: none; cursor: pointer; transition: background-color 0.2s ease, box-shadow 0.2s ease; }
+        /* Primary button (Save) styling */
+        .ai-pricing-calc-wrapper .modal-actions .btn-primary { background-color: #1a73e8; color: white; }
+        .ai-pricing-calc-wrapper .modal-actions .btn-primary:hover { background-color: #1558b0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        /* Secondary button (Cancel) styling */
+        .ai-pricing-calc-wrapper .modal-actions .btn-secondary { background-color: #f1f3f4; color: #5f6368; border: 1px solid #dadce0; }
+        .ai-pricing-calc-wrapper .modal-actions .btn-secondary:hover { background-color: #e8eaed; }
 
         /* --- Footer --- */
-        .ai-pricing-calc-wrapper footer { text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e8eaed; font-size: 0.8em; color: #5f6368; flex-shrink: 0; }
+        /* Footer styling */
+        .ai-pricing-calc-wrapper footer { text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e8eaed; font-size: 0.8em; color: #5f6368; flex-shrink: 0; /* Prevent footer from shrinking */ }
+        /* Footer subtitle styling */
         .ai-pricing-calc-wrapper footer .subtitle-footer { font-size: 1em; margin-bottom: 0.5em; display: block; color: #5f6368; }
+        /* Explanation for Price-Performance score */
         .ai-pricing-calc-wrapper footer .pl-explanation { margin-top: 0.3em; font-style: italic; display: block; }
 
         /* --- Responsive Styles --- */
-        @media (max-width: 991px) and (min-width: 768px) { .ai-pricing-calc-wrapper .container { max-width: 90%; } .ai-pricing-calc-wrapper .config-header-row { gap: 1rem; } .ai-pricing-calc-wrapper .config-controls-container { gap: 0.5rem; } .ai-pricing-calc-wrapper .model-items-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); } }
-        @media (max-width: 767px) { .ai-pricing-calc-wrapper { padding: 0.5rem; } .ai-pricing-calc-wrapper .container { padding: 1rem 1rem; border-radius: 8px; } .ai-pricing-calc-wrapper .config-header-row { flex-direction: column; align-items: stretch; gap: 0.8rem;} .ai-pricing-calc-wrapper .config-header-row h2 { width: 100%; text-align: center; border-bottom: none; padding-bottom: 0;} .ai-pricing-calc-wrapper .config-controls-container { align-items: center; } .ai-pricing-calc-wrapper .config-controls-container .input-row { width: 100%; justify-content: space-between;} .ai-pricing-calc-wrapper .config-controls-container .input-group { flex-basis: 45%; } .ai-pricing-calc-wrapper .request-multiplier-buttons { justify-content: center; width: 100%; } .ai-pricing-calc-wrapper .token-explanation { margin-top: 1rem;} .ai-pricing-calc-wrapper .model-items-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+        /* Medium screens (Tablets) */
+        @media (max-width: 991px) and (min-width: 768px) {
+            .ai-pricing-calc-wrapper .container { max-width: 90%; } /* Slightly reduce max width */
+            .ai-pricing-calc-wrapper .config-header-row { gap: 1rem; }
+            .ai-pricing-calc-wrapper .config-controls-container { gap: 0.5rem; }
+            .ai-pricing-calc-wrapper .model-items-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); } /* Adjust grid columns */
+        }
+        /* Small screens (Mobile Landscape / Large Phones) */
+        @media (max-width: 767px) {
+            .ai-pricing-calc-wrapper { padding: 0.5rem; } /* Reduce outer padding */
+            .ai-pricing-calc-wrapper .container { padding: 1rem 1rem; border-radius: 8px; } /* Reduce container padding */
+            /* Stack config header items */
+            .ai-pricing-calc-wrapper .config-header-row { flex-direction: column; align-items: stretch; gap: 0.8rem;}
+            .ai-pricing-calc-wrapper .config-header-row h2 { width: 100%; text-align: center; border-bottom: none; padding-bottom: 0;}
+            .ai-pricing-calc-wrapper .config-controls-container { align-items: center; }
+            .ai-pricing-calc-wrapper .config-controls-container .input-row { width: 100%; justify-content: space-between;}
+            .ai-pricing-calc-wrapper .config-controls-container .input-group { flex-basis: 45%; } /* Approx two columns for inputs */
+            .ai-pricing-calc-wrapper .request-multiplier-buttons { justify-content: center; width: 100%; }
+            .ai-pricing-calc-wrapper .token-explanation { margin-top: 1rem;}
+            .ai-pricing-calc-wrapper .model-items-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } /* Adjust grid columns */
+            /* Stack model selection header */
             .ai-pricing-calc-wrapper .model-selection .section-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            /* Stack results header */
             .ai-pricing-calc-wrapper .results .results-header { flex-direction: column; align-items: flex-start; }
             .ai-pricing-calc-wrapper .sort-controls { justify-content: flex-start; width: 100%; margin-top: 0.5rem; }
         }
-        @media (max-width: 480px) { .ai-pricing-calc-wrapper .config-controls-container .input-row { flex-direction: column; gap: 1rem;} .ai-pricing-calc-wrapper .config-controls-container .input-group { flex-basis: auto;} .ai-pricing-calc-wrapper .slider-container { flex-direction: column; align-items: stretch; gap: 0.5rem;} .ai-pricing-calc-wrapper .slider-container input[type="number"] { width: 100%; text-align: center; } .ai-pricing-calc-wrapper .word-estimate { text-align: center; padding-right: 0;} .ai-pricing-calc-wrapper .model-items-grid { grid-template-columns: 1fr; }
+        /* Extra Small screens (Mobile Portrait) */
+        @media (max-width: 480px) {
+            /* Stack token input groups */
+            .ai-pricing-calc-wrapper .config-controls-container .input-row { flex-direction: column; gap: 1rem;}
+            .ai-pricing-calc-wrapper .config-controls-container .input-group { flex-basis: auto;} /* Full width */
+            /* Stack slider and number input */
+            .ai-pricing-calc-wrapper .slider-container { flex-direction: column; align-items: stretch; gap: 0.5rem;}
+            .ai-pricing-calc-wrapper .slider-container input[type="number"] { width: 100%; text-align: center; }
+            .ai-pricing-calc-wrapper .word-estimate { text-align: center; padding-right: 0;}
+            /* Single column for model items */
+            .ai-pricing-calc-wrapper .model-items-grid { grid-template-columns: 1fr; }
+            /* Center sort controls */
             .ai-pricing-calc-wrapper .sort-controls { justify-content: center; }
+            /* Center price-performance/livebench row */
             .ai-pricing-calc-wrapper .result-card .preis-leistung { justify-content: center; text-align: center; }
             .ai-pricing-calc-wrapper .result-card .livebench-result-score { text-align: center; width: 100%; margin-top: 5px;}
             /* Responsive adjustments for cost breakdown */
@@ -189,8 +376,8 @@
                  justify-content: space-between; /* Space label and value */
             }
              .ai-pricing-calc-wrapper .result-card .content-area .cost-item.cost-output {
-                 justify-content: space-between; /* Override previous alignment */
-                 text-align: left; /* Align text left */
+                 justify-content: space-between; /* Override previous right alignment */
+                 text-align: left; /* Align text left like input */
              }
              .ai-pricing-calc-wrapper .result-card .content-area .cost-value {
                  text-align: right; /* Keep value itself right aligned */
@@ -202,23 +389,34 @@
 </head>
 <body>
 
+    <!-- Main Wrapper for the Calculator -->
     <div class="ai-pricing-calc-wrapper">
 
+        <!-- Content Container -->
         <div class="container">
+            <!-- Header Section -->
             <header>
+                <!-- Main Title (with wave effect applied via JS) -->
                 <h1 id="main-title" data-translate-key="mainTitle">Wie viel kostet eigentlich meine API-Anfrage an die KI?</h1>
+                <!-- Language Selection Buttons -->
                 <div class="lang-toggle">
                     <button class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
                     <button class="lang-btn" data-lang="en" title="English">🇬🇧</button>
                 </div>
             </header>
 
+            <!-- Main Content Area -->
             <main>
+                <!-- Token Configuration Section -->
                 <section class="configurator">
+                     <!-- Header Row for Configurator (Title + Controls) -->
                      <div class="config-header-row">
                          <h2 data-translate-key="configureTokensTitle">Token Konfigurieren</h2>
+                         <!-- Container for Input Controls -->
                          <div class="config-controls-container">
+                             <!-- Row for Input/Output Token Sliders/Numbers -->
                              <div class="input-row">
+                                 <!-- Input Token Group -->
                                  <div class="input-group">
                                      <label for="input-tokens-number" data-translate-key="inputTokensLabel">Input-Token</label>
                                      <div class="slider-container">
@@ -227,6 +425,7 @@
                                      </div>
                                      <small class="word-estimate">(≈ <span id="input-words-est">1.500</span> <span data-translate-key="wordsSuffix">Wörter</span>)</small>
                                  </div>
+                                 <!-- Output Token Group -->
                                  <div class="input-group">
                                      <label for="output-tokens-number" data-translate-key="outputTokensLabel">Output-Token</label>
                                      <div class="slider-container">
@@ -236,6 +435,7 @@
                                      <small class="word-estimate">(≈ <span id="output-words-est">375</span> <span data-translate-key="wordsSuffix">Wörter</span>)</small>
                                  </div>
                              </div>
+                             <!-- Request Multiplier Buttons -->
                             <div class="request-multiplier-buttons">
                                 <span class="multiplier-label" data-translate-key="requestsLabel">Anzahl der API Anfragen:</span>
                                 <button class="multiplier-btn" data-multiplier="1">1x</button>
@@ -244,24 +444,34 @@
                             </div>
                          </div>
                      </div>
+                     <!-- Token Explanation Text -->
                      <p class="token-explanation" data-translate-key="tokenExplanation">
                          Token sind Wortteile, die von Modellen verwendet werden. Im Durchschnitt entspricht 1 Token ≈ 0,75 deutschen Wörtern.
                      </p>
                 </section>
 
+                <!-- Two-Column Layout for Model Selection and Results -->
                 <div class="content-columns">
+                    <!-- Model Selection Section (Left Column on Desktop) -->
                     <section class="model-selection">
+                        <!-- Header for Model Selection -->
                         <div class="section-header">
                              <h2 data-translate-key="selectModelsTitle">Modelle auswählen</h2>
                              <button id="select-all-toggle" class="select-all-btn" data-translate-key="deselectAll">Alle abwählen</button>
                         </div>
+                        <!-- Container where model groups will be populated by JS -->
                         <div id="model-groups-container"></div>
+                        <!-- Button to add a custom model -->
                         <button id="add-model-btn" class="add-model-placeholder" data-translate-key="addCustomModel">+ Eigenes Modell hinzufügen</button>
                     </section>
 
+                    <!-- Results Section (Right Column on Desktop) -->
                     <section class="results">
+                         <!-- Header for Results -->
                          <div class="results-header">
-                            <h2 data-translate-key="estimatedCostsTitle">Geschätzte Kosten</h2>
+                            <!-- Results Title (ID added, content managed by JS) -->
+                            <h2 id="results-title" data-translate-key="estimatedCostsTitle">Geschätzte Kosten</h2>
+                            <!-- Sorting Controls -->
                             <div class="sort-controls">
                                 <span class="sort-label" data-translate-key="sortByLabel">Sortieren nach:</span>
                                 <button class="sort-btn" id="sort-cost" data-sort="cost" data-translate-key="sortByCost">Preis</button>
@@ -269,25 +479,29 @@
                                 <button class="sort-btn" id="sort-intelligence" data-sort="intelligence" data-translate-key="sortByIntelligence">Intelligenz</button>
                             </div>
                          </div>
+                         <!-- Container where result cards will be populated by JS -->
                         <div class="results-list-container" id="results-container">
+                           <!-- Placeholder text shown when no results are available -->
                            <p class="placeholder" data-translate-key="resultsPlaceholder">Modelle auswählen und Token anpassen, um Kostenschätzungen zu sehen.</p>
                         </div>
                     </section>
                 </div>
             </main>
 
+            <!-- Footer Section -->
             <footer>
                  <p class="subtitle subtitle-footer" data-translate-key="subtitle">Vergleiche offizielle & benutzerdefinierte API-Kosten für Textgenerierung (inkl. LiveBench Scores)</p>
                  <p data-translate-key="disclaimer">Haftungsausschluss: Preise basieren auf offizieller API-Dokumentation (Stand April 2025). LiveBench-Werte von livebench.ai (Stand April 2025). Überprüfe immer die offiziellen Quellen.
                  <span class="pl-explanation" data-translate-key="plExplanation">Preis-Leistungs-Score (0-100): Kombiniert normalisierte Leistung (LiveBench Score, 20% Gewicht) und normalisierte Kosten (gewichteter Preis/1Mio Token, 80% Gewicht). Der beste Kompromiss erhält 100 Punkte.</span>
                  </p>
             </footer>
-        </div>
+        </div><!-- /.container -->
 
-        <!-- Add Model Modal -->
+        <!-- Add Custom Model Modal -->
         <div id="add-model-modal" class="modal-overlay" hidden>
              <div class="modal-content">
                 <h2 data-translate-key="addModelTitle">Eigenes Modell hinzufügen</h2>
+                <!-- Form for adding custom model details -->
                 <form id="add-model-form">
                      <div class="form-group"><label for="custom-model-name" data-translate-key="modalNameLabel">Modellname *</label><input type="text" id="custom-model-name" required></div>
                      <div class="form-group"><label for="custom-model-provider" data-translate-key="modalProviderLabel">Anbieter/Organisation *</label><input type="text" id="custom-model-provider" required></div>
@@ -296,34 +510,195 @@
                      <div class="form-group"><label for="custom-model-score" data-translate-key="modalScoreLabel">LiveBench Score (Optional)</label><input type="number" step="0.01" id="custom-model-score" data-translate-placeholder="modalScorePlaceholder" placeholder="z.B. 75,67"></div>
                      <div class="form-group price-group"><label for="custom-model-input-price" data-translate-key="modalInputPriceLabel">Input-Preis ($ / 1 Mio. Token) *</label><input type="number" step="0.00001" id="custom-model-input-price" required data-translate-placeholder="modalInputPricePlaceholder" placeholder="z.B. 2,50"></div>
                      <div class="form-group price-group"><label for="custom-model-output-price" data-translate-key="modalOutputPriceLabel">Output-Preis ($ / 1 Mio. Token) *</label><input type="number" step="0.00001" id="custom-model-output-price" required data-translate-placeholder="modalOutputPricePlaceholder" placeholder="z.B. 10,00"></div>
-                     <div class="modal-actions"><button type="button" id="cancel-add-model" class="btn-secondary" data-translate-key="modalCancelButton">Abbrechen</button><button type="submit" id="save-add-model" class="btn-primary" data-translate-key="modalSaveButton">Modell speichern</button></div>
+                     <!-- Modal Action Buttons -->
+                     <div class="modal-actions">
+                        <button type="button" id="cancel-add-model" class="btn-secondary" data-translate-key="modalCancelButton">Abbrechen</button>
+                        <button type="submit" id="save-add-model" class="btn-primary" data-translate-key="modalSaveButton">Modell speichern</button>
+                     </div>
                 </form>
             </div>
-        </div>
-    </div>
+        </div><!-- /#add-model-modal -->
+
+    </div><!-- /.ai-pricing-calc-wrapper -->
 
 <script>
     // --- JavaScript Start ---
     document.addEventListener('DOMContentLoaded', () => {
+        // Select the main wrapper for the calculator to scope DOM queries
         const wrapper = document.querySelector('.ai-pricing-calc-wrapper');
-        if (!wrapper) { console.error("AI Pricing Calculator: Wrapper missing."); return; }
+        // Basic check to ensure the wrapper exists before proceeding
+        if (!wrapper) {
+            console.error("AI Pricing Calculator: Wrapper element '.ai-pricing-calc-wrapper' not found.");
+            return; // Stop execution if the main container is missing
+        }
 
-        // *** UPDATED: Translation Dictionary with Prompt/Response labels ***
+        // --- Translation Dictionary ---
+        // Stores all UI strings for different languages. Keys are language codes (e.g., 'de', 'en').
+        // Values are objects where keys map to translation keys used in `data-translate-key` attributes.
         const translations = {
-             de: { calculatorTitle: "KI-Modell Kostenrechner mit Preis-Leistung", mainTitle: "Wie viel kostet eigentlich meine API-Anfrage an die KI?", subtitle: "Vergleiche offizielle & benutzerdefinierte API-Kosten für Textgenerierung (inkl. LiveBench Scores)", configureTokensTitle: "Token Konfigurieren", inputTokensLabel: "Input-Token", outputTokensLabel: "Output-Token", wordsSuffix: "Wörter", requestsLabel: "Anzahl der API Anfragen:", tokenExplanation: "Token sind Wortteile, die von Modellen verwendet werden. Im Durchschnitt entspricht 1 Token ≈ 0,75 deutschen Wörtern.", selectModelsTitle: "Modelle auswählen", selectAll: "Alle auswählen", deselectAll: "Alle abwählen", addCustomModel: "+ Eigenes Modell hinzufügen", estimatedCostsTitle: "Geschätzte Kosten", sortByLabel: "Sortieren nach:", sortByCost: "Preis", sortByValue: "Preis-Leistung", sortByIntelligence: "Intelligenz", resultsPlaceholder: "Modelle auswählen und Token anpassen, um Kostenschätzungen zu sehen.", addModelTitle: "Eigenes Modell hinzufügen", modalNameLabel: "Modellname *", modalProviderLabel: "Anbieter/Organisation *", modalContextLabel: "Kontextfenster (z.B. 128k, 1M) *", modalCutoffLabel: "Wissensstand (Optional)", modalScoreLabel: "LiveBench Score (Optional)", modalInputPriceLabel: "Input-Preis ($ / 1 Mio. Token) *", modalOutputPriceLabel: "Output-Preis ($ / 1 Mio. Token) *", modalExamplePlaceholder: "z.B. 200k", modalCutoffPlaceholder: "z.B. Okt 2024", modalScorePlaceholder: "z.B. 75,67", modalInputPricePlaceholder: "z.B. 2,50", modalOutputPricePlaceholder: "z.B. 10,00", modalCancelButton: "Abbrechen", modalSaveButton: "Modell speichern", disclaimer: "Haftungsausschluss: Preise basieren auf offizieller API-Dokumentation (Stand April 2025). LiveBench-Werte von livebench.ai (Stand April 2025). Überprüfe immer die offiziellen Quellen.", plExplanation: "Preis-Leistungs-Score (0-100): Kombiniert normalisierte Leistung (LiveBench Score, 20% Gewicht) und normalisierte Kosten (gewichteter Preis/1Mio Token, 80% Gewicht). Der beste Kompromiss erhält 100 Punkte.", plScoreLabel: "Preis-Leistung:", plTooltipText: "Gewichteter Wert (20% Leistung, 80% Kosten). Score und Kosten werden relativ zu allen Modellen normalisiert (0-1), kombiniert und dann auf 0-100 skaliert (100=bester Kompromiss).", livebenchResultLabel: "Livebench.ai Score:", contextLabel: "Kontext", /* NEW */ promptLabel: "Prompt:", /* NEW */ responseLabel: "Antwort:", inputTooltip: "Eingabe an die KI", outputTooltip: "Antwort der KI", totalCostLabel: "Gesamt", multiplierMoreSuffix: "x mehr", customModelsTitle: "Benutzerdefiniert", alertMissingFields: "Bitte fülle alle Pflichtfelder (*) aus.", alertInvalidNumbers: "Bitte gib gültige Zahlen für Preise und Score ein.", alertNegativeValues: "Preise und Score dürfen nicht negativ sein." },
-             en: { calculatorTitle: "AI Model Cost Calculator with Price-Performance", mainTitle: "How much does my API request to the AI actually cost?", subtitle: "Compare official & custom API costs for text generation (incl. LiveBench Scores)", configureTokensTitle: "Configure Tokens", inputTokensLabel: "Input Tokens", outputTokensLabel: "Output Tokens", wordsSuffix: "words", requestsLabel: "Number of API Requests:", tokenExplanation: "Tokens are parts of words used by models. On average, 1 token ≈ 0.75 English words.", selectModelsTitle: "Select Models", selectAll: "Select All", deselectAll: "Deselect All", addCustomModel: "+ Add Custom Model", estimatedCostsTitle: "Estimated Costs", sortByLabel: "Sort by:", sortByCost: "Price", sortByValue: "Price-Perf.", sortByIntelligence: "Intelligence", resultsPlaceholder: "Select models and adjust tokens to see cost estimates.", addModelTitle: "Add Custom Model", modalNameLabel: "Model Name *", modalProviderLabel: "Provider/Organization *", modalContextLabel: "Context Window (e.g., 128k, 1M) *", modalCutoffLabel: "Knowledge Cutoff (Optional)", modalScoreLabel: "LiveBench Score (Optional)", modalInputPriceLabel: "Input Price ($ / 1M tokens) *", modalOutputPriceLabel: "Output Price ($ / 1M tokens) *", modalExamplePlaceholder: "e.g., 200k", modalCutoffPlaceholder: "e.g., Oct 2024", modalScorePlaceholder: "e.g., 75.67", modalInputPricePlaceholder: "e.g., 2.50", modalOutputPricePlaceholder: "e.g., 10.00", modalCancelButton: "Cancel", modalSaveButton: "Save Model", disclaimer: "Disclaimer: Prices based on official API documentation (as of April 2025). LiveBench scores from livebench.ai (as of April 2025). Always verify official sources.", plExplanation: "Price-Performance Score (0-100): Combines normalized performance (LiveBench Score, 20% weight) and normalized cost (blended price/1M tokens, 80% weight). The best trade-off gets 100 points.", plScoreLabel: "Price-Perf.:", plTooltipText: "Weighted value (20% performance, 80% cost). Score and cost are normalized relative to all models (0-1), combined, then scaled to 0-100 (100=best trade-off).", livebenchResultLabel: "Livebench.ai Score:", contextLabel: "Context", /* NEW */ promptLabel: "Prompt:", /* NEW */ responseLabel: "Response:", inputTooltip: "Input to the AI", outputTooltip: "Response from the AI", totalCostLabel: "Total", multiplierMoreSuffix: "x more", customModelsTitle: "Custom Models", alertMissingFields: "Please fill in all required fields (*).", alertInvalidNumbers: "Please enter valid numbers for prices and score.", alertNegativeValues: "Prices and score cannot be negative." }
+             de: {
+                 calculatorTitle: "KI-Modell Kostenrechner mit Preis-Leistung",
+                 mainTitle: "Wie viel kostet eigentlich meine API-Anfrage an die KI?",
+                 subtitle: "Vergleiche offizielle & benutzerdefinierte API-Kosten für Textgenerierung (inkl. LiveBench Scores)",
+                 configureTokensTitle: "Token Konfigurieren",
+                 inputTokensLabel: "Input-Token",
+                 outputTokensLabel: "Output-Token",
+                 wordsSuffix: "Wörter",
+                 requestsLabel: "Anzahl der API Anfragen:",
+                 tokenExplanation: "Token sind Wortteile, die von Modellen verwendet werden. Im Durchschnitt entspricht 1 Token ≈ 0,75 deutschen Wörtern.",
+                 selectModelsTitle: "Modelle auswählen",
+                 selectAll: "Alle auswählen",
+                 deselectAll: "Alle abwählen",
+                 addCustomModel: "+ Eigenes Modell hinzufügen",
+                 // *** UPDATED: Dynamic Results Titles ***
+                 estimatedCostsTitle: "Geschätzte Kosten", // Default / Cost sort
+                 resultsTitleCost: "Geschätzte Kosten",
+                 resultsTitleValue: "Beste Preis-Leistung",
+                 resultsTitleIntelligence: "Beste Intelligenz",
+                 // *** END UPDATE ***
+                 sortByLabel: "Sortieren nach:",
+                 sortByCost: "Preis",
+                 sortByValue: "Preis-Leistung",
+                 sortByIntelligence: "Intelligenz",
+                 resultsPlaceholder: "Modelle auswählen und Token anpassen, um Kostenschätzungen zu sehen.",
+                 addModelTitle: "Eigenes Modell hinzufügen",
+                 modalNameLabel: "Modellname *",
+                 modalProviderLabel: "Anbieter/Organisation *",
+                 modalContextLabel: "Kontextfenster (z.B. 128k, 1M) *",
+                 modalCutoffLabel: "Wissensstand (Optional)",
+                 modalScoreLabel: "LiveBench Score (Optional)",
+                 modalInputPriceLabel: "Input-Preis ($ / 1 Mio. Token) *",
+                 modalOutputPriceLabel: "Output-Preis ($ / 1 Mio. Token) *",
+                 modalExamplePlaceholder: "z.B. 200k",
+                 modalCutoffPlaceholder: "z.B. Okt 2024",
+                 modalScorePlaceholder: "z.B. 75,67",
+                 modalInputPricePlaceholder: "z.B. 2,50",
+                 modalOutputPricePlaceholder: "z.B. 10,00",
+                 modalCancelButton: "Abbrechen",
+                 modalSaveButton: "Modell speichern",
+                 disclaimer: "Haftungsausschluss: Preise basieren auf offizieller API-Dokumentation (Stand April 2025). LiveBench-Werte von livebench.ai (Stand April 2025). Überprüfe immer die offiziellen Quellen.",
+                 plExplanation: "Preis-Leistungs-Score (0-100): Kombiniert normalisierte Leistung (LiveBench Score, 20% Gewicht) und normalisierte Kosten (gewichteter Preis/1Mio Token, 80% Gewicht). Der beste Kompromiss erhält 100 Punkte.",
+                 plScoreLabel: "Preis-Leistung:",
+                 plTooltipText: "Gewichteter Wert (20% Leistung, 80% Kosten). Score und Kosten werden relativ zu allen Modellen normalisiert (0-1), kombiniert und dann auf 0-100 skaliert (100=bester Kompromiss).",
+                 livebenchResultLabel: "Livebench.ai Score:",
+                 contextLabel: "Kontext",
+                 promptLabel: "Prompt:", // Label for input cost
+                 responseLabel: "Antwort:", // Label for output cost
+                 inputTooltip: "Eingabe an die KI",
+                 outputTooltip: "Antwort der KI",
+                 totalCostLabel: "Gesamt",
+                 multiplierMoreSuffix: "x mehr", // Suffix for cost multiplier text
+                 customModelsTitle: "Benutzerdefiniert", // Header for custom models group
+                 alertMissingFields: "Bitte fülle alle Pflichtfelder (*) aus.",
+                 alertInvalidNumbers: "Bitte gib gültige Zahlen für Preise und Score ein.",
+                 alertNegativeValues: "Preise und Score dürfen nicht negativ sein."
+             },
+             en: {
+                 calculatorTitle: "AI Model Cost Calculator with Price-Performance",
+                 mainTitle: "How much does my API request to the AI actually cost?",
+                 subtitle: "Compare official & custom API costs for text generation (incl. LiveBench Scores)",
+                 configureTokensTitle: "Configure Tokens",
+                 inputTokensLabel: "Input Tokens",
+                 outputTokensLabel: "Output Tokens",
+                 wordsSuffix: "words",
+                 requestsLabel: "Number of API Requests:",
+                 tokenExplanation: "Tokens are parts of words used by models. On average, 1 token ≈ 0.75 English words.",
+                 selectModelsTitle: "Select Models",
+                 selectAll: "Select All",
+                 deselectAll: "Deselect All",
+                 addCustomModel: "+ Add Custom Model",
+                 // *** UPDATED: Dynamic Results Titles ***
+                 estimatedCostsTitle: "Estimated Costs", // Default / Cost sort
+                 resultsTitleCost: "Estimated Costs",
+                 resultsTitleValue: "Best Price-Performance",
+                 resultsTitleIntelligence: "Best Intelligence",
+                 // *** END UPDATE ***
+                 sortByLabel: "Sort by:",
+                 sortByCost: "Price",
+                 sortByValue: "Price-Perf.", // Abbreviated for space
+                 sortByIntelligence: "Intelligence",
+                 resultsPlaceholder: "Select models and adjust tokens to see cost estimates.",
+                 addModelTitle: "Add Custom Model",
+                 modalNameLabel: "Model Name *",
+                 modalProviderLabel: "Provider/Organization *",
+                 modalContextLabel: "Context Window (e.g., 128k, 1M) *",
+                 modalCutoffLabel: "Knowledge Cutoff (Optional)",
+                 modalScoreLabel: "LiveBench Score (Optional)",
+                 modalInputPriceLabel: "Input Price ($ / 1M tokens) *",
+                 modalOutputPriceLabel: "Output Price ($ / 1M tokens) *",
+                 modalExamplePlaceholder: "e.g., 200k",
+                 modalCutoffPlaceholder: "e.g., Oct 2024",
+                 modalScorePlaceholder: "e.g., 75.67",
+                 modalInputPricePlaceholder: "e.g., 2.50",
+                 modalOutputPricePlaceholder: "e.g., 10.00",
+                 modalCancelButton: "Cancel",
+                 modalSaveButton: "Save Model",
+                 disclaimer: "Disclaimer: Prices based on official API documentation (as of April 2025). LiveBench scores from livebench.ai (as of April 2025). Always verify official sources.",
+                 plExplanation: "Price-Performance Score (0-100): Combines normalized performance (LiveBench Score, 20% weight) and normalized cost (blended price/1M tokens, 80% weight). The best trade-off gets 100 points.",
+                 plScoreLabel: "Price-Perf.:",
+                 plTooltipText: "Weighted value (20% performance, 80% cost). Score and cost are normalized relative to all models (0-1), combined, then scaled to 0-100 (100=best trade-off).",
+                 livebenchResultLabel: "Livebench.ai Score:",
+                 contextLabel: "Context",
+                 promptLabel: "Prompt:", // Label for input cost
+                 responseLabel: "Response:", // Label for output cost
+                 inputTooltip: "Input to the AI",
+                 outputTooltip: "Response from the AI",
+                 totalCostLabel: "Total",
+                 multiplierMoreSuffix: "x more", // Suffix for cost multiplier text
+                 customModelsTitle: "Custom Models", // Header for custom models group
+                 alertMissingFields: "Please fill in all required fields (*).",
+                 alertInvalidNumbers: "Please enter valid numbers for prices and score.",
+                 alertNegativeValues: "Prices and score cannot be negative."
+             }
         };
-        function getTranslation(key, lang) { return translations[lang]?.[key] || `[${key}]`; }
 
-        // Wave Effect
-        function applyWaveEffect(lang) { const mainTitle = wrapper.querySelector('#main-title'); if (!mainTitle) return; const titleText = getTranslation('mainTitle', lang); mainTitle.innerHTML = ''; titleText.split(' ').forEach((word, wordIndex, wordsArray) => { const wordSpan = document.createElement('span'); wordSpan.classList.add('wave-word'); wordSpan.textContent = word; wordSpan.style.animationDelay = `${wordIndex * 0.2}s`; mainTitle.appendChild(wordSpan); if (wordIndex < wordsArray.length - 1) { mainTitle.appendChild(document.createTextNode(' ')); } }); }
+        /**
+         * Retrieves a translation string for a given key and language.
+         * Falls back to the key itself surrounded by brackets if the translation is missing.
+         * @param {string} key - The translation key (e.g., 'mainTitle').
+         * @param {string} lang - The language code (e.g., 'de', 'en').
+         * @returns {string} The translated string or a fallback indicator.
+         */
+        function getTranslation(key, lang) {
+            return translations[lang]?.[key] || `[${key}]`; // Safely access nested properties
+        }
 
-        // *** UPDATED: Base Model Data (Removed GPT-4.5, Added GPT-4.1 Mini/Nano) ***
+        /**
+         * Applies a wave color animation effect to the main title.
+         * Splits the title into words and animates each word with a delay.
+         * @param {string} lang - The current language code.
+         */
+        function applyWaveEffect(lang) {
+            const mainTitle = wrapper.querySelector('#main-title');
+            if (!mainTitle) return; // Exit if title element not found
+
+            const titleText = getTranslation('mainTitle', lang);
+            mainTitle.innerHTML = ''; // Clear existing content
+
+            // Split title into words and create animated spans for each
+            titleText.split(' ').forEach((word, wordIndex, wordsArray) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.classList.add('wave-word');
+                wordSpan.textContent = word;
+                wordSpan.style.animationDelay = `${wordIndex * 0.15}s`; // Stagger animation start
+                mainTitle.appendChild(wordSpan);
+
+                // Add space between words
+                if (wordIndex < wordsArray.length - 1) {
+                    mainTitle.appendChild(document.createTextNode(' '));
+                }
+            });
+        }
+
+        // --- Base Model Data ---
+        // Stores the predefined AI models, their properties, and pricing.
+        // Pricing can be a fixed number ($/1M tokens) or a function for tiered pricing.
         const baseModels = [
             {
                 provider: 'Google',
                 models: [
-                    { id: 'gemini-2.5-pro-preview', name: 'Gemini 2.5 Pro Preview', contextWindow: '1M', knowledgeCutoff: 'Jan 2025', liveBenchScore: 82.35, pricing: { input: (t) => (t <= 200000 ? 1.25 : 2.50), output: (t) => (t <= 200000 ? 10.00 : 15.00), baseInput: 1.25, baseOutput: 10.00 } },
+                    // Example with tiered pricing based on input token count
+                    { id: 'gemini-2.5-pro-preview', name: 'Gemini 2.5 Pro Preview', contextWindow: '1M', knowledgeCutoff: 'Jan 2025', liveBenchScore: 82.35, pricing: { input: (t) => (t <= 200000 ? 1.25 : 2.50), output: (t) => (t <= 200000 ? 10.00 : 15.00), baseInput: 1.25, baseOutput: 10.00 } }, // Base prices for normalization
                     { id: 'gemini-2.5-flash-preview', name: 'Gemini 2.5 Flash Preview', contextWindow: '1M', knowledgeCutoff: 'Jan 2025', liveBenchScore: 71.21, pricing: { input: 0.15, output: 3.50, baseInput: 0.15, baseOutput: 3.50 } },
                     { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', contextWindow: '1M', knowledgeCutoff: 'Aug 2024', liveBenchScore: 54.89, pricing: { input: 0.10, output: 0.40, baseInput: 0.10, baseOutput: 0.40 } },
                 ]
@@ -347,9 +722,11 @@
                 ]
             }
         ];
+        // Array to store user-added custom models
         let customModels = [];
 
-        // DOM Elements
+        // --- DOM Element References ---
+        // Get references to frequently used DOM elements for performance.
         const modelGroupsContainer = wrapper.querySelector('#model-groups-container');
         const inputTokensSlider = wrapper.querySelector('#input-tokens-slider');
         const inputTokensNumber = wrapper.querySelector('#input-tokens-number');
@@ -368,175 +745,442 @@
         const langToggleButtons = wrapper.querySelectorAll('.lang-btn');
         const sortButtons = wrapper.querySelectorAll('.sort-btn');
 
-        if (!modelGroupsContainer || !inputTokensSlider || !resultsContainer || !multiplierButtons.length || !langToggleButtons.length || !sortButtons.length) { console.error("AI Pricing Calculator: Core elements missing."); wrapper.innerHTML = "<p style='color: red; text-align: center; padding: 20px;'>Fehler beim Initialisieren des Rechners.</p>"; return; }
+        // Basic check for essential elements
+        if (!modelGroupsContainer || !inputTokensSlider || !resultsContainer || !multiplierButtons.length || !langToggleButtons.length || !sortButtons.length) {
+            console.error("AI Pricing Calculator: Core UI elements missing. Cannot initialize.");
+            // Display an error message to the user within the wrapper
+            wrapper.innerHTML = "<p style='color: red; text-align: center; padding: 20px;'>Error: Calculator could not be initialized. Essential elements are missing.</p>";
+            return; // Stop execution
+        }
 
-        // State Variables
-        let selectedModelIds = new Set();
-        const modelMap = new Map();
-        let allModelElements = [];
-        const WORDS_PER_TOKEN = 0.75;
-        let currentMultiplier = 1;
+        // --- State Variables ---
+        let selectedModelIds = new Set(); // Stores the IDs of currently selected models
+        const modelMap = new Map(); // Maps model IDs to their full data object for quick lookup
+        let allModelElements = []; // Stores references to the DOM elements for each model item
+        const WORDS_PER_TOKEN = 0.75; // Approximate conversion factor
+        let currentMultiplier = 1; // Currently selected request multiplier (1x, 100x, 1000x)
+        // Store the 'base' token values before multiplier is applied
         let baseInputTokens = parseInt(inputTokensNumber.value) || 2000;
         let baseOutputTokens = parseInt(outputTokensNumber.value) || 500;
-        const COST_EPSILON = 1e-9;
+        const COST_EPSILON = 1e-9; // Small number to handle floating point comparisons
+        // Determine initial language from localStorage or default to German ('de')
         let currentLang = localStorage.getItem('calculatorLang') || 'de';
-        let currentSortMode = 'cost';
+        // Initial sort mode
+        let currentSortMode = 'cost'; // 'cost', 'value', or 'intelligence'
 
-        // Translate Function
+        // --- Translation Function ---
+        /**
+         * Updates the UI text based on the selected language.
+         * Iterates through elements with `data-translate-key` and sets their content.
+         * Also updates document title, lang attribute, and triggers other language-dependent updates.
+         * @param {string} lang - The target language code (e.g., 'de', 'en').
+         */
         function translateUI(lang) {
-            currentLang = lang; localStorage.setItem('calculatorLang', lang);
-            document.documentElement.lang = lang; document.title = getTranslation('calculatorTitle', lang);
+            currentLang = lang; // Update global language state
+            localStorage.setItem('calculatorLang', lang); // Persist language choice
+            document.documentElement.lang = lang; // Set HTML lang attribute
+            document.title = getTranslation('calculatorTitle', lang); // Update page title
+
+            // Update text content of elements with translation keys
             wrapper.querySelectorAll('[data-translate-key]').forEach(el => {
-                const key = el.dataset.translateKey; const translation = getTranslation(key, lang);
-                 if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) { el.placeholder = translation; }
-                 else if (el.hasAttribute('title') && (key === 'plTooltipText' || key === 'inputTooltip' || key === 'outputTooltip')) { el.title = translation; }
-                 else if (el.id === 'select-all-toggle') { /* handled in updateSelectAllButtonState */ }
-                 else if (el.id === 'main-title') { /* handled in applyWaveEffect */ }
-                 // Update cost labels inside results if they exist
-                 else if (el.classList.contains('cost-label') && (key === 'promptLabel' || key === 'responseLabel')) { el.textContent = translation; }
-                 else if (key !== 'plTooltipText' && key !== 'inputTooltip' && key !== 'outputTooltip' && !el.classList.contains('cost-label')) { el.textContent = translation; }
+                const key = el.dataset.translateKey;
+                const translation = getTranslation(key, lang);
+
+                // Handle specific element types or attributes
+                if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
+                    // Set placeholder text for inputs
+                    const placeholderKey = el.dataset.translatePlaceholder;
+                    el.placeholder = getTranslation(placeholderKey, lang) || translation; // Use specific placeholder key if available
+                } else if (el.hasAttribute('title') && (key === 'plTooltipText' || key === 'inputTooltip' || key === 'outputTooltip')) {
+                    // Set title attribute (tooltip) for specific elements
+                    el.title = translation;
+                } else if (el.id === 'select-all-toggle') {
+                    // Select-all button text is handled by updateSelectAllButtonState()
+                } else if (el.id === 'main-title') {
+                    // Main title text/animation handled by applyWaveEffect()
+                } else if (el.classList.contains('cost-label') && (key === 'promptLabel' || key === 'responseLabel')) {
+                    // Cost labels within results are updated directly in updateResults(),
+                    // but this ensures they are correct if language changes *after* results rendered.
+                    el.textContent = translation;
+                } else if (el.id === 'results-title') {
+                     // Results title is handled dynamically in updateResults() based on sort mode
+                     // but ensure the correct key is set for potential future translations
+                     // The text content itself is set in updateResults
+                }
+                else if (key !== 'plTooltipText' && key !== 'inputTooltip' && key !== 'outputTooltip' && !el.classList.contains('cost-label') && el.id !== 'results-title') {
+                    // Set textContent for all other elements
+                    el.textContent = translation;
+                }
             });
-            applyWaveEffect(lang); updateSelectAllButtonState(); updateWordEstimates(); updateResults(); // Re-render results for label changes
-            langToggleButtons.forEach(btn => { btn.classList.toggle('active', btn.dataset.lang === lang); });
+
+            // Apply language-specific visual effects or updates
+            applyWaveEffect(lang);          // Re-apply title animation
+            updateSelectAllButtonState(); // Update select/deselect button text
+            updateWordEstimates();        // Update word count estimates
+            updateResults();              // Re-render results to apply new labels/formats
+            // Update active state for language buttons
+            langToggleButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+             // Update custom model group header if it exists
+             const customHeader = wrapper.querySelector('.provider-group.benutzerdefiniert h3');
+             if (customHeader) {
+                 customHeader.textContent = getTranslation('customModelsTitle', currentLang);
+             }
         }
 
-        // Initialize
+        // --- Initialization ---
+        /**
+         * Sets up the calculator on page load.
+         * Populates models, sets defaults, attaches event listeners, and translates the UI.
+         */
+        function initializeCalculator() {
+            populateModelGroups();         // Create model selection UI
+            selectAllModelsByDefault();    // Select all models initially
+            setActiveMultiplierButton(currentMultiplier); // Highlight default multiplier
+            setActiveSortButton(currentSortMode);       // Highlight default sort button
+            setupEventListeners();         // Attach event handlers
+            translateUI(currentLang);      // Translate UI to the initial language
+            // Initial calculation and display
+            // updateResults() is called within translateUI, so no separate call needed here.
+        }
+
+        // Call the initializer function
         initializeCalculator();
 
-        function initializeCalculator() {
-            populateModelGroups();
-            selectAllModelsByDefault();
-            setActiveMultiplierButton(currentMultiplier);
-            setActiveSortButton(currentSortMode);
-            setupEventListeners();
-            translateUI(currentLang);
-        }
+        // --- Core UI Update Functions ---
 
-        // --- Core Functions ---
-
+        /**
+         * Updates the estimated word counts based on the current token inputs.
+         */
         function updateWordEstimates() {
             const inputTokens = parseInt(inputTokensNumber.value) || 0;
             const outputTokens = parseInt(outputTokensNumber.value) || 0;
             const inputWords = Math.round(inputTokens * WORDS_PER_TOKEN);
             const outputWords = Math.round(outputTokens * WORDS_PER_TOKEN);
-            const locale = currentLang === 'de' ? 'de-DE' : 'en-US';
-            inputWordsEstSpan.textContent = inputWords.toLocaleString(locale);
-            outputWordsEstSpan.textContent = outputWords.toLocaleString(locale);
+            const locale = currentLang === 'de' ? 'de-DE' : 'en-US'; // Locale for number formatting
+
+            // Update the displayed word counts with locale-specific formatting
+            if (inputWordsEstSpan) inputWordsEstSpan.textContent = inputWords.toLocaleString(locale);
+            if (outputWordsEstSpan) outputWordsEstSpan.textContent = outputWords.toLocaleString(locale);
+
+            // Update the "Wörter"/"words" suffix based on language
             wrapper.querySelectorAll('[data-translate-key="wordsSuffix"]').forEach(span => {
                 span.textContent = getTranslation('wordsSuffix', currentLang);
             });
         }
 
+        /**
+         * Sets the visual 'active' state for the selected multiplier button.
+         * @param {number} multiplierValue - The multiplier value (1, 100, 1000).
+         */
         function setActiveMultiplierButton(multiplierValue) {
             multiplierButtons.forEach(btn => {
                 btn.classList.toggle('active', parseInt(btn.dataset.multiplier) === multiplierValue);
             });
-            currentMultiplier = multiplierValue;
+            currentMultiplier = multiplierValue; // Update global state
         }
 
+        /**
+         * Sets the visual 'active' state for the selected sort button.
+         * @param {string} sortMode - The sort mode ('cost', 'value', 'intelligence').
+         */
         function setActiveSortButton(sortMode) {
             sortButtons.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.sort === sortMode);
             });
-            currentSortMode = sortMode;
+            currentSortMode = sortMode; // Update global state
         }
 
+        // --- Event Handlers ---
+
+        /**
+         * Handles clicks on the multiplier buttons.
+         * Updates the active button state and recalculates results.
+         * @param {Event} event - The click event object.
+         */
         function handleMultiplierClick(event) {
             const clickedButton = event.target.closest('.multiplier-btn');
-            if (!clickedButton) return;
+            if (!clickedButton) return; // Ignore clicks outside buttons
+
             const multiplier = parseInt(clickedButton.dataset.multiplier);
-            if (isNaN(multiplier)) return;
-            setActiveMultiplierButton(multiplier);
-            updateResults();
+            if (isNaN(multiplier)) return; // Ignore if multiplier data is invalid
+
+            setActiveMultiplierButton(multiplier); // Update UI and state
+            updateResults(); // Recalculate and display results
         }
 
+        /**
+         * Handles clicks on the sort buttons.
+         * Updates the active button state and recalculates results.
+         * @param {Event} event - The click event object.
+         */
         function handleSortClick(event) {
             const clickedButton = event.target.closest('.sort-btn');
-            if (!clickedButton) return;
+            if (!clickedButton) return; // Ignore clicks outside buttons
+
             const sortMode = clickedButton.dataset.sort;
-            if (!sortMode) return;
-            setActiveSortButton(sortMode);
-            updateResults();
+            if (!sortMode) return; // Ignore if sort data is missing
+
+            setActiveSortButton(sortMode); // Update UI and state
+            updateResults(); // Recalculate, sort, and display results
         }
 
+        /**
+         * Handles changes in the token number input fields or sliders.
+         * Updates the corresponding slider/number input, word estimates, and results.
+         */
         function handleManualTokenChange() {
+            // Update base token values from number inputs, ensuring they are non-negative
             baseInputTokens = Math.max(0, parseInt(inputTokensNumber.value) || 0);
             baseOutputTokens = Math.max(0, parseInt(outputTokensNumber.value) || 0);
+
+            // Cap values at the maximum allowed by the sliders (optional, good practice)
             const maxInput = parseInt(inputTokensSlider.max);
             const maxOutput = parseInt(outputTokensSlider.max);
             if (!isNaN(maxInput) && baseInputTokens > maxInput) baseInputTokens = maxInput;
             if (!isNaN(maxOutput) && baseOutputTokens > maxOutput) baseOutputTokens = maxOutput;
+
+            // Sync number input with slider and vice-versa, avoiding infinite loops
             if (document.activeElement !== inputTokensSlider) inputTokensSlider.value = baseInputTokens;
-            if (document.activeElement !== inputTokensNumber) inputTokensNumber.value = baseInputTokens;
+            if (document.activeElement !== inputTokensNumber) inputTokensNumber.value = baseInputTokens; // Update number input if slider changed it
             if (document.activeElement !== outputTokensSlider) outputTokensSlider.value = baseOutputTokens;
-            if (document.activeElement !== outputTokensNumber) outputTokensNumber.value = baseOutputTokens;
-            updateWordEstimates();
-            updateResults();
+            if (document.activeElement !== outputTokensNumber) outputTokensNumber.value = baseOutputTokens; // Update number input if slider changed it
+
+
+            updateWordEstimates(); // Update word count display
+            updateResults();       // Recalculate and display results
         }
 
+        // --- Model Selection and Population ---
+
+        /**
+         * Creates a DOM element for a single model item in the selection list.
+         * @param {object} model - The model data object.
+         * @param {string} providerName - The name of the model's provider.
+         * @returns {HTMLElement} The created model item div element.
+         */
         function createModelItemElement(model, providerName) {
-            const item = document.createElement('div'); item.classList.add('model-item'); item.dataset.modelId = model.id; allModelElements.push(item);
-            const providerClass = providerName.toLowerCase().replace(/\s+/g, '-'); const providerColorVar = `--ai-calc-provider-color-item`; const providerH3Var = `--ai-calc-provider-color`; let providerColorValue = '#6c757d'; if (providerName === 'Google') providerColorValue = '#4285F4'; else if (providerName === 'OpenAI') providerColorValue = '#10a37f'; else if (providerName === 'Anthropic') providerColorValue = '#d97706';
-            item.style.setProperty(providerColorVar, providerColorValue); item.style.setProperty(providerH3Var, providerColorValue);
-            let scoreDisplay = 'N/A'; let scoreClass = 'na'; const locale = currentLang === 'de' ? 'de-DE' : 'en-US'; if (model.liveBenchScore !== null && typeof model.liveBenchScore !== 'undefined' && !isNaN(model.liveBenchScore)) { scoreDisplay = model.liveBenchScore.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); scoreClass = ''; }
+            const item = document.createElement('div');
+            item.classList.add('model-item');
+            item.dataset.modelId = model.id; // Store model ID for selection tracking
+            allModelElements.push(item); // Keep track of all model elements
+
+            // Determine provider color for styling
+            const providerClass = providerName.toLowerCase().replace(/\s+/g, '-');
+            const providerColorVar = `--ai-calc-provider-color-item`; // CSS variable for item border
+            const providerH3Var = `--ai-calc-provider-color`;      // CSS variable for group header
+            let providerColorValue = '#6c757d'; // Default grey
+            if (providerName === 'Google') providerColorValue = '#4285F4';
+            else if (providerName === 'OpenAI') providerColorValue = '#10a37f';
+            else if (providerName === 'Anthropic') providerColorValue = '#d97706';
+            item.style.setProperty(providerColorVar, providerColorValue);
+            item.style.setProperty(providerH3Var, providerColorValue); // Also set for potential use
+
+            // Format LiveBench score for display
+            let scoreDisplay = 'N/A';
+            let scoreClass = 'na'; // CSS class for styling N/A scores
+            const locale = currentLang === 'de' ? 'de-DE' : 'en-US';
+            if (model.liveBenchScore !== null && typeof model.liveBenchScore !== 'undefined' && !isNaN(model.liveBenchScore)) {
+                scoreDisplay = model.liveBenchScore.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                scoreClass = ''; // Remove 'na' class if score is valid
+            }
+
+            // Format other details
             const cutoffDisplay = model.knowledgeCutoff ? `<span class="knowledge-cutoff">${model.knowledgeCutoff}</span>` : '';
-            const contextValue = model.contextWindow || 'N/A'; const contextLabelText = getTranslation('contextLabel', currentLang); const contextDisplay = `<span>${contextValue} ${contextLabelText}</span>`;
-            item.innerHTML = `<h4>${model.name}</h4><div class="details">${contextDisplay}<span class="livebench-score ${scoreClass}" title="LiveBench Global Avg. Score">${scoreDisplay}</span>${cutoffDisplay}</div>`;
-            item.addEventListener('click', () => { toggleModelSelection(model.id, item); updateSelectAllButtonState(); }); return item;
+            const contextValue = model.contextWindow || 'N/A';
+            const contextLabelText = getTranslation('contextLabel', currentLang);
+            const contextDisplay = `<span>${contextValue} ${contextLabelText}</span>`;
+
+            // Set inner HTML of the model item
+            item.innerHTML = `
+                <h4>${model.name}</h4>
+                <div class="details">
+                    ${contextDisplay}
+                    <span class="livebench-score ${scoreClass}" title="LiveBench Global Avg. Score">${scoreDisplay}</span>
+                    ${cutoffDisplay}
+                </div>`;
+
+            // Add click listener for selecting/deselecting the model
+            item.addEventListener('click', () => {
+                toggleModelSelection(model.id, item);
+                updateSelectAllButtonState(); // Update the 'Select/Deselect All' button text
+            });
+
+            return item;
         }
 
+        /**
+         * Populates the model selection area with groups and items based on baseModels and customModels.
+         */
         function populateModelGroups() {
-            modelGroupsContainer.innerHTML = ''; modelMap.clear(); allModelElements = [];
+            modelGroupsContainer.innerHTML = ''; // Clear existing models
+            modelMap.clear();                  // Clear the model lookup map
+            allModelElements = [];             // Clear the list of model DOM elements
+
+            // Add base models grouped by provider
             baseModels.forEach(providerGroup => {
-                 const groupDiv = document.createElement('div'); groupDiv.classList.add('provider-group', providerGroup.provider.toLowerCase());
-                 const groupHeader = document.createElement('h3'); groupHeader.textContent = providerGroup.provider; groupDiv.appendChild(groupHeader);
-                 const itemsGrid = document.createElement('div'); itemsGrid.classList.add('model-items-grid');
+                 const groupDiv = document.createElement('div');
+                 groupDiv.classList.add('provider-group', providerGroup.provider.toLowerCase());
+
+                 const groupHeader = document.createElement('h3');
+                 groupHeader.textContent = providerGroup.provider;
+                 groupDiv.appendChild(groupHeader);
+
+                 const itemsGrid = document.createElement('div');
+                 itemsGrid.classList.add('model-items-grid');
+
                  providerGroup.models.forEach(model => {
+                    // Store base prices for normalization later
                     const baseInput = typeof model.pricing.input === 'function' ? model.pricing.baseInput : model.pricing.input;
                     const baseOutput = typeof model.pricing.output === 'function' ? model.pricing.baseOutput : model.pricing.output;
                     modelMap.set(model.id, { ...model, provider: providerGroup.provider, baseInputPrice: baseInput, baseOutputPrice: baseOutput });
                     const itemElement = createModelItemElement(model, providerGroup.provider);
                     itemsGrid.appendChild(itemElement);
                  });
-                 groupDiv.appendChild(itemsGrid); modelGroupsContainer.appendChild(groupDiv);
+                 groupDiv.appendChild(itemsGrid);
+                 modelGroupsContainer.appendChild(groupDiv);
             });
+
+            // Add custom models if any exist
             if (customModels.length > 0) {
-                const customGroupDiv = document.createElement('div'); customGroupDiv.classList.add('provider-group', 'benutzerdefiniert');
-                const customHeader = document.createElement('h3'); customHeader.textContent = getTranslation('customModelsTitle', currentLang) || "Benutzerdefiniert"; customGroupDiv.appendChild(customHeader);
-                const customItemsGrid = document.createElement('div'); customItemsGrid.classList.add('model-items-grid');
+                const customGroupDiv = document.createElement('div');
+                customGroupDiv.classList.add('provider-group', 'benutzerdefiniert'); // Specific class for custom models
+
+                const customHeader = document.createElement('h3');
+                customHeader.textContent = getTranslation('customModelsTitle', currentLang); // Use translated title
+                customGroupDiv.appendChild(customHeader);
+
+                const customItemsGrid = document.createElement('div');
+                customItemsGrid.classList.add('model-items-grid');
+
                 customModels.forEach(model => {
+                    // Ensure custom models are also in the map with base prices
                     modelMap.set(model.id, { ...model, baseInputPrice: model.pricing.input, baseOutputPrice: model.pricing.output });
-                    const itemElement = createModelItemElement(model, model.provider);
+                    const itemElement = createModelItemElement(model, model.provider); // Provider is part of custom model data
                     customItemsGrid.appendChild(itemElement);
                 });
-                customGroupDiv.appendChild(customItemsGrid); modelGroupsContainer.appendChild(customGroupDiv);
+                customGroupDiv.appendChild(customItemsGrid);
+                modelGroupsContainer.appendChild(customGroupDiv);
             }
-            selectedModelIds.forEach(id => { const element = allModelElements.find(el => el.dataset.modelId === id); if (element) { element.classList.add('selected'); } });
-            updateSelectAllButtonState();
+
+            // Re-apply 'selected' class to models that were previously selected
+            selectedModelIds.forEach(id => {
+                const element = allModelElements.find(el => el.dataset.modelId === id);
+                if (element) {
+                    element.classList.add('selected');
+                }
+            });
+
+            updateSelectAllButtonState(); // Ensure button text is correct after repopulation
         }
 
-        function selectAllModelsByDefault() { selectedModelIds.clear(); modelMap.forEach(model => { selectedModelIds.add(model.id); }); allModelElements.forEach(item => { item.classList.add('selected'); }); updateSelectAllButtonState(); }
-        function toggleModelSelection(modelId, itemElement) { if (selectedModelIds.has(modelId)) { selectedModelIds.delete(modelId); itemElement.classList.remove('selected'); } else { selectedModelIds.add(modelId); itemElement.classList.add('selected'); } updateResults(); }
-        function updateSelectAllButtonState() { const key = (allModelElements.length > 0 && selectedModelIds.size === allModelElements.length) ? 'deselectAll' : 'selectAll'; selectAllToggleBtn.textContent = getTranslation(key, currentLang); selectAllToggleBtn.dataset.state = (key === 'deselectAll') ? 'all-selected' : 'some-selected'; }
+        /**
+         * Selects all available models by default when the calculator loads.
+         */
+        function selectAllModelsByDefault() {
+            selectedModelIds.clear(); // Start with no selections
+            modelMap.forEach(model => {
+                selectedModelIds.add(model.id); // Add every model ID to the set
+            });
+            // Add 'selected' class to all model item elements
+            allModelElements.forEach(item => {
+                item.classList.add('selected');
+            });
+            updateSelectAllButtonState(); // Update button text
+        }
 
+        /**
+         * Toggles the selection state of a single model.
+         * @param {string} modelId - The ID of the model to toggle.
+         * @param {HTMLElement} itemElement - The DOM element of the model item.
+         */
+        function toggleModelSelection(modelId, itemElement) {
+            if (selectedModelIds.has(modelId)) {
+                selectedModelIds.delete(modelId);
+                itemElement.classList.remove('selected');
+            } else {
+                selectedModelIds.add(modelId);
+                itemElement.classList.add('selected');
+            }
+            updateResults(); // Recalculate results after selection change
+        }
+
+        /**
+         * Updates the text and state of the "Select/Deselect All" button
+         * based on the current selection status.
+         */
+        function updateSelectAllButtonState() {
+            if (!selectAllToggleBtn) return; // Guard against missing button
+            // Determine if all models are currently selected
+            const allSelected = allModelElements.length > 0 && selectedModelIds.size === allModelElements.length;
+            // Get the appropriate translation key ('selectAll' or 'deselectAll')
+            const key = allSelected ? 'deselectAll' : 'selectAll';
+            // Update button text
+            selectAllToggleBtn.textContent = getTranslation(key, currentLang);
+            // Store the current state in a data attribute (useful for the click handler)
+            selectAllToggleBtn.dataset.state = allSelected ? 'all-selected' : 'some-selected';
+        }
+
+        // --- Event Listener Setup ---
+        /**
+         * Attaches all necessary event listeners to the UI elements.
+         */
         function setupEventListeners() {
+            // Token Sliders and Number Inputs (sync changes)
             inputTokensSlider.addEventListener('input', () => { inputTokensNumber.value = inputTokensSlider.value; handleManualTokenChange(); });
             inputTokensNumber.addEventListener('input', handleManualTokenChange);
             outputTokensSlider.addEventListener('input', () => { outputTokensNumber.value = outputTokensSlider.value; handleManualTokenChange(); });
             outputTokensNumber.addEventListener('input', handleManualTokenChange);
+
+            // Multiplier Buttons
             multiplierButtons.forEach(button => { button.addEventListener('click', handleMultiplierClick); });
+
+            // Sort Buttons
             sortButtons.forEach(button => { button.addEventListener('click', handleSortClick); });
+
+            // Select/Deselect All Button
             selectAllToggleBtn.addEventListener('click', () => {
                  const currentState = selectAllToggleBtn.dataset.state;
-                 if (currentState === 'all-selected') { selectedModelIds.clear(); } else { modelMap.forEach(model => selectedModelIds.add(model.id)); }
-                 allModelElements.forEach(item => { item.classList.toggle('selected', selectedModelIds.has(item.dataset.modelId)); });
-                 updateSelectAllButtonState(); updateResults();
+                 if (currentState === 'all-selected') {
+                     // Deselect all
+                     selectedModelIds.clear();
+                 } else {
+                     // Select all
+                     modelMap.forEach(model => selectedModelIds.add(model.id));
+                 }
+                 // Update visual state for all model items
+                 allModelElements.forEach(item => {
+                     item.classList.toggle('selected', selectedModelIds.has(item.dataset.modelId));
+                 });
+                 updateSelectAllButtonState(); // Update button text
+                 updateResults(); // Recalculate results
             });
-            addModelBtn.addEventListener('click', () => { addModelForm.reset(); translateUI(currentLang); modal.removeAttribute('hidden'); }); // Retranslate modal on open
-            cancelBtn.addEventListener('click', () => { modal.setAttribute('hidden', true); });
-            modal.addEventListener('click', (event) => { if (event.target === modal) { modal.setAttribute('hidden', true); } });
+
+            // Add Custom Model Button (opens modal)
+            addModelBtn.addEventListener('click', () => {
+                addModelForm.reset(); // Clear previous form data
+                translateUI(currentLang); // Ensure modal labels/placeholders are translated
+                modal.removeAttribute('hidden'); // Show the modal
+            });
+
+            // Cancel Button in Modal (closes modal)
+            cancelBtn.addEventListener('click', () => {
+                modal.setAttribute('hidden', true);
+            });
+
+            // Close Modal if clicking outside the content area
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) { // Check if click was directly on the overlay
+                    modal.setAttribute('hidden', true);
+                }
+            });
+
+            // Add Custom Model Form Submission
             addModelForm.addEventListener('submit', (event) => {
-                event.preventDefault();
+                event.preventDefault(); // Prevent default form submission
+
+                // Get values from modal form inputs
                 const name = wrapper.querySelector('#custom-model-name').value.trim();
                 const provider = wrapper.querySelector('#custom-model-provider').value.trim();
                 const context = wrapper.querySelector('#custom-model-context').value.trim();
@@ -544,128 +1188,404 @@
                 const scoreInput = wrapper.querySelector('#custom-model-score').value;
                 const inputPriceInput = wrapper.querySelector('#custom-model-input-price').value;
                 const outputPriceInput = wrapper.querySelector('#custom-model-output-price').value;
-                if (!name || !provider || !context || !inputPriceInput || !outputPriceInput) { alert(getTranslation('alertMissingFields', currentLang)); return; }
-                const inputPrice = parseFloat(inputPriceInput); const outputPrice = parseFloat(outputPriceInput); let score = scoreInput ? parseFloat(scoreInput) : null;
-                if (isNaN(inputPrice) || isNaN(outputPrice) || (scoreInput && isNaN(score))) { alert(getTranslation('alertInvalidNumbers', currentLang)); return; }
-                if (inputPrice < 0 || outputPrice < 0 || (score !== null && score < 0)) { alert(getTranslation('alertNegativeValues', currentLang)); return; }
-                const newModel = { id: `custom-${Date.now()}-${Math.random().toString(16).slice(2)}`, name: name, provider: provider, contextWindow: context, knowledgeCutoff: cutoff || null, liveBenchScore: score, pricing: { input: inputPrice, output: outputPrice, baseInput: inputPrice, baseOutput: outputPrice } };
+
+                // Basic validation for required fields
+                if (!name || !provider || !context || !inputPriceInput || !outputPriceInput) {
+                    alert(getTranslation('alertMissingFields', currentLang));
+                    return;
+                }
+
+                // Parse numeric values, handle potential errors
+                const inputPrice = parseFloat(inputPriceInput);
+                const outputPrice = parseFloat(outputPriceInput);
+                let score = scoreInput ? parseFloat(scoreInput) : null; // Score is optional
+
+                // Validate numeric inputs
+                if (isNaN(inputPrice) || isNaN(outputPrice) || (scoreInput && isNaN(score))) {
+                    alert(getTranslation('alertInvalidNumbers', currentLang));
+                    return;
+                }
+                // Validate non-negative values
+                 if (inputPrice < 0 || outputPrice < 0 || (score !== null && score < 0)) {
+                    alert(getTranslation('alertNegativeValues', currentLang));
+                    return;
+                }
+
+                // Create new model object
+                const newModel = {
+                    id: `custom-${Date.now()}-${Math.random().toString(16).slice(2)}`, // Generate unique ID
+                    name: name,
+                    provider: provider,
+                    contextWindow: context,
+                    knowledgeCutoff: cutoff || null, // Use null if empty
+                    liveBenchScore: score,
+                    pricing: {
+                        input: inputPrice,
+                        output: outputPrice,
+                        baseInput: inputPrice, // Base prices are the same for custom models
+                        baseOutput: outputPrice
+                    }
+                };
+
+                // Add the new model to the custom models list and update UI
                 customModels.push(newModel);
-                populateModelGroups();
-                selectedModelIds.add(newModel.id);
-                allModelElements.find(el => el.dataset.modelId === newModel.id)?.classList.add('selected');
-                modal.setAttribute('hidden', true);
-                updateResults(); updateSelectAllButtonState();
+                populateModelGroups(); // Repopulate model list to include the new one
+                selectedModelIds.add(newModel.id); // Select the newly added model
+                // Find the new element and add the selected class
+                const newModelElement = allModelElements.find(el => el.dataset.modelId === newModel.id);
+                if (newModelElement) {
+                   newModelElement.classList.add('selected');
+                }
+                modal.setAttribute('hidden', true); // Close the modal
+                updateResults(); // Update results to include the new model
+                updateSelectAllButtonState(); // Update select/deselect button state
             });
+
+            // Language Toggle Buttons
             langToggleButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     const selectedLang = e.target.dataset.lang;
-                    if (selectedLang && selectedLang !== currentLang) { translateUI(selectedLang); }
+                    // Change language only if a valid and different language is selected
+                    if (selectedLang && selectedLang !== currentLang) {
+                        translateUI(selectedLang);
+                    }
                 });
             });
         }
 
-        // Calculation Functions
+        // --- Calculation Functions ---
+
+        /**
+         * Calculates the input, output, and total cost for a given model and token counts.
+         * Handles both fixed and function-based pricing.
+         * @param {object} model - The model data object.
+         * @param {number} inputTokens - The number of input tokens.
+         * @param {number} outputTokens - The number of output tokens.
+         * @param {number} requestMultiplier - The multiplier for the number of requests.
+         * @returns {object} An object containing { inputCost, outputCost, totalCost }.
+         */
         function calculateCost(model, inputTokens, outputTokens, requestMultiplier) {
-            inputTokens = inputTokens || 0; outputTokens = outputTokens || 0;
-            const millionsInput = inputTokens / 1000000; const millionsOutput = outputTokens / 1000000;
-            let inputPricePerMillion = 0; let outputPricePerMillion = 0;
-            if (typeof model.pricing.input === 'function') { inputPricePerMillion = model.pricing.input(inputTokens); } else { inputPricePerMillion = model.pricing.input; }
-            if (typeof model.pricing.output === 'function') { outputPricePerMillion = model.pricing.output(inputTokens); } else { outputPricePerMillion = model.pricing.output; }
-            const singleInputCost = millionsInput * inputPricePerMillion; const singleOutputCost = millionsOutput * outputPricePerMillion;
-            const inputCost = singleInputCost * requestMultiplier; const outputCost = singleOutputCost * requestMultiplier;
+            inputTokens = inputTokens || 0; // Default to 0 if undefined/null
+            outputTokens = outputTokens || 0;
+
+            const millionsInput = inputTokens / 1000000;
+            const millionsOutput = outputTokens / 1000000;
+
+            let inputPricePerMillion = 0;
+            let outputPricePerMillion = 0;
+
+            // Determine price per million tokens, handling function-based pricing
+            if (typeof model.pricing.input === 'function') {
+                inputPricePerMillion = model.pricing.input(inputTokens); // Pass tokens for tiered pricing
+            } else {
+                inputPricePerMillion = model.pricing.input;
+            }
+            // Tiered output pricing might depend on input tokens (e.g., Gemini Pro)
+            if (typeof model.pricing.output === 'function') {
+                outputPricePerMillion = model.pricing.output(inputTokens);
+            } else {
+                outputPricePerMillion = model.pricing.output;
+            }
+
+            // Calculate costs for a single request
+            const singleInputCost = millionsInput * inputPricePerMillion;
+            const singleOutputCost = millionsOutput * outputPricePerMillion;
+
+            // Apply the request multiplier
+            const inputCost = singleInputCost * requestMultiplier;
+            const outputCost = singleOutputCost * requestMultiplier;
             const totalCost = inputCost + outputCost;
+
             return { inputCost, outputCost, totalCost };
         }
 
-        function formatCurrency(amount) { const locale = currentLang === 'de' ? 'de-DE' : 'en-US'; const currencySymbol = '$'; if (amount === 0) return `${currencySymbol}0${locale === 'de-DE' ? ',' : '.'}00`; if (amount > 0 && amount < 0.01) { let precise = amount.toFixed(5); while (precise.endsWith('0') && precise.split('.')[1].length > 3) { precise = precise.slice(0, -1); } return `${currencySymbol}${locale === 'de-DE' ? precise.replace('.', ',') : precise}`; } return `${currencySymbol}${amount.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
+        /**
+         * Formats a number as currency (USD) according to the current language locale.
+         * Handles very small amounts precisely.
+         * @param {number} amount - The numeric amount to format.
+         * @returns {string} The formatted currency string (e.g., "$1,234.56" or "$0,00123").
+         */
+        function formatCurrency(amount) {
+            const locale = currentLang === 'de' ? 'de-DE' : 'en-US';
+            const currencySymbol = '$'; // Assuming USD for now
 
+            if (amount === 0) {
+                return `${currencySymbol}0${locale === 'de-DE' ? ',' : '.'}00`; // Explicitly format zero
+            }
+
+            // For very small positive amounts, show more precision
+            if (amount > 0 && amount < 0.01) {
+                let precise = amount.toFixed(5); // Start with 5 decimal places
+                // Remove trailing zeros, but keep at least 3 decimal places
+                while (precise.endsWith('0') && precise.split('.')[1].length > 3) {
+                    precise = precise.slice(0, -1);
+                }
+                return `${currencySymbol}${locale === 'de-DE' ? precise.replace('.', ',') : precise}`;
+            }
+
+            // Standard formatting for other amounts
+            return `${currencySymbol}${amount.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        /**
+         * Calculates the Price-Performance (PL) score for selected models.
+         * Normalizes LiveBench scores and blended costs, combines them with weights,
+         * and scales the result to 0-100.
+         * @param {Array<object>} selectedData - Array of objects containing model and calculated costs.
+         * @param {Map<string, object>} allModelsMap - Map of all models (base + custom) for normalization context.
+         * @param {number} inputTokens - Base input tokens (used for cost weighting).
+         * @param {number} outputTokens - Base output tokens (used for cost weighting).
+         * @returns {Array<object>} The input array with an added `plScore` property for each item.
+         */
         function calculateBalancedPricePerformance(selectedData, allModelsMap, inputTokens, outputTokens) {
-            const WEIGHT_SCORE = 0.2; const WEIGHT_COST = 0.8;
-            const intermediateResults = new Map(); let validModelsForNorm = [];
+            const WEIGHT_SCORE = 0.2; // Weight for normalized LiveBench score
+            const WEIGHT_COST = 0.8; // Weight for normalized (inverted) cost
+
+            const intermediateResults = new Map(); // Store intermediate calculations per model ID
+            let validModelsForNorm = []; // Models with both valid score and cost for normalization
+
+            // Calculate cost weighting based on input/output token ratio
             const totalTokens = inputTokens + outputTokens;
-            const inputFraction = (totalTokens > COST_EPSILON) ? inputTokens / totalTokens : 0.5;
+            const inputFraction = (totalTokens > COST_EPSILON) ? inputTokens / totalTokens : 0.5; // Avoid division by zero
             const outputFraction = (totalTokens > COST_EPSILON) ? outputTokens / totalTokens : 0.5;
+
+            // --- Step 1: Calculate blended cost and identify valid models for normalization ---
             allModelsMap.forEach((model, id) => {
-                const score = model.liveBenchScore; const hasValidScore = score !== null && typeof score !== 'undefined' && !isNaN(score);
-                let blendedCost = null; let costIsValid = false;
-                const inputPrice1M = model.baseInputPrice ?? null; const outputPrice1M = model.baseOutputPrice ?? null;
-                if (inputPrice1M !== null && outputPrice1M !== null) { blendedCost = (inputPrice1M * inputFraction) + (outputPrice1M * outputFraction); costIsValid = blendedCost !== null && !isNaN(blendedCost) && blendedCost >= 0; }
-                intermediateResults.set(id, { score: score, blendedCost: blendedCost, isValidForNorm: hasValidScore && costIsValid });
-                if (hasValidScore && costIsValid) { validModelsForNorm.push({ id, score, blendedCost }); }
+                const score = model.liveBenchScore;
+                const hasValidScore = score !== null && typeof score !== 'undefined' && !isNaN(score);
+
+                let blendedCost = null;
+                let costIsValid = false;
+                // Use base prices stored in the map for fair comparison
+                const inputPrice1M = model.baseInputPrice ?? null;
+                const outputPrice1M = model.baseOutputPrice ?? null;
+
+                if (inputPrice1M !== null && outputPrice1M !== null) {
+                    // Calculate weighted cost per 1M tokens based on current input/output ratio
+                    blendedCost = (inputPrice1M * inputFraction) + (outputPrice1M * outputFraction);
+                    costIsValid = blendedCost !== null && !isNaN(blendedCost) && blendedCost >= 0;
+                }
+
+                // Store intermediate data
+                intermediateResults.set(id, {
+                    score: score,
+                    blendedCost: blendedCost,
+                    isValidForNorm: hasValidScore && costIsValid // Must have both score and cost to be included in normalization
+                });
+
+                if (hasValidScore && costIsValid) {
+                    validModelsForNorm.push({ id, score, blendedCost });
+                }
             });
-            if (validModelsForNorm.length === 0) { return selectedData.map(item => ({ ...item, plScore: null })); }
-            const scores = validModelsForNorm.map(m => m.score); const costs = validModelsForNorm.map(m => m.blendedCost);
-            const minScore = Math.min(...scores); const maxScore = Math.max(...scores); const minCost = Math.min(...costs); const maxCost = Math.max(...costs);
-            const rangeScore = maxScore - minScore; const rangeCost = maxCost - minCost;
+
+            // If no models are valid for normalization, return data with null plScore
+            if (validModelsForNorm.length === 0) {
+                return selectedData.map(item => ({ ...item, plScore: null }));
+            }
+
+            // --- Step 2: Normalize scores and costs ---
+            const scores = validModelsForNorm.map(m => m.score);
+            const costs = validModelsForNorm.map(m => m.blendedCost);
+
+            const minScore = Math.min(...scores);
+            const maxScore = Math.max(...scores);
+            const minCost = Math.min(...costs);
+            const maxCost = Math.max(...costs);
+
+            // Handle cases where all scores or costs are the same (avoid division by zero)
+            const rangeScore = maxScore - minScore;
+            const rangeCost = maxCost - minCost;
+
+            // --- Step 3: Calculate raw combined scores and find the maximum ---
             let maxRawCombinedScore = 0;
             validModelsForNorm.forEach(modelData => {
-                const score = modelData.score; const cost = modelData.blendedCost;
-                const normScore = (rangeScore > COST_EPSILON) ? (score - minScore) / rangeScore : 0.5;
-                const normCost = (rangeCost > COST_EPSILON) ? (cost - minCost) / rangeCost : 0.5; const normCostPerf = 1.0 - normCost;
+                const score = modelData.score;
+                const cost = modelData.blendedCost;
+
+                // Normalize score (0 to 1, higher is better)
+                const normScore = (rangeScore > COST_EPSILON) ? (score - minScore) / rangeScore : 0.5; // Assign 0.5 if range is zero
+
+                // Normalize cost (0 to 1, lower is better), then invert for performance (higher is better)
+                const normCost = (rangeCost > COST_EPSILON) ? (cost - minCost) / rangeCost : 0.5; // Assign 0.5 if range is zero
+                const normCostPerf = 1.0 - normCost; // Invert: 1 is best (lowest cost), 0 is worst
+
+                // Calculate weighted combined score
                 const rawCombinedScore = (WEIGHT_SCORE * normScore) + (WEIGHT_COST * normCostPerf);
+
+                // Store normalized values and raw score back into intermediate results
                 const interim = intermediateResults.get(modelData.id);
-                interim.normScore = normScore; interim.normCostPerf = normCostPerf; interim.rawCombinedScore = rawCombinedScore;
-                if (rawCombinedScore > maxRawCombinedScore) { maxRawCombinedScore = rawCombinedScore; }
+                interim.normScore = normScore;
+                interim.normCostPerf = normCostPerf;
+                interim.rawCombinedScore = rawCombinedScore;
+
+                // Track the maximum raw score for final scaling
+                if (rawCombinedScore > maxRawCombinedScore) {
+                    maxRawCombinedScore = rawCombinedScore;
+                }
             });
-             if (maxRawCombinedScore < COST_EPSILON && validModelsForNorm.length > 0) { maxRawCombinedScore = COST_EPSILON; }
+
+            // Prevent division by zero if max score is somehow still zero
+             if (maxRawCombinedScore < COST_EPSILON && validModelsForNorm.length > 0) {
+                maxRawCombinedScore = COST_EPSILON; // Use a tiny number instead of 0
+             }
+
+            // --- Step 4: Scale raw scores to 0-100 and add to the original selectedData ---
             return selectedData.map(item => {
-                const modelId = item.model.id; const interim = intermediateResults.get(modelId); let finalPlScore = null;
+                const modelId = item.model.id;
+                const interim = intermediateResults.get(modelId);
+                let finalPlScore = null; // Default to null
+
+                // Only calculate score for models that were valid for normalization
                 if (interim && interim.isValidForNorm) {
                      const rawCombined = interim.rawCombinedScore;
                      if (rawCombined !== null && typeof rawCombined !== 'undefined') {
-                         const scalingFactor = (maxRawCombinedScore > COST_EPSILON) ? (rawCombined / maxRawCombinedScore) : 0.5;
+                         // Scale the raw score relative to the maximum raw score
+                         const scalingFactor = (maxRawCombinedScore > COST_EPSILON) ? (rawCombined / maxRawCombinedScore) : 0.5; // If max is 0, assign 0.5? Or 0? Let's use 0.5 for now.
+                         // Convert to 0-100 scale, round, and clamp between 0 and 100
                          finalPlScore = Math.min(100, Math.max(0, Math.round(scalingFactor * 100)));
                      }
                 }
-                return { ...item, plScore: finalPlScore };
+                return { ...item, plScore: finalPlScore }; // Add the final score to the item object
             });
         }
 
         // --- Update Results Display ---
-        // *** FINAL Version: Includes all changes ***
+        /**
+         * Calculates costs for selected models, sorts them based on the current mode,
+         * and populates the results container with formatted result cards.
+         * Also updates the results section title dynamically.
+         */
         function updateResults() {
-             resultsContainer.innerHTML = ''; resultsContainer.appendChild(resultsPlaceholder);
-             const inputTokens = baseInputTokens; const outputTokens = baseOutputTokens; let calculatedData = [];
+             // Clear previous results and show placeholder initially
+             resultsContainer.innerHTML = '';
+             if (resultsPlaceholder) resultsContainer.appendChild(resultsPlaceholder); // Add placeholder back
 
-             if (selectedModelIds.size > 0) {
-                 resultsPlaceholder.style.display = 'none';
-                 selectedModelIds.forEach(id => { const model = modelMap.get(id); if (model) { const costs = calculateCost(model, inputTokens, outputTokens, currentMultiplier); calculatedData.push({ model, costs }); } });
-                 calculatedData = calculateBalancedPricePerformance(calculatedData, modelMap, inputTokens, outputTokens);
-                 switch (currentSortMode) {
-                    case 'intelligence': calculatedData.sort((a, b) => (b.model.liveBenchScore ?? -1) - (a.model.liveBenchScore ?? -1)); break;
-                    case 'value': calculatedData.sort((a, b) => (b.plScore ?? -1) - (a.plScore ?? -1)); break;
-                    case 'cost': default: calculatedData.sort((a, b) => a.costs.totalCost - b.costs.totalCost); break;
+             const inputTokens = baseInputTokens; // Use the base tokens before multiplier
+             const outputTokens = baseOutputTokens;
+             let calculatedData = []; // Array to hold { model, costs, plScore } objects
+
+             // --- Update Results Title ---
+             const resultsTitleElement = wrapper.querySelector('#results-title');
+             if (resultsTitleElement) {
+                 let titleKey = 'resultsTitleCost'; // Default key
+                 // Choose the correct translation key based on the sort mode
+                 if (currentSortMode === 'value') {
+                     titleKey = 'resultsTitleValue';
+                 } else if (currentSortMode === 'intelligence') {
+                     titleKey = 'resultsTitleIntelligence';
                  }
-                 const minCost = (calculatedData.length > 0 && currentSortMode === 'cost') ? calculatedData[0].costs.totalCost : 0;
+                 // Update the title text using the current language
+                 resultsTitleElement.textContent = getTranslation(titleKey, currentLang);
+                 // IMPORTANT: Update the data-translate-key so language switching works correctly later
+                 resultsTitleElement.dataset.translateKey = titleKey;
+             }
+             // --- End Title Update ---
+
+
+             // Proceed only if models are selected
+             if (selectedModelIds.size > 0) {
+                 if (resultsPlaceholder) resultsPlaceholder.style.display = 'none'; // Hide placeholder
+
+                 // --- 1. Calculate Costs for Each Selected Model ---
+                 selectedModelIds.forEach(id => {
+                     const model = modelMap.get(id);
+                     if (model) {
+                         // Calculate cost using the *base* tokens and *current* multiplier
+                         const costs = calculateCost(model, inputTokens, outputTokens, currentMultiplier);
+                         calculatedData.push({ model, costs }); // Store model data and calculated costs
+                     }
+                 });
+
+                 // --- 2. Calculate Price-Performance Score ---
+                 // This needs the costs and scores of *all* models (base+custom) for normalization context
+                 calculatedData = calculateBalancedPricePerformance(calculatedData, modelMap, inputTokens, outputTokens);
+
+                 // --- 3. Sort Data Based on Current Sort Mode ---
+                 switch (currentSortMode) {
+                    case 'intelligence':
+                        // Sort by LiveBench score descending (highest first). Treat null/undefined as lowest (-1).
+                        calculatedData.sort((a, b) => (b.model.liveBenchScore ?? -1) - (a.model.liveBenchScore ?? -1));
+                        break;
+                    case 'value':
+                        // Sort by Price-Performance score descending (highest first). Treat null/undefined as lowest (-1).
+                        calculatedData.sort((a, b) => (b.plScore ?? -1) - (a.plScore ?? -1));
+                        break;
+                    case 'cost':
+                    default: // Default to sorting by cost
+                        // Sort by total cost ascending (lowest first).
+                        calculatedData.sort((a, b) => a.costs.totalCost - b.costs.totalCost);
+                        break;
+                 }
+
+                 // --- 4. Render Result Cards ---
+                 // Find the minimum cost among results *if* sorting by cost, for multiplier calculation
+                 const minCost = (calculatedData.length > 0 && currentSortMode === 'cost')
+                                    ? calculatedData[0].costs.totalCost
+                                    : 0;
+
                  calculatedData.forEach((item, index) => {
                      const resultCard = document.createElement('div');
                      resultCard.classList.add('result-card');
+                     // Stagger animation for a nicer visual effect
                      resultCard.style.animationDelay = `${index * 0.06}s`;
-                     let providerColorValue = '#6c757d'; const providerLower = item.model.provider?.toLowerCase().replace(/\s+/g, '-');
-                     if (providerLower === 'google') providerColorValue = '#4285F4'; else if (providerLower === 'openai') providerColorValue = '#10a37f'; else if (providerLower === 'anthropic') providerColorValue = '#d97706';
-                     if (index === 0) {
-                        if (currentSortMode === 'cost' && item.costs.totalCost >= COST_EPSILON) { resultCard.classList.add('highlight'); }
-                        else if (currentSortMode === 'intelligence' && (item.model.liveBenchScore ?? -1) > -1) { resultCard.classList.add('highlight-intelligence'); }
-                        else if (currentSortMode === 'value' && (item.plScore ?? -1) > -1) { resultCard.classList.add('highlight-value'); }
-                     }
-                     const locale = currentLang === 'de' ? 'de-DE' : 'en-US';
-                     const rankSuffix = currentLang === 'de' ? '.' : (index === 0 ? 'st' : (index === 1 ? 'nd' : (index === 2 ? 'rd' : 'th')));
-                     let trophyHTML = (index === 0) ? '<span class="trophy">🏆</span>' : '';
-                     let multiplierText = '';
-                     if (currentSortMode === 'cost' && index > 0 && minCost > COST_EPSILON && item.costs.totalCost > minCost * 1.001) { const timesMore = item.costs.totalCost / minCost; multiplierText = `<span class="multiplier">${timesMore.toLocaleString(locale, {minimumFractionDigits:1, maximumFractionDigits:1})}${getTranslation('multiplierMoreSuffix', currentLang)}</span>`; }
-                     else { multiplierText = `<span class="multiplier"></span>`; }
-                     const rankIndicatorHTML = `<span class="rank">${index + 1}<sup>${rankSuffix}</sup></span>${trophyHTML}${multiplierText}`;
-                     const plScoreValue = item.plScore; const plScoreDisplay = (plScoreValue !== null && typeof plScoreValue !== 'undefined') ? plScoreValue.toLocaleString(locale) : 'N/A';
-                     const plScoreClass = (plScoreValue === null || typeof plScoreValue === 'undefined') ? 'na' : ''; const plTooltip = getTranslation('plTooltipText', currentLang);
-                     const lbScoreValue = item.model.liveBenchScore;
-                     let lbScoreDisplay = 'N/A'; let lbScoreClass = 'na';
-                     if (lbScoreValue !== null && typeof lbScoreValue !== 'undefined' && !isNaN(lbScoreValue)) { lbScoreDisplay = lbScoreValue.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); lbScoreClass = ''; }
 
+                     // Determine provider color for card header/highlighting
+                     let providerColorValue = '#6c757d'; // Default
+                     const providerLower = item.model.provider?.toLowerCase().replace(/\s+/g, '-');
+                     if (providerLower === 'google') providerColorValue = '#4285F4';
+                     else if (providerLower === 'openai') providerColorValue = '#10a37f';
+                     else if (providerLower === 'anthropic') providerColorValue = '#d97706';
+                     // Benutzerdefiniert uses the default grey
+
+                     // Highlight the top-ranked card based on the current sort mode
+                     if (index === 0) {
+                        if (currentSortMode === 'cost' && item.costs.totalCost >= COST_EPSILON) {
+                            resultCard.classList.add('highlight'); // Green highlight for best cost
+                        } else if (currentSortMode === 'intelligence' && (item.model.liveBenchScore ?? -1) > -1) {
+                            resultCard.classList.add('highlight-intelligence'); // Yellow for best intelligence
+                        } else if (currentSortMode === 'value' && (item.plScore ?? -1) > -1) {
+                            resultCard.classList.add('highlight-value'); // Blue for best value
+                        }
+                     }
+
+                     const locale = currentLang === 'de' ? 'de-DE' : 'en-US';
+
+                     // --- Rank Indicator HTML ---
+                     const rankSuffix = currentLang === 'de' ? '.' : (index === 0 ? 'st' : (index === 1 ? 'nd' : (index === 2 ? 'rd' : 'th')));
+                     let trophyHTML = (index === 0) ? '<span class="trophy">🏆</span>' : ''; // Trophy only for #1
+                     let multiplierText = '';
+                     // Show cost multiplier only when sorting by cost and item is not #1 and cost is significantly different
+                     if (currentSortMode === 'cost' && index > 0 && minCost > COST_EPSILON && item.costs.totalCost > minCost * 1.001) { // Check > 0.1% difference
+                        const timesMore = item.costs.totalCost / minCost;
+                        multiplierText = `<span class="multiplier">${timesMore.toLocaleString(locale, {minimumFractionDigits:1, maximumFractionDigits:1})}${getTranslation('multiplierMoreSuffix', currentLang)}</span>`;
+                     } else {
+                         // Ensure the span exists even if empty to maintain layout consistency
+                         multiplierText = `<span class="multiplier"></span>`;
+                     }
+                     const rankIndicatorHTML = `<span class="rank">${index + 1}<sup>${rankSuffix}</sup></span>${trophyHTML}${multiplierText}`;
+
+                     // --- Price-Performance and LiveBench Score Display ---
+                     const plScoreValue = item.plScore;
+                     const plScoreDisplay = (plScoreValue !== null && typeof plScoreValue !== 'undefined') ? plScoreValue.toLocaleString(locale) : 'N/A';
+                     const plScoreClass = (plScoreValue === null || typeof plScoreValue === 'undefined') ? 'na' : '';
+                     const plTooltip = getTranslation('plTooltipText', currentLang);
+
+                     const lbScoreValue = item.model.liveBenchScore;
+                     let lbScoreDisplay = 'N/A';
+                     let lbScoreClass = 'na';
+                     if (lbScoreValue !== null && typeof lbScoreValue !== 'undefined' && !isNaN(lbScoreValue)) {
+                         lbScoreDisplay = lbScoreValue.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                         lbScoreClass = '';
+                     }
+
+                     // --- Cost Breakdown Display ---
                      const inputCostFormatted = formatCurrency(item.costs.inputCost);
                      const outputCostFormatted = formatCurrency(item.costs.outputCost);
+                     // Tooltips showing the token counts for the costs
                      const inputTooltipText = `${getTranslation('inputTooltip', currentLang)}: ${inputTokens.toLocaleString(locale)} tokens`;
                      const outputTooltipText = `${getTranslation('outputTooltip', currentLang)}: ${outputTokens.toLocaleString(locale)} tokens`;
 
+                     // --- Construct Inner HTML for the Result Card ---
                      resultCard.innerHTML = `
                          <div class="rank-indicator">${rankIndicatorHTML}</div>
                          <div class="content-area">
@@ -690,16 +1610,20 @@
                                      <span class="cost-value" title="${outputTooltipText}">${outputCostFormatted}</span>
                                 </span>
                              </p>
-                             <p class="total-cost"><span>${getTranslation('totalCostLabel', currentLang)} (${currentMultiplier}x):</span><span>${formatCurrency(item.costs.totalCost)}</span></p>
+                             <p class="total-cost">
+                                <span>${getTranslation('totalCostLabel', currentLang)} (${currentMultiplier}x):</span>
+                                <span>${formatCurrency(item.costs.totalCost)}</span>
+                             </p>
                          </div>`;
-                     resultsContainer.appendChild(resultCard);
+                     resultsContainer.appendChild(resultCard); // Add the completed card to the container
                  });
              } else {
-                 resultsPlaceholder.style.display = 'block';
+                 // No models selected, ensure placeholder is visible
+                 if (resultsPlaceholder) resultsPlaceholder.style.display = 'block';
              }
         }
 
-    });
+    }); // End DOMContentLoaded
     // --- JavaScript End ---
 </script>
 
