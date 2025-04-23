@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<!-- Language attribute will be set dynamically -->
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title will be set dynamically -->
+    <title>KI-Modell Kostenrechner mit Preis-Leistung</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Start --- */
+
+        /* --- Reset & Base --- */
+        .ai-pricing-calc-wrapper * { margin: 0; padding: 0; box-sizing: border-box; }
+        .ai-pricing-calc-wrapper html { font-size: 16px; }
+        .ai-pricing-calc-wrapper { font-family: 'Roboto', 'Google Sans', sans-serif; background-color: #f8f9fa; color: #3c4043; line-height: 1.5; padding: 1rem; min-height: 100vh; border: 1px solid #e0e0e0; border-radius: 8px; }
+        .ai-pricing-calc-wrapper .container { background-color: #ffffff; padding: 1.5rem 2rem; border-radius: 12px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08); width: 100%; max-width: 1400px; margin: 0 auto; animation: ai-calc-fadeIn 0.7s ease-out; display: flex; flex-direction: column; }
+        @keyframes ai-calc-fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Header --- */
+        .ai-pricing-calc-wrapper header { text-align: center; margin-bottom: 1.5rem; flex-shrink: 0; }
+        .ai-pricing-calc-wrapper header h1 { font-family: 'Google Sans', sans-serif; font-size: clamp(1.6em, 3.5vw, 2.0em); color: #1a73e8; margin-bottom: 0.8em; font-weight: 700; line-height: 1.3; position: relative; }
+        .ai-pricing-calc-wrapper header h1 span.wave-word { display: inline-block; animation: ai-calc-wave-color 3s linear infinite; margin-right: 0.15em; }
+        @keyframes ai-calc-wave-color { 0%   { color: #1a73e8; } 25%  { color: #8ab4f8; } 50%  { color: #1558b0; } 75%  { color: #8ab4f8; } 100% { color: #1a73e8; } }
+
+         /* Language Toggle */
+        .ai-pricing-calc-wrapper .lang-toggle { display: flex; justify-content: center; gap: 0.8rem; margin-top: -0.5em; margin-bottom: 1em; }
+        .ai-pricing-calc-wrapper .lang-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; opacity: 0.6; transition: opacity 0.2s ease, transform 0.2s ease; padding: 0; line-height: 1; }
+        .ai-pricing-calc-wrapper .lang-btn:hover { opacity: 1; transform: scale(1.1); }
+        .ai-pricing-calc-wrapper .lang-btn.active { opacity: 1; transform: scale(1.1); }
+
+        /* --- Configurator Layout --- */
+        .ai-pricing-calc-wrapper .configurator { margin-bottom: 0.5rem; }
+        .ai-pricing-calc-wrapper .config-header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+        .ai-pricing-calc-wrapper .config-header-row h2 { font-family: 'Google Sans', sans-serif; font-size: clamp(1.2em, 3vw, 1.4em); color: #3c4043; margin-bottom: 0; border-bottom: 2px solid #1a73e8; padding-bottom: 0.4em; display: inline-block; white-space: nowrap; margin-top: 0; line-height: 1.3; flex-shrink: 0; }
+        .ai-pricing-calc-wrapper .config-controls-container { display: flex; flex-direction: column; flex-grow: 1; gap: 0.8rem; }
+        .ai-pricing-calc-wrapper .config-controls-container .input-row { display: flex; gap: 1.5rem; flex-grow: 1; flex-wrap: wrap; }
+        .ai-pricing-calc-wrapper .config-controls-container .input-group { flex-grow: 1; flex-basis: 250px; }
+        .ai-pricing-calc-wrapper .config-controls-container label { display: block; font-weight: 500; font-size: 0.9em; margin-bottom: 0.4em; color: #3c4043; }
+        /* Token Slider/Number Input Adjustments */
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container { display: flex; align-items: center; gap: 0.8rem; width: 100%; }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"] { flex-grow: 1; min-width: 100px; cursor: pointer; appearance: none; height: 6px; background: linear-gradient(to right, #1a73e8, #8ab4f8); border-radius: 3px; outline: none; transition: background 0.3s ease; }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; background: #1a73e8; border-radius: 50%; cursor: pointer; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); transition: background 0.3s ease; }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; background: #1a73e8; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); transition: background 0.3s ease; }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]:active::-webkit-slider-thumb { background: #1558b0; }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]:active::-moz-range-thumb { background: #1558b0; }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="number"] { width: 85px; /* Slightly wider for more digits */ flex-shrink: 0; padding: 5px 7px; border: 1px solid #dadce0; border-radius: 6px; font-size: 0.85em; text-align: right; transition: border-color 0.3s ease, box-shadow 0.3s ease; -moz-appearance: textfield; /* Hide spinner */ }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="number"]::-webkit-outer-spin-button,
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; /* Hide spinner */ }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="number"]:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.15); }
+        .ai-pricing-calc-wrapper .word-estimate { display: block; font-size: 0.8em; color: #5f6368; margin-top: 4px; text-align: right; padding-right: 25px; }
+        .ai-pricing-calc-wrapper .request-multiplier-buttons { display: flex; justify-content: center; gap: 0.5rem; padding-left: 0; align-items: center; width: 100%; }
+        .ai-pricing-calc-wrapper .multiplier-label { font-size: 0.85em; color: #5f6368; margin-right: 0.5rem; font-weight: 500; }
+        .ai-pricing-calc-wrapper .multiplier-btn { padding: 4px 10px; font-size: 0.8em; font-weight: 500; border: 1px solid #ccc; background-color: #f9f9f9; color: #444; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; min-width: 50px; text-align: center; }
+        .ai-pricing-calc-wrapper .multiplier-btn:hover { background-color: #f0f0f0; border-color: #bbb; }
+        .ai-pricing-calc-wrapper .multiplier-btn.active { background-color: #e8f0fe; border-color: #1a73e8; color: #1a73e8; box-shadow: 0 0 0 1px #1a73e8; }
+        .ai-pricing-calc-wrapper .token-explanation { font-size: 0.85em; color: #5f6368; margin-top: 0.5rem; text-align: center; padding-bottom: 0.8rem; border-bottom: 1px solid #e8eaed; margin-bottom: 1rem; }
+
+        /* --- Two Column Layout --- */
+        .ai-pricing-calc-wrapper .content-columns { flex-grow: 1; display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 0; }
+        @media (min-width: 992px) { .ai-pricing-calc-wrapper .content-columns { grid-template-columns: repeat(2, 1fr); align-items: start; } }
+
+        /* --- Model Selection --- */
+        .ai-pricing-calc-wrapper .model-selection .section-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .ai-pricing-calc-wrapper .model-selection .section-header h2 { margin-bottom: 0; font-family: 'Google Sans', sans-serif; font-size: clamp(1.2em, 3vw, 1.4em); color: #3c4043; border-bottom: 2px solid #1a73e8; padding-bottom: 0.4em; display: inline-block; }
+        .ai-pricing-calc-wrapper .select-all-btn { padding: 5px 12px; font-size: 0.8em; font-weight: 500; border: 1px solid #dadce0; background-color: #f8f9fa; color: #5f6368; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease; flex-shrink: 0; }
+        .ai-pricing-calc-wrapper .select-all-btn:hover { background-color: #f1f3f4; border-color: #c6c6c6; }
+        .ai-pricing-calc-wrapper .select-all-btn:active { background-color: #e8eaed; }
+        .ai-pricing-calc-wrapper #model-groups-container { display: flex; flex-direction: column; gap: 1.2rem; }
+        .ai-pricing-calc-wrapper .provider-group h3 { font-family: 'Google Sans', sans-serif; font-size: 1.1em; color: var(--ai-calc-provider-color, #5f6368); margin-bottom: 0.6rem; padding-bottom: 0.3em; border-bottom: 1px solid #eee; }
+        .ai-pricing-calc-wrapper .provider-group.google h3 { --ai-calc-provider-color: #4285F4; } .ai-pricing-calc-wrapper .provider-group.openai h3 { --ai-calc-provider-color: #10a37f; } .ai-pricing-calc-wrapper .provider-group.anthropic h3 { --ai-calc-provider-color: #d97706; } .ai-pricing-calc-wrapper .provider-group.benutzerdefiniert h3 { --ai-calc-provider-color: #6c757d; }
+        .ai-pricing-calc-wrapper .model-items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.6rem; }
+        .ai-pricing-calc-wrapper .model-item { background-color: #fff; border: 1px solid #dadce0; border-radius: 6px; padding: 0.6rem 0.8rem; cursor: pointer; transition: all 0.25s ease; position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 55px; border-left: 4px solid var(--ai-calc-provider-color-item, #dadce0); }
+        .ai-pricing-calc-wrapper .model-item:hover { transform: translateY(-2px); box-shadow: 0 3px 6px rgba(0,0,0,0.07); }
+        .ai-pricing-calc-wrapper .model-item.selected { border-color: #1a73e8; background-color: #e8f0fe; box-shadow: 0 2px 4px rgba(26, 115, 232, 0.15); border-left-color: #1a73e8; }
+        .ai-pricing-calc-wrapper .model-item h4 { font-family: 'Google Sans', sans-serif; font-size: 0.95em; margin-bottom: 0.2em; color: #202124; font-weight: 500; line-height: 1.3; }
+        .ai-pricing-calc-wrapper .model-item .details { font-size: 0.75em; color: #5f6368; display: flex; flex-wrap: wrap; gap: 0 8px; align-items: center; }
+        .ai-pricing-calc-wrapper .model-item .details span { white-space: nowrap; }
+        .ai-pricing-calc-wrapper .model-item .details .livebench-score { font-weight: 500; color: #34a853; }
+        .ai-pricing-calc-wrapper .model-item .details .livebench-score.na { color: #9aa0a6; font-weight: 400;}
+        .ai-pricing-calc-wrapper .model-item .details .knowledge-cutoff {}
+        .ai-pricing-calc-wrapper .add-model-placeholder { display: block; width: 100%; margin-top: 1rem; padding: 0.6rem; font-size: 0.9em; font-weight: 500; text-align: center; border: 1px dashed #adb5bd; background-color: #f8f9fa; color: #5f6368; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease; }
+        .ai-pricing-calc-wrapper .add-model-placeholder:hover { background-color: #f1f3f4; border-color: #9aa0a6; }
+
+        /* --- Results --- */
+        .ai-pricing-calc-wrapper .results {}
+        .ai-pricing-calc-wrapper .results .results-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-bottom: 1rem; }
+        .ai-pricing-calc-wrapper .results .results-header h2 { margin-bottom: 0; font-family: 'Google Sans', sans-serif; font-size: clamp(1.2em, 3vw, 1.4em); color: #3c4043; border-bottom: 2px solid #1a73e8; padding-bottom: 0.4em; display: inline-block; }
+        /* Sorting Controls */
+        .ai-pricing-calc-wrapper .sort-controls { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;}
+        .ai-pricing-calc-wrapper .sort-label { font-size: 0.85em; color: #5f6368; font-weight: 500; margin-right: 0.3rem; }
+        .ai-pricing-calc-wrapper .sort-btn { padding: 4px 10px; font-size: 0.8em; font-weight: 500; border: 1px solid #ccc; background-color: #f9f9f9; color: #444; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+        .ai-pricing-calc-wrapper .sort-btn:hover { background-color: #f0f0f0; border-color: #bbb; }
+        .ai-pricing-calc-wrapper .sort-btn.active { background-color: #e8f0fe; border-color: #1a73e8; color: #1a73e8; box-shadow: 0 0 0 1px #1a73e8; }
+
+        .ai-pricing-calc-wrapper .results-list-container { display: flex; flex-direction: column; gap: 0.6rem; min-height: 60px; position: relative; }
+        .ai-pricing-calc-wrapper .results-list-container .placeholder { position: absolute; top: 30px; left: 0; right: 0; margin: 0 auto; width: fit-content; color: #9aa0a6; font-style: italic; text-align: center; font-size: 0.85em; }
+        .ai-pricing-calc-wrapper .result-card { background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 0.6rem 0.8rem; animation: ai-calc-resultFadeIn 0.4s ease-out forwards; opacity: 0; transform: scale(0.95); position: relative; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; align-items: flex-start; gap: 0.8rem; }
+        .ai-pricing-calc-wrapper .result-card:hover { transform: scale(1.01); box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+        .ai-pricing-calc-wrapper .result-card.highlight { border-left: 4px solid #34a853; } /* Highlight best cost */
+        .ai-pricing-calc-wrapper .result-card.highlight-intelligence { border-left: 4px solid #fbbc05; } /* Highlight best intelligence */
+        .ai-pricing-calc-wrapper .result-card.highlight-value { border-left: 4px solid #1a73e8; } /* Highlight best value */
+        @keyframes ai-calc-resultFadeIn { from { opacity: 0; transform: scale(0.95) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .ai-pricing-calc-wrapper .result-card .rank-indicator { font-size: 1em; font-weight: 700; color: #5f6368; text-align: center; min-width: 35px; padding-top: 0; }
+        .ai-pricing-calc-wrapper .result-card .rank-indicator .trophy { font-size: 1.2em; color: #fbbc05; } /* Default trophy for #1 */
+        .ai-pricing-calc-wrapper .result-card .rank-indicator .multiplier { display: block; font-size: 0.8em; font-weight: 400; color: #d93025; margin-top: 2px; }
+        .ai-pricing-calc-wrapper .result-card .content-area { flex-grow: 1; }
+        .ai-pricing-calc-wrapper .result-card .content-area h4 { font-family: 'Google Sans', sans-serif; font-size: 0.9em; margin-bottom: 0.2rem; color: var(--ai-calc-provider-color-result, #3c4043); padding-bottom: 0.25em; border-bottom: 1px solid #eee; font-weight: 500; line-height: 1.3; }
+        .ai-pricing-calc-wrapper .result-card .content-area h4 span { font-size: 0.9em; color: #5f6368; font-weight: 400; }
+        .ai-pricing-calc-wrapper .result-card .preis-leistung {
+            font-size: 0.8em; color: #5f6368; margin-top: 0.2rem; margin-bottom: 0.3rem;
+            display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: help; flex-wrap: wrap;
+        }
+        .ai-pricing-calc-wrapper .result-card .pl-label { font-weight: 500; margin-right: 4px; }
+        .ai-pricing-calc-wrapper .result-card .pl-score { font-weight: 700; color: #3c4043; background-color: #e8eaed; padding: 1px 5px; border-radius: 4px; min-width: 25px; text-align: center; }
+        .ai-pricing-calc-wrapper .result-card .pl-score.na { background-color: transparent; color: #5f6368; font-weight: 400; font-style: italic; }
+        .ai-pricing-calc-wrapper .result-card .livebench-result-score { text-align: right; font-weight: 500; }
+        .ai-pricing-calc-wrapper .result-card .livebench-result-score .lb-label { font-size: 0.9em; color: #5f6368; margin-right: 3px; }
+        .ai-pricing-calc-wrapper .result-card .livebench-result-score .lb-value { font-weight: 700; color: #34a853; }
+        .ai-pricing-calc-wrapper .result-card .livebench-result-score.na .lb-value { color: #9aa0a6; font-weight: 400; font-style: italic; }
+
+        /* *** UPDATED: Cost breakdown display *** */
+        .ai-pricing-calc-wrapper .result-card .content-area p.cost-breakdown {
+            font-size: 0.8em; margin-bottom: 0.1rem; margin-top: 0.4rem;
+            display: flex; /* Keep flex */
+            justify-content: space-between; /* Keep space between left/right groups */
+            align-items: baseline;
+            color: #5f6368; line-height: 1.4;
+            flex-wrap: wrap; /* Allow wrapping */
+            gap: 8px; /* Gap if they wrap */
+        }
+        /* Wrapper for each cost item (Prompt/Antwort) */
+        .ai-pricing-calc-wrapper .result-card .content-area .cost-item {
+            display: inline-flex; /* Use flex for label + value */
+            align-items: baseline;
+            gap: 4px; /* Space between label and value */
+            flex-basis: 48%; /* Approx half width, allows space-between to work */
+        }
+        .ai-pricing-calc-wrapper .result-card .content-area .cost-item.cost-output {
+             justify-content: flex-end; /* Push output content (label+value) to the right within its flex basis */
+             text-align: right; /* Align text inside to right */
+        }
+        .ai-pricing-calc-wrapper .result-card .content-area .cost-item.cost-input {
+             justify-content: flex-start; /* Default, but explicit */
+             text-align: left;
+        }
+        /* Style for the label itself */
+        .ai-pricing-calc-wrapper .result-card .content-area .cost-label {
+             font-weight: 500;
+             color: #5f6368;
+             white-space: nowrap; /* Prevent label wrapping */
+        }
+        /* Cost values */
+        .ai-pricing-calc-wrapper .result-card .content-area .cost-value {
+            font-weight: 500;
+            color: #202124;
+            cursor: help;
+        }
+
+        .ai-pricing-calc-wrapper .result-card .content-area .total-cost { font-size: 1.05em; font-weight: 700; color: #1a73e8; margin-top: 0.3rem; padding-top: 0.3rem; border-top: 1px solid #e0e0e0; text-align: right; display: flex; justify-content: space-between; }
+        .ai-pricing-calc-wrapper .result-card .content-area .total-cost span:first-child { color: #3c4043; font-weight: 500; font-size: 0.8em; margin-right: 4px; }
+
+        /* --- Modal Styles --- */
+        .ai-pricing-calc-wrapper .modal-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1050; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; } .ai-pricing-calc-wrapper .modal-overlay:not([hidden]) { opacity: 1; visibility: visible; } .ai-pricing-calc-wrapper .modal-content { background-color: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); width: 90%; max-width: 500px; transform: scale(0.95); transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; } .ai-pricing-calc-wrapper .modal-overlay:not([hidden]) .modal-content { transform: scale(1); } .ai-pricing-calc-wrapper .modal-content h2 { font-family: 'Google Sans', sans-serif; font-size: 1.5em; color: #3c4043; margin-top: 0; margin-bottom: 1.5rem; text-align: center; } .ai-pricing-calc-wrapper .modal-content .form-group { margin-bottom: 1rem; } .ai-pricing-calc-wrapper .modal-content label { display: block; font-size: 0.9em; font-weight: 500; margin-bottom: 0.3rem; color: #3c4043; } .ai-pricing-calc-wrapper .modal-content input[type="text"], .ai-pricing-calc-wrapper .modal-content input[type="number"] { width: 100%; padding: 0.6rem 0.8rem; border: 1px solid #dadce0; border-radius: 6px; font-size: 0.95em; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .ai-pricing-calc-wrapper .modal-content input:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.15); } .ai-pricing-calc-wrapper .modal-actions { margin-top: 2rem; display: flex; justify-content: flex-end; gap: 0.8rem; } .ai-pricing-calc-wrapper .modal-actions button { padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.95em; font-weight: 500; border: none; cursor: pointer; transition: background-color 0.2s ease, box-shadow 0.2s ease; } .ai-pricing-calc-wrapper .modal-actions .btn-primary { background-color: #1a73e8; color: white; } .ai-pricing-calc-wrapper .modal-actions .btn-primary:hover { background-color: #1558b0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); } .ai-pricing-calc-wrapper .modal-actions .btn-secondary { background-color: #f1f3f4; color: #5f6368; border: 1px solid #dadce0; } .ai-pricing-calc-wrapper .modal-actions .btn-secondary:hover { background-color: #e8eaed; }
+
+        /* --- Footer --- */
+        .ai-pricing-calc-wrapper footer { text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e8eaed; font-size: 0.8em; color: #5f6368; flex-shrink: 0; }
+        .ai-pricing-calc-wrapper footer .subtitle-footer { font-size: 1em; margin-bottom: 0.5em; display: block; color: #5f6368; }
+        .ai-pricing-calc-wrapper footer .pl-explanation { margin-top: 0.3em; font-style: italic; display: block; }
+
+        /* --- Responsive Styles --- */
+        @media (max-width: 991px) and (min-width: 768px) { .ai-pricing-calc-wrapper .container { max-width: 90%; } .ai-pricing-calc-wrapper .config-header-row { gap: 1rem; } .ai-pricing-calc-wrapper .config-controls-container { gap: 0.5rem; } .ai-pricing-calc-wrapper .model-items-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); } }
+        @media (max-width: 767px) { .ai-pricing-calc-wrapper { padding: 0.5rem; } .ai-pricing-calc-wrapper .container { padding: 1rem 1rem; border-radius: 8px; } .ai-pricing-calc-wrapper .config-header-row { flex-direction: column; align-items: stretch; gap: 0.8rem;} .ai-pricing-calc-wrapper .config-header-row h2 { width: 100%; text-align: center; border-bottom: none; padding-bottom: 0;} .ai-pricing-calc-wrapper .config-controls-container { align-items: center; } .ai-pricing-calc-wrapper .config-controls-container .input-row { width: 100%; justify-content: space-between;} .ai-pricing-calc-wrapper .config-controls-container .input-group { flex-basis: 45%; } .ai-pricing-calc-wrapper .request-multiplier-buttons { justify-content: center; width: 100%; } .ai-pricing-calc-wrapper .token-explanation { margin-top: 1rem;} .ai-pricing-calc-wrapper .model-items-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .ai-pricing-calc-wrapper .model-selection .section-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .ai-pricing-calc-wrapper .results .results-header { flex-direction: column; align-items: flex-start; }
+            .ai-pricing-calc-wrapper .sort-controls { justify-content: flex-start; width: 100%; margin-top: 0.5rem; }
+        }
+        @media (max-width: 480px) { .ai-pricing-calc-wrapper .config-controls-container .input-row { flex-direction: column; gap: 1rem;} .ai-pricing-calc-wrapper .config-controls-container .input-group { flex-basis: auto;} .ai-pricing-calc-wrapper .slider-container { flex-direction: column; align-items: stretch; gap: 0.5rem;} .ai-pricing-calc-wrapper .slider-container input[type="number"] { width: 100%; text-align: center; } .ai-pricing-calc-wrapper .word-estimate { text-align: center; padding-right: 0;} .ai-pricing-calc-wrapper .model-items-grid { grid-template-columns: 1fr; }
+            .ai-pricing-calc-wrapper .sort-controls { justify-content: center; }
+            .ai-pricing-calc-wrapper .result-card .preis-leistung { justify-content: center; text-align: center; }
+            .ai-pricing-calc-wrapper .result-card .livebench-result-score { text-align: center; width: 100%; margin-top: 5px;}
+            /* Responsive adjustments for cost breakdown */
+            .ai-pricing-calc-wrapper .result-card .content-area .cost-item {
+                 flex-basis: 100%; /* Take full width */
+                 justify-content: space-between; /* Space label and value */
+            }
+             .ai-pricing-calc-wrapper .result-card .content-area .cost-item.cost-output {
+                 justify-content: space-between; /* Override previous alignment */
+                 text-align: left; /* Align text left */
+             }
+             .ai-pricing-calc-wrapper .result-card .content-area .cost-value {
+                 text-align: right; /* Keep value itself right aligned */
+             }
+        }
+
+        /* --- CSS End --- */
+    </style>
+</head>
+<body>
+
+    <div class="ai-pricing-calc-wrapper">
+
+        <div class="container">
+            <header>
+                <h1 id="main-title" data-translate-key="mainTitle">Wie viel kostet eigentlich meine API-Anfrage an die KI?</h1>
+                <div class="lang-toggle">
+                    <button class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
+                    <button class="lang-btn" data-lang="en" title="English">🇬🇧</button>
+                </div>
+            </header>
+
+            <main>
+                <section class="configurator">
+                     <div class="config-header-row">
+                         <h2 data-translate-key="configureTokensTitle">Token Konfigurieren</h2>
+                         <div class="config-controls-container">
+                             <div class="input-row">
+                                 <div class="input-group">
+                                     <label for="input-tokens-number" data-translate-key="inputTokensLabel">Input-Token</label>
+                                     <div class="slider-container">
+                                         <input type="range" id="input-tokens-slider" min="0" max="2000000" value="2000" step="100" title="Input-Token">
+                                         <input type="number" id="input-tokens-number" min="0" max="2000000" value="2000" step="100">
+                                     </div>
+                                     <small class="word-estimate">(≈ <span id="input-words-est">1.500</span> <span data-translate-key="wordsSuffix">Wörter</span>)</small>
+                                 </div>
+                                 <div class="input-group">
+                                     <label for="output-tokens-number" data-translate-key="outputTokensLabel">Output-Token</label>
+                                     <div class="slider-container">
+                                         <input type="range" id="output-tokens-slider" min="0" max="500000" value="500" step="100" title="Output-Token">
+                                         <input type="number" id="output-tokens-number" min="0" max="500000" value="500" step="100">
+                                     </div>
+                                     <small class="word-estimate">(≈ <span id="output-words-est">375</span> <span data-translate-key="wordsSuffix">Wörter</span>)</small>
+                                 </div>
+                             </div>
+                            <div class="request-multiplier-buttons">
+                                <span class="multiplier-label" data-translate-key="requestsLabel">Anzahl der API Anfragen:</span>
+                                <button class="multiplier-btn" data-multiplier="1">1x</button>
+                                <button class="multiplier-btn" data-multiplier="100">100x</button>
+                                <button class="multiplier-btn" data-multiplier="1000">1000x</button>
+                            </div>
+                         </div>
+                     </div>
+                     <p class="token-explanation" data-translate-key="tokenExplanation">
+                         Token sind Wortteile, die von Modellen verwendet werden. Im Durchschnitt entspricht 1 Token ≈ 0,75 deutschen Wörtern.
+                     </p>
+                </section>
+
+                <div class="content-columns">
+                    <section class="model-selection">
+                        <div class="section-header">
+                             <h2 data-translate-key="selectModelsTitle">Modelle auswählen</h2>
+                             <button id="select-all-toggle" class="select-all-btn" data-translate-key="deselectAll">Alle abwählen</button>
+                        </div>
+                        <div id="model-groups-container"></div>
+                        <button id="add-model-btn" class="add-model-placeholder" data-translate-key="addCustomModel">+ Eigenes Modell hinzufügen</button>
+                    </section>
+
+                    <section class="results">
+                         <div class="results-header">
+                            <h2 data-translate-key="estimatedCostsTitle">Geschätzte Kosten</h2>
+                            <div class="sort-controls">
+                                <span class="sort-label" data-translate-key="sortByLabel">Sortieren nach:</span>
+                                <button class="sort-btn" id="sort-cost" data-sort="cost" data-translate-key="sortByCost">Preis</button>
+                                <button class="sort-btn" id="sort-value" data-sort="value" data-translate-key="sortByValue">Preis-Leistung</button>
+                                <button class="sort-btn" id="sort-intelligence" data-sort="intelligence" data-translate-key="sortByIntelligence">Intelligenz</button>
+                            </div>
+                         </div>
+                        <div class="results-list-container" id="results-container">
+                           <p class="placeholder" data-translate-key="resultsPlaceholder">Modelle auswählen und Token anpassen, um Kostenschätzungen zu sehen.</p>
+                        </div>
+                    </section>
+                </div>
+            </main>
+
+            <footer>
+                 <p class="subtitle subtitle-footer" data-translate-key="subtitle">Vergleiche offizielle & benutzerdefinierte API-Kosten für Textgenerierung (inkl. LiveBench Scores)</p>
+                 <p data-translate-key="disclaimer">Haftungsausschluss: Preise basieren auf offizieller API-Dokumentation (Stand April 2025). LiveBench-Werte von livebench.ai (Stand April 2025). Überprüfe immer die offiziellen Quellen.
+                 <span class="pl-explanation" data-translate-key="plExplanation">Preis-Leistungs-Score (0-100): Kombiniert normalisierte Leistung (LiveBench Score, 20% Gewicht) und normalisierte Kosten (gewichteter Preis/1Mio Token, 80% Gewicht). Der beste Kompromiss erhält 100 Punkte.</span>
+                 </p>
+            </footer>
+        </div>
+
+        <!-- Add Model Modal -->
+        <div id="add-model-modal" class="modal-overlay" hidden>
+             <div class="modal-content">
+                <h2 data-translate-key="addModelTitle">Eigenes Modell hinzufügen</h2>
+                <form id="add-model-form">
+                     <div class="form-group"><label for="custom-model-name" data-translate-key="modalNameLabel">Modellname *</label><input type="text" id="custom-model-name" required></div>
+                     <div class="form-group"><label for="custom-model-provider" data-translate-key="modalProviderLabel">Anbieter/Organisation *</label><input type="text" id="custom-model-provider" required></div>
+                     <div class="form-group"><label for="custom-model-context" data-translate-key="modalContextLabel">Kontextfenster (z.B. 128k, 1M) *</label><input type="text" id="custom-model-context" required data-translate-placeholder="modalExamplePlaceholder" placeholder="z.B. 200k"></div>
+                     <div class="form-group"><label for="custom-model-cutoff" data-translate-key="modalCutoffLabel">Wissensstand (Optional)</label><input type="text" id="custom-model-cutoff" data-translate-placeholder="modalCutoffPlaceholder" placeholder="z.B. Okt 2024"></div>
+                     <div class="form-group"><label for="custom-model-score" data-translate-key="modalScoreLabel">LiveBench Score (Optional)</label><input type="number" step="0.01" id="custom-model-score" data-translate-placeholder="modalScorePlaceholder" placeholder="z.B. 75,67"></div>
+                     <div class="form-group price-group"><label for="custom-model-input-price" data-translate-key="modalInputPriceLabel">Input-Preis ($ / 1 Mio. Token) *</label><input type="number" step="0.00001" id="custom-model-input-price" required data-translate-placeholder="modalInputPricePlaceholder" placeholder="z.B. 2,50"></div>
+                     <div class="form-group price-group"><label for="custom-model-output-price" data-translate-key="modalOutputPriceLabel">Output-Preis ($ / 1 Mio. Token) *</label><input type="number" step="0.00001" id="custom-model-output-price" required data-translate-placeholder="modalOutputPricePlaceholder" placeholder="z.B. 10,00"></div>
+                     <div class="modal-actions"><button type="button" id="cancel-add-model" class="btn-secondary" data-translate-key="modalCancelButton">Abbrechen</button><button type="submit" id="save-add-model" class="btn-primary" data-translate-key="modalSaveButton">Modell speichern</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // --- JavaScript Start ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const wrapper = document.querySelector('.ai-pricing-calc-wrapper');
+        if (!wrapper) { console.error("AI Pricing Calculator: Wrapper missing."); return; }
+
+        // *** UPDATED: Translation Dictionary with Prompt/Response labels ***
+        const translations = {
+             de: { calculatorTitle: "KI-Modell Kostenrechner mit Preis-Leistung", mainTitle: "Wie viel kostet eigentlich meine API-Anfrage an die KI?", subtitle: "Vergleiche offizielle & benutzerdefinierte API-Kosten für Textgenerierung (inkl. LiveBench Scores)", configureTokensTitle: "Token Konfigurieren", inputTokensLabel: "Input-Token", outputTokensLabel: "Output-Token", wordsSuffix: "Wörter", requestsLabel: "Anzahl der API Anfragen:", tokenExplanation: "Token sind Wortteile, die von Modellen verwendet werden. Im Durchschnitt entspricht 1 Token ≈ 0,75 deutschen Wörtern.", selectModelsTitle: "Modelle auswählen", selectAll: "Alle auswählen", deselectAll: "Alle abwählen", addCustomModel: "+ Eigenes Modell hinzufügen", estimatedCostsTitle: "Geschätzte Kosten", sortByLabel: "Sortieren nach:", sortByCost: "Preis", sortByValue: "Preis-Leistung", sortByIntelligence: "Intelligenz", resultsPlaceholder: "Modelle auswählen und Token anpassen, um Kostenschätzungen zu sehen.", addModelTitle: "Eigenes Modell hinzufügen", modalNameLabel: "Modellname *", modalProviderLabel: "Anbieter/Organisation *", modalContextLabel: "Kontextfenster (z.B. 128k, 1M) *", modalCutoffLabel: "Wissensstand (Optional)", modalScoreLabel: "LiveBench Score (Optional)", modalInputPriceLabel: "Input-Preis ($ / 1 Mio. Token) *", modalOutputPriceLabel: "Output-Preis ($ / 1 Mio. Token) *", modalExamplePlaceholder: "z.B. 200k", modalCutoffPlaceholder: "z.B. Okt 2024", modalScorePlaceholder: "z.B. 75,67", modalInputPricePlaceholder: "z.B. 2,50", modalOutputPricePlaceholder: "z.B. 10,00", modalCancelButton: "Abbrechen", modalSaveButton: "Modell speichern", disclaimer: "Haftungsausschluss: Preise basieren auf offizieller API-Dokumentation (Stand April 2025). LiveBench-Werte von livebench.ai (Stand April 2025). Überprüfe immer die offiziellen Quellen.", plExplanation: "Preis-Leistungs-Score (0-100): Kombiniert normalisierte Leistung (LiveBench Score, 20% Gewicht) und normalisierte Kosten (gewichteter Preis/1Mio Token, 80% Gewicht). Der beste Kompromiss erhält 100 Punkte.", plScoreLabel: "Preis-Leistung:", plTooltipText: "Gewichteter Wert (20% Leistung, 80% Kosten). Score und Kosten werden relativ zu allen Modellen normalisiert (0-1), kombiniert und dann auf 0-100 skaliert (100=bester Kompromiss).", livebenchResultLabel: "Livebench.ai Score:", contextLabel: "Kontext", /* NEW */ promptLabel: "Prompt:", /* NEW */ responseLabel: "Antwort:", inputTooltip: "Eingabe an die KI", outputTooltip: "Antwort der KI", totalCostLabel: "Gesamt", multiplierMoreSuffix: "x mehr", customModelsTitle: "Benutzerdefiniert", alertMissingFields: "Bitte fülle alle Pflichtfelder (*) aus.", alertInvalidNumbers: "Bitte gib gültige Zahlen für Preise und Score ein.", alertNegativeValues: "Preise und Score dürfen nicht negativ sein." },
+             en: { calculatorTitle: "AI Model Cost Calculator with Price-Performance", mainTitle: "How much does my API request to the AI actually cost?", subtitle: "Compare official & custom API costs for text generation (incl. LiveBench Scores)", configureTokensTitle: "Configure Tokens", inputTokensLabel: "Input Tokens", outputTokensLabel: "Output Tokens", wordsSuffix: "words", requestsLabel: "Number of API Requests:", tokenExplanation: "Tokens are parts of words used by models. On average, 1 token ≈ 0.75 English words.", selectModelsTitle: "Select Models", selectAll: "Select All", deselectAll: "Deselect All", addCustomModel: "+ Add Custom Model", estimatedCostsTitle: "Estimated Costs", sortByLabel: "Sort by:", sortByCost: "Price", sortByValue: "Price-Perf.", sortByIntelligence: "Intelligence", resultsPlaceholder: "Select models and adjust tokens to see cost estimates.", addModelTitle: "Add Custom Model", modalNameLabel: "Model Name *", modalProviderLabel: "Provider/Organization *", modalContextLabel: "Context Window (e.g., 128k, 1M) *", modalCutoffLabel: "Knowledge Cutoff (Optional)", modalScoreLabel: "LiveBench Score (Optional)", modalInputPriceLabel: "Input Price ($ / 1M tokens) *", modalOutputPriceLabel: "Output Price ($ / 1M tokens) *", modalExamplePlaceholder: "e.g., 200k", modalCutoffPlaceholder: "e.g., Oct 2024", modalScorePlaceholder: "e.g., 75.67", modalInputPricePlaceholder: "e.g., 2.50", modalOutputPricePlaceholder: "e.g., 10.00", modalCancelButton: "Cancel", modalSaveButton: "Save Model", disclaimer: "Disclaimer: Prices based on official API documentation (as of April 2025). LiveBench scores from livebench.ai (as of April 2025). Always verify official sources.", plExplanation: "Price-Performance Score (0-100): Combines normalized performance (LiveBench Score, 20% weight) and normalized cost (blended price/1M tokens, 80% weight). The best trade-off gets 100 points.", plScoreLabel: "Price-Perf.:", plTooltipText: "Weighted value (20% performance, 80% cost). Score and cost are normalized relative to all models (0-1), combined, then scaled to 0-100 (100=best trade-off).", livebenchResultLabel: "Livebench.ai Score:", contextLabel: "Context", /* NEW */ promptLabel: "Prompt:", /* NEW */ responseLabel: "Response:", inputTooltip: "Input to the AI", outputTooltip: "Response from the AI", totalCostLabel: "Total", multiplierMoreSuffix: "x more", customModelsTitle: "Custom Models", alertMissingFields: "Please fill in all required fields (*).", alertInvalidNumbers: "Please enter valid numbers for prices and score.", alertNegativeValues: "Prices and score cannot be negative." }
+        };
+        function getTranslation(key, lang) { return translations[lang]?.[key] || `[${key}]`; }
+
+        // Wave Effect
+        function applyWaveEffect(lang) { const mainTitle = wrapper.querySelector('#main-title'); if (!mainTitle) return; const titleText = getTranslation('mainTitle', lang); mainTitle.innerHTML = ''; titleText.split(' ').forEach((word, wordIndex, wordsArray) => { const wordSpan = document.createElement('span'); wordSpan.classList.add('wave-word'); wordSpan.textContent = word; wordSpan.style.animationDelay = `${wordIndex * 0.2}s`; mainTitle.appendChild(wordSpan); if (wordIndex < wordsArray.length - 1) { mainTitle.appendChild(document.createTextNode(' ')); } }); }
+
+        // *** UPDATED: Base Model Data (Removed GPT-4.5, Added GPT-4.1 Mini/Nano) ***
+        const baseModels = [
+            {
+                provider: 'Google',
+                models: [
+                    { id: 'gemini-2.5-pro-preview', name: 'Gemini 2.5 Pro Preview', contextWindow: '1M', knowledgeCutoff: 'Jan 2025', liveBenchScore: 82.35, pricing: { input: (t) => (t <= 200000 ? 1.25 : 2.50), output: (t) => (t <= 200000 ? 10.00 : 15.00), baseInput: 1.25, baseOutput: 10.00 } },
+                    { id: 'gemini-2.5-flash-preview', name: 'Gemini 2.5 Flash Preview', contextWindow: '1M', knowledgeCutoff: 'Jan 2025', liveBenchScore: 71.21, pricing: { input: 0.15, output: 3.50, baseInput: 0.15, baseOutput: 3.50 } },
+                    { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', contextWindow: '1M', knowledgeCutoff: 'Aug 2024', liveBenchScore: 54.89, pricing: { input: 0.10, output: 0.40, baseInput: 0.10, baseOutput: 0.40 } },
+                ]
+            },
+            {
+                provider: 'OpenAI',
+                models: [
+                    { id: 'o1', name: 'o1', contextWindow: '200k', knowledgeCutoff: 'Okt 2023', liveBenchScore: 75.67, pricing: { input: 15.00, output: 60.00, baseInput: 15.00, baseOutput: 60.00 } },
+                    { id: 'o3', name: 'o3', contextWindow: '200k', knowledgeCutoff: 'Juni 2024', liveBenchScore: 79.22, pricing: { input: 10.00, output: 40.00, baseInput: 10.00, baseOutput: 40.00 } },
+                    { id: 'o4-mini', name: 'o4-mini', contextWindow: '200k', knowledgeCutoff: 'Juni 2024', liveBenchScore: 72.75, pricing: { input: 1.10, output: 4.40, baseInput: 1.10, baseOutput: 4.40 } },
+                    { id: 'gpt-4.1', name: 'GPT-4.1', contextWindow: '1M', knowledgeCutoff: 'Juni 2024', liveBenchScore: 58.41, pricing: { input: 2.00, output: 8.00, baseInput: 2.00, baseOutput: 8.00 } },
+                    { id: 'gpt-4.1-mini', name: 'GPT-4.1 mini', contextWindow: '1M', knowledgeCutoff: 'Juni 2024', liveBenchScore: 55.55, pricing: { input: 0.40, output: 1.60, baseInput: 0.40, baseOutput: 1.60 } },
+                    { id: 'gpt-4.1-nano', name: 'GPT-4.1 nano', contextWindow: '1M', knowledgeCutoff: 'Juni 2024', liveBenchScore: 39.72, pricing: { input: 0.10, output: 0.40, baseInput: 0.10, baseOutput: 0.40 } },
+                    { id: 'gpt-4o', name: 'GPT-4o', contextWindow: '128k', knowledgeCutoff: 'Okt 2023', liveBenchScore: 55.33, pricing: { input: 2.50, output: 10.00, baseInput: 2.50, baseOutput: 10.00 } },
+                ]
+            },
+            {
+                provider: 'Anthropic',
+                models: [
+                    { id: 'claude-3.7-sonnet', name: 'Claude 3.7 Sonnet', contextWindow: '200k', knowledgeCutoff: 'Okt 2024', liveBenchScore: 70.57, pricing: { input: 3.00, output: 15.00, baseInput: 3.00, baseOutput: 15.00 } },
+                ]
+            }
+        ];
+        let customModels = [];
+
+        // DOM Elements
+        const modelGroupsContainer = wrapper.querySelector('#model-groups-container');
+        const inputTokensSlider = wrapper.querySelector('#input-tokens-slider');
+        const inputTokensNumber = wrapper.querySelector('#input-tokens-number');
+        const outputTokensSlider = wrapper.querySelector('#output-tokens-slider');
+        const outputTokensNumber = wrapper.querySelector('#output-tokens-number');
+        const resultsContainer = wrapper.querySelector('#results-container');
+        const resultsPlaceholder = wrapper.querySelector('.results-list-container .placeholder');
+        const selectAllToggleBtn = wrapper.querySelector('#select-all-toggle');
+        const addModelBtn = wrapper.querySelector('#add-model-btn');
+        const modal = wrapper.querySelector('#add-model-modal');
+        const addModelForm = wrapper.querySelector('#add-model-form');
+        const cancelBtn = wrapper.querySelector('#cancel-add-model');
+        const inputWordsEstSpan = wrapper.querySelector('#input-words-est');
+        const outputWordsEstSpan = wrapper.querySelector('#output-words-est');
+        const multiplierButtons = wrapper.querySelectorAll('.multiplier-btn');
+        const langToggleButtons = wrapper.querySelectorAll('.lang-btn');
+        const sortButtons = wrapper.querySelectorAll('.sort-btn');
+
+        if (!modelGroupsContainer || !inputTokensSlider || !resultsContainer || !multiplierButtons.length || !langToggleButtons.length || !sortButtons.length) { console.error("AI Pricing Calculator: Core elements missing."); wrapper.innerHTML = "<p style='color: red; text-align: center; padding: 20px;'>Fehler beim Initialisieren des Rechners.</p>"; return; }
+
+        // State Variables
+        let selectedModelIds = new Set();
+        const modelMap = new Map();
+        let allModelElements = [];
+        const WORDS_PER_TOKEN = 0.75;
+        let currentMultiplier = 1;
+        let baseInputTokens = parseInt(inputTokensNumber.value) || 2000;
+        let baseOutputTokens = parseInt(outputTokensNumber.value) || 500;
+        const COST_EPSILON = 1e-9;
+        let currentLang = localStorage.getItem('calculatorLang') || 'de';
+        let currentSortMode = 'cost';
+
+        // Translate Function
+        function translateUI(lang) {
+            currentLang = lang; localStorage.setItem('calculatorLang', lang);
+            document.documentElement.lang = lang; document.title = getTranslation('calculatorTitle', lang);
+            wrapper.querySelectorAll('[data-translate-key]').forEach(el => {
+                const key = el.dataset.translateKey; const translation = getTranslation(key, lang);
+                 if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) { el.placeholder = translation; }
+                 else if (el.hasAttribute('title') && (key === 'plTooltipText' || key === 'inputTooltip' || key === 'outputTooltip')) { el.title = translation; }
+                 else if (el.id === 'select-all-toggle') { /* handled in updateSelectAllButtonState */ }
+                 else if (el.id === 'main-title') { /* handled in applyWaveEffect */ }
+                 // Update cost labels inside results if they exist
+                 else if (el.classList.contains('cost-label') && (key === 'promptLabel' || key === 'responseLabel')) { el.textContent = translation; }
+                 else if (key !== 'plTooltipText' && key !== 'inputTooltip' && key !== 'outputTooltip' && !el.classList.contains('cost-label')) { el.textContent = translation; }
+            });
+            applyWaveEffect(lang); updateSelectAllButtonState(); updateWordEstimates(); updateResults(); // Re-render results for label changes
+            langToggleButtons.forEach(btn => { btn.classList.toggle('active', btn.dataset.lang === lang); });
+        }
+
+        // Initialize
+        initializeCalculator();
+
+        function initializeCalculator() {
+            populateModelGroups();
+            selectAllModelsByDefault();
+            setActiveMultiplierButton(currentMultiplier);
+            setActiveSortButton(currentSortMode);
+            setupEventListeners();
+            translateUI(currentLang);
+        }
+
+        // --- Core Functions ---
+
+        function updateWordEstimates() {
+            const inputTokens = parseInt(inputTokensNumber.value) || 0;
+            const outputTokens = parseInt(outputTokensNumber.value) || 0;
+            const inputWords = Math.round(inputTokens * WORDS_PER_TOKEN);
+            const outputWords = Math.round(outputTokens * WORDS_PER_TOKEN);
+            const locale = currentLang === 'de' ? 'de-DE' : 'en-US';
+            inputWordsEstSpan.textContent = inputWords.toLocaleString(locale);
+            outputWordsEstSpan.textContent = outputWords.toLocaleString(locale);
+            wrapper.querySelectorAll('[data-translate-key="wordsSuffix"]').forEach(span => {
+                span.textContent = getTranslation('wordsSuffix', currentLang);
+            });
+        }
+
+        function setActiveMultiplierButton(multiplierValue) {
+            multiplierButtons.forEach(btn => {
+                btn.classList.toggle('active', parseInt(btn.dataset.multiplier) === multiplierValue);
+            });
+            currentMultiplier = multiplierValue;
+        }
+
+        function setActiveSortButton(sortMode) {
+            sortButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.sort === sortMode);
+            });
+            currentSortMode = sortMode;
+        }
+
+        function handleMultiplierClick(event) {
+            const clickedButton = event.target.closest('.multiplier-btn');
+            if (!clickedButton) return;
+            const multiplier = parseInt(clickedButton.dataset.multiplier);
+            if (isNaN(multiplier)) return;
+            setActiveMultiplierButton(multiplier);
+            updateResults();
+        }
+
+        function handleSortClick(event) {
+            const clickedButton = event.target.closest('.sort-btn');
+            if (!clickedButton) return;
+            const sortMode = clickedButton.dataset.sort;
+            if (!sortMode) return;
+            setActiveSortButton(sortMode);
+            updateResults();
+        }
+
+        function handleManualTokenChange() {
+            baseInputTokens = Math.max(0, parseInt(inputTokensNumber.value) || 0);
+            baseOutputTokens = Math.max(0, parseInt(outputTokensNumber.value) || 0);
+            const maxInput = parseInt(inputTokensSlider.max);
+            const maxOutput = parseInt(outputTokensSlider.max);
+            if (!isNaN(maxInput) && baseInputTokens > maxInput) baseInputTokens = maxInput;
+            if (!isNaN(maxOutput) && baseOutputTokens > maxOutput) baseOutputTokens = maxOutput;
+            if (document.activeElement !== inputTokensSlider) inputTokensSlider.value = baseInputTokens;
+            if (document.activeElement !== inputTokensNumber) inputTokensNumber.value = baseInputTokens;
+            if (document.activeElement !== outputTokensSlider) outputTokensSlider.value = baseOutputTokens;
+            if (document.activeElement !== outputTokensNumber) outputTokensNumber.value = baseOutputTokens;
+            updateWordEstimates();
+            updateResults();
+        }
+
+        function createModelItemElement(model, providerName) {
+            const item = document.createElement('div'); item.classList.add('model-item'); item.dataset.modelId = model.id; allModelElements.push(item);
+            const providerClass = providerName.toLowerCase().replace(/\s+/g, '-'); const providerColorVar = `--ai-calc-provider-color-item`; const providerH3Var = `--ai-calc-provider-color`; let providerColorValue = '#6c757d'; if (providerName === 'Google') providerColorValue = '#4285F4'; else if (providerName === 'OpenAI') providerColorValue = '#10a37f'; else if (providerName === 'Anthropic') providerColorValue = '#d97706';
+            item.style.setProperty(providerColorVar, providerColorValue); item.style.setProperty(providerH3Var, providerColorValue);
+            let scoreDisplay = 'N/A'; let scoreClass = 'na'; const locale = currentLang === 'de' ? 'de-DE' : 'en-US'; if (model.liveBenchScore !== null && typeof model.liveBenchScore !== 'undefined' && !isNaN(model.liveBenchScore)) { scoreDisplay = model.liveBenchScore.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); scoreClass = ''; }
+            const cutoffDisplay = model.knowledgeCutoff ? `<span class="knowledge-cutoff">${model.knowledgeCutoff}</span>` : '';
+            const contextValue = model.contextWindow || 'N/A'; const contextLabelText = getTranslation('contextLabel', currentLang); const contextDisplay = `<span>${contextValue} ${contextLabelText}</span>`;
+            item.innerHTML = `<h4>${model.name}</h4><div class="details">${contextDisplay}<span class="livebench-score ${scoreClass}" title="LiveBench Global Avg. Score">${scoreDisplay}</span>${cutoffDisplay}</div>`;
+            item.addEventListener('click', () => { toggleModelSelection(model.id, item); updateSelectAllButtonState(); }); return item;
+        }
+
+        function populateModelGroups() {
+            modelGroupsContainer.innerHTML = ''; modelMap.clear(); allModelElements = [];
+            baseModels.forEach(providerGroup => {
+                 const groupDiv = document.createElement('div'); groupDiv.classList.add('provider-group', providerGroup.provider.toLowerCase());
+                 const groupHeader = document.createElement('h3'); groupHeader.textContent = providerGroup.provider; groupDiv.appendChild(groupHeader);
+                 const itemsGrid = document.createElement('div'); itemsGrid.classList.add('model-items-grid');
+                 providerGroup.models.forEach(model => {
+                    const baseInput = typeof model.pricing.input === 'function' ? model.pricing.baseInput : model.pricing.input;
+                    const baseOutput = typeof model.pricing.output === 'function' ? model.pricing.baseOutput : model.pricing.output;
+                    modelMap.set(model.id, { ...model, provider: providerGroup.provider, baseInputPrice: baseInput, baseOutputPrice: baseOutput });
+                    const itemElement = createModelItemElement(model, providerGroup.provider);
+                    itemsGrid.appendChild(itemElement);
+                 });
+                 groupDiv.appendChild(itemsGrid); modelGroupsContainer.appendChild(groupDiv);
+            });
+            if (customModels.length > 0) {
+                const customGroupDiv = document.createElement('div'); customGroupDiv.classList.add('provider-group', 'benutzerdefiniert');
+                const customHeader = document.createElement('h3'); customHeader.textContent = getTranslation('customModelsTitle', currentLang) || "Benutzerdefiniert"; customGroupDiv.appendChild(customHeader);
+                const customItemsGrid = document.createElement('div'); customItemsGrid.classList.add('model-items-grid');
+                customModels.forEach(model => {
+                    modelMap.set(model.id, { ...model, baseInputPrice: model.pricing.input, baseOutputPrice: model.pricing.output });
+                    const itemElement = createModelItemElement(model, model.provider);
+                    customItemsGrid.appendChild(itemElement);
+                });
+                customGroupDiv.appendChild(customItemsGrid); modelGroupsContainer.appendChild(customGroupDiv);
+            }
+            selectedModelIds.forEach(id => { const element = allModelElements.find(el => el.dataset.modelId === id); if (element) { element.classList.add('selected'); } });
+            updateSelectAllButtonState();
+        }
+
+        function selectAllModelsByDefault() { selectedModelIds.clear(); modelMap.forEach(model => { selectedModelIds.add(model.id); }); allModelElements.forEach(item => { item.classList.add('selected'); }); updateSelectAllButtonState(); }
+        function toggleModelSelection(modelId, itemElement) { if (selectedModelIds.has(modelId)) { selectedModelIds.delete(modelId); itemElement.classList.remove('selected'); } else { selectedModelIds.add(modelId); itemElement.classList.add('selected'); } updateResults(); }
+        function updateSelectAllButtonState() { const key = (allModelElements.length > 0 && selectedModelIds.size === allModelElements.length) ? 'deselectAll' : 'selectAll'; selectAllToggleBtn.textContent = getTranslation(key, currentLang); selectAllToggleBtn.dataset.state = (key === 'deselectAll') ? 'all-selected' : 'some-selected'; }
+
+        function setupEventListeners() {
+            inputTokensSlider.addEventListener('input', () => { inputTokensNumber.value = inputTokensSlider.value; handleManualTokenChange(); });
+            inputTokensNumber.addEventListener('input', handleManualTokenChange);
+            outputTokensSlider.addEventListener('input', () => { outputTokensNumber.value = outputTokensSlider.value; handleManualTokenChange(); });
+            outputTokensNumber.addEventListener('input', handleManualTokenChange);
+            multiplierButtons.forEach(button => { button.addEventListener('click', handleMultiplierClick); });
+            sortButtons.forEach(button => { button.addEventListener('click', handleSortClick); });
+            selectAllToggleBtn.addEventListener('click', () => {
+                 const currentState = selectAllToggleBtn.dataset.state;
+                 if (currentState === 'all-selected') { selectedModelIds.clear(); } else { modelMap.forEach(model => selectedModelIds.add(model.id)); }
+                 allModelElements.forEach(item => { item.classList.toggle('selected', selectedModelIds.has(item.dataset.modelId)); });
+                 updateSelectAllButtonState(); updateResults();
+            });
+            addModelBtn.addEventListener('click', () => { addModelForm.reset(); translateUI(currentLang); modal.removeAttribute('hidden'); }); // Retranslate modal on open
+            cancelBtn.addEventListener('click', () => { modal.setAttribute('hidden', true); });
+            modal.addEventListener('click', (event) => { if (event.target === modal) { modal.setAttribute('hidden', true); } });
+            addModelForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const name = wrapper.querySelector('#custom-model-name').value.trim();
+                const provider = wrapper.querySelector('#custom-model-provider').value.trim();
+                const context = wrapper.querySelector('#custom-model-context').value.trim();
+                const cutoff = wrapper.querySelector('#custom-model-cutoff').value.trim();
+                const scoreInput = wrapper.querySelector('#custom-model-score').value;
+                const inputPriceInput = wrapper.querySelector('#custom-model-input-price').value;
+                const outputPriceInput = wrapper.querySelector('#custom-model-output-price').value;
+                if (!name || !provider || !context || !inputPriceInput || !outputPriceInput) { alert(getTranslation('alertMissingFields', currentLang)); return; }
+                const inputPrice = parseFloat(inputPriceInput); const outputPrice = parseFloat(outputPriceInput); let score = scoreInput ? parseFloat(scoreInput) : null;
+                if (isNaN(inputPrice) || isNaN(outputPrice) || (scoreInput && isNaN(score))) { alert(getTranslation('alertInvalidNumbers', currentLang)); return; }
+                if (inputPrice < 0 || outputPrice < 0 || (score !== null && score < 0)) { alert(getTranslation('alertNegativeValues', currentLang)); return; }
+                const newModel = { id: `custom-${Date.now()}-${Math.random().toString(16).slice(2)}`, name: name, provider: provider, contextWindow: context, knowledgeCutoff: cutoff || null, liveBenchScore: score, pricing: { input: inputPrice, output: outputPrice, baseInput: inputPrice, baseOutput: outputPrice } };
+                customModels.push(newModel);
+                populateModelGroups();
+                selectedModelIds.add(newModel.id);
+                allModelElements.find(el => el.dataset.modelId === newModel.id)?.classList.add('selected');
+                modal.setAttribute('hidden', true);
+                updateResults(); updateSelectAllButtonState();
+            });
+            langToggleButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const selectedLang = e.target.dataset.lang;
+                    if (selectedLang && selectedLang !== currentLang) { translateUI(selectedLang); }
+                });
+            });
+        }
+
+        // Calculation Functions
+        function calculateCost(model, inputTokens, outputTokens, requestMultiplier) {
+            inputTokens = inputTokens || 0; outputTokens = outputTokens || 0;
+            const millionsInput = inputTokens / 1000000; const millionsOutput = outputTokens / 1000000;
+            let inputPricePerMillion = 0; let outputPricePerMillion = 0;
+            if (typeof model.pricing.input === 'function') { inputPricePerMillion = model.pricing.input(inputTokens); } else { inputPricePerMillion = model.pricing.input; }
+            if (typeof model.pricing.output === 'function') { outputPricePerMillion = model.pricing.output(inputTokens); } else { outputPricePerMillion = model.pricing.output; }
+            const singleInputCost = millionsInput * inputPricePerMillion; const singleOutputCost = millionsOutput * outputPricePerMillion;
+            const inputCost = singleInputCost * requestMultiplier; const outputCost = singleOutputCost * requestMultiplier;
+            const totalCost = inputCost + outputCost;
+            return { inputCost, outputCost, totalCost };
+        }
+
+        function formatCurrency(amount) { const locale = currentLang === 'de' ? 'de-DE' : 'en-US'; const currencySymbol = '$'; if (amount === 0) return `${currencySymbol}0${locale === 'de-DE' ? ',' : '.'}00`; if (amount > 0 && amount < 0.01) { let precise = amount.toFixed(5); while (precise.endsWith('0') && precise.split('.')[1].length > 3) { precise = precise.slice(0, -1); } return `${currencySymbol}${locale === 'de-DE' ? precise.replace('.', ',') : precise}`; } return `${currencySymbol}${amount.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; }
+
+        function calculateBalancedPricePerformance(selectedData, allModelsMap, inputTokens, outputTokens) {
+            const WEIGHT_SCORE = 0.2; const WEIGHT_COST = 0.8;
+            const intermediateResults = new Map(); let validModelsForNorm = [];
+            const totalTokens = inputTokens + outputTokens;
+            const inputFraction = (totalTokens > COST_EPSILON) ? inputTokens / totalTokens : 0.5;
+            const outputFraction = (totalTokens > COST_EPSILON) ? outputTokens / totalTokens : 0.5;
+            allModelsMap.forEach((model, id) => {
+                const score = model.liveBenchScore; const hasValidScore = score !== null && typeof score !== 'undefined' && !isNaN(score);
+                let blendedCost = null; let costIsValid = false;
+                const inputPrice1M = model.baseInputPrice ?? null; const outputPrice1M = model.baseOutputPrice ?? null;
+                if (inputPrice1M !== null && outputPrice1M !== null) { blendedCost = (inputPrice1M * inputFraction) + (outputPrice1M * outputFraction); costIsValid = blendedCost !== null && !isNaN(blendedCost) && blendedCost >= 0; }
+                intermediateResults.set(id, { score: score, blendedCost: blendedCost, isValidForNorm: hasValidScore && costIsValid });
+                if (hasValidScore && costIsValid) { validModelsForNorm.push({ id, score, blendedCost }); }
+            });
+            if (validModelsForNorm.length === 0) { return selectedData.map(item => ({ ...item, plScore: null })); }
+            const scores = validModelsForNorm.map(m => m.score); const costs = validModelsForNorm.map(m => m.blendedCost);
+            const minScore = Math.min(...scores); const maxScore = Math.max(...scores); const minCost = Math.min(...costs); const maxCost = Math.max(...costs);
+            const rangeScore = maxScore - minScore; const rangeCost = maxCost - minCost;
+            let maxRawCombinedScore = 0;
+            validModelsForNorm.forEach(modelData => {
+                const score = modelData.score; const cost = modelData.blendedCost;
+                const normScore = (rangeScore > COST_EPSILON) ? (score - minScore) / rangeScore : 0.5;
+                const normCost = (rangeCost > COST_EPSILON) ? (cost - minCost) / rangeCost : 0.5; const normCostPerf = 1.0 - normCost;
+                const rawCombinedScore = (WEIGHT_SCORE * normScore) + (WEIGHT_COST * normCostPerf);
+                const interim = intermediateResults.get(modelData.id);
+                interim.normScore = normScore; interim.normCostPerf = normCostPerf; interim.rawCombinedScore = rawCombinedScore;
+                if (rawCombinedScore > maxRawCombinedScore) { maxRawCombinedScore = rawCombinedScore; }
+            });
+             if (maxRawCombinedScore < COST_EPSILON && validModelsForNorm.length > 0) { maxRawCombinedScore = COST_EPSILON; }
+            return selectedData.map(item => {
+                const modelId = item.model.id; const interim = intermediateResults.get(modelId); let finalPlScore = null;
+                if (interim && interim.isValidForNorm) {
+                     const rawCombined = interim.rawCombinedScore;
+                     if (rawCombined !== null && typeof rawCombined !== 'undefined') {
+                         const scalingFactor = (maxRawCombinedScore > COST_EPSILON) ? (rawCombined / maxRawCombinedScore) : 0.5;
+                         finalPlScore = Math.min(100, Math.max(0, Math.round(scalingFactor * 100)));
+                     }
+                }
+                return { ...item, plScore: finalPlScore };
+            });
+        }
+
+        // --- Update Results Display ---
+        // *** FINAL Version: Includes all changes ***
+        function updateResults() {
+             resultsContainer.innerHTML = ''; resultsContainer.appendChild(resultsPlaceholder);
+             const inputTokens = baseInputTokens; const outputTokens = baseOutputTokens; let calculatedData = [];
+
+             if (selectedModelIds.size > 0) {
+                 resultsPlaceholder.style.display = 'none';
+                 selectedModelIds.forEach(id => { const model = modelMap.get(id); if (model) { const costs = calculateCost(model, inputTokens, outputTokens, currentMultiplier); calculatedData.push({ model, costs }); } });
+                 calculatedData = calculateBalancedPricePerformance(calculatedData, modelMap, inputTokens, outputTokens);
+                 switch (currentSortMode) {
+                    case 'intelligence': calculatedData.sort((a, b) => (b.model.liveBenchScore ?? -1) - (a.model.liveBenchScore ?? -1)); break;
+                    case 'value': calculatedData.sort((a, b) => (b.plScore ?? -1) - (a.plScore ?? -1)); break;
+                    case 'cost': default: calculatedData.sort((a, b) => a.costs.totalCost - b.costs.totalCost); break;
+                 }
+                 const minCost = (calculatedData.length > 0 && currentSortMode === 'cost') ? calculatedData[0].costs.totalCost : 0;
+                 calculatedData.forEach((item, index) => {
+                     const resultCard = document.createElement('div');
+                     resultCard.classList.add('result-card');
+                     resultCard.style.animationDelay = `${index * 0.06}s`;
+                     let providerColorValue = '#6c757d'; const providerLower = item.model.provider?.toLowerCase().replace(/\s+/g, '-');
+                     if (providerLower === 'google') providerColorValue = '#4285F4'; else if (providerLower === 'openai') providerColorValue = '#10a37f'; else if (providerLower === 'anthropic') providerColorValue = '#d97706';
+                     if (index === 0) {
+                        if (currentSortMode === 'cost' && item.costs.totalCost >= COST_EPSILON) { resultCard.classList.add('highlight'); }
+                        else if (currentSortMode === 'intelligence' && (item.model.liveBenchScore ?? -1) > -1) { resultCard.classList.add('highlight-intelligence'); }
+                        else if (currentSortMode === 'value' && (item.plScore ?? -1) > -1) { resultCard.classList.add('highlight-value'); }
+                     }
+                     const locale = currentLang === 'de' ? 'de-DE' : 'en-US';
+                     const rankSuffix = currentLang === 'de' ? '.' : (index === 0 ? 'st' : (index === 1 ? 'nd' : (index === 2 ? 'rd' : 'th')));
+                     let trophyHTML = (index === 0) ? '<span class="trophy">🏆</span>' : '';
+                     let multiplierText = '';
+                     if (currentSortMode === 'cost' && index > 0 && minCost > COST_EPSILON && item.costs.totalCost > minCost * 1.001) { const timesMore = item.costs.totalCost / minCost; multiplierText = `<span class="multiplier">${timesMore.toLocaleString(locale, {minimumFractionDigits:1, maximumFractionDigits:1})}${getTranslation('multiplierMoreSuffix', currentLang)}</span>`; }
+                     else { multiplierText = `<span class="multiplier"></span>`; }
+                     const rankIndicatorHTML = `<span class="rank">${index + 1}<sup>${rankSuffix}</sup></span>${trophyHTML}${multiplierText}`;
+                     const plScoreValue = item.plScore; const plScoreDisplay = (plScoreValue !== null && typeof plScoreValue !== 'undefined') ? plScoreValue.toLocaleString(locale) : 'N/A';
+                     const plScoreClass = (plScoreValue === null || typeof plScoreValue === 'undefined') ? 'na' : ''; const plTooltip = getTranslation('plTooltipText', currentLang);
+                     const lbScoreValue = item.model.liveBenchScore;
+                     let lbScoreDisplay = 'N/A'; let lbScoreClass = 'na';
+                     if (lbScoreValue !== null && typeof lbScoreValue !== 'undefined' && !isNaN(lbScoreValue)) { lbScoreDisplay = lbScoreValue.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); lbScoreClass = ''; }
+
+                     const inputCostFormatted = formatCurrency(item.costs.inputCost);
+                     const outputCostFormatted = formatCurrency(item.costs.outputCost);
+                     const inputTooltipText = `${getTranslation('inputTooltip', currentLang)}: ${inputTokens.toLocaleString(locale)} tokens`;
+                     const outputTooltipText = `${getTranslation('outputTooltip', currentLang)}: ${outputTokens.toLocaleString(locale)} tokens`;
+
+                     resultCard.innerHTML = `
+                         <div class="rank-indicator">${rankIndicatorHTML}</div>
+                         <div class="content-area">
+                             <h4 style="color: ${providerColorValue};">${item.model.name} <span>(${item.model.provider || 'N/A'})</span></h4>
+                             <div class="preis-leistung" title="${plTooltip}">
+                                 <div>
+                                     <span class="pl-label">${getTranslation('plScoreLabel', currentLang)}</span>
+                                     <span class="pl-score ${plScoreClass}">${plScoreDisplay}</span>
+                                 </div>
+                                 <div class="livebench-result-score ${lbScoreClass}" title="LiveBench Global Avg. Score">
+                                     <span class="lb-label">${getTranslation('livebenchResultLabel', currentLang)}</span>
+                                     <span class="lb-value">${lbScoreDisplay}</span>
+                                 </div>
+                             </div>
+                             <p class="cost-breakdown">
+                                <span class="cost-item cost-input">
+                                     <span class="cost-label" data-translate-key="promptLabel">${getTranslation('promptLabel', currentLang)}</span>
+                                     <span class="cost-value" title="${inputTooltipText}">${inputCostFormatted}</span>
+                                </span>
+                                <span class="cost-item cost-output">
+                                     <span class="cost-label" data-translate-key="responseLabel">${getTranslation('responseLabel', currentLang)}</span>
+                                     <span class="cost-value" title="${outputTooltipText}">${outputCostFormatted}</span>
+                                </span>
+                             </p>
+                             <p class="total-cost"><span>${getTranslation('totalCostLabel', currentLang)} (${currentMultiplier}x):</span><span>${formatCurrency(item.costs.totalCost)}</span></p>
+                         </div>`;
+                     resultsContainer.appendChild(resultCard);
+                 });
+             } else {
+                 resultsPlaceholder.style.display = 'block';
+             }
+        }
+
+    });
+    // --- JavaScript End ---
+</script>
+
+</body>
+</html>
