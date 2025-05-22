@@ -46,6 +46,15 @@
         /* Fade-in animation keyframes */
         @keyframes ai-calc-fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Keyframes for Google Border Wave animation */
+        @keyframes google-border-wave {
+            0%   { border-color: #4285F4; } /* Google Blue */
+            25%  { border-color: #DB4437; } /* Google Red */
+            50%  { border-color: #F4B400; } /* Google Yellow */
+            75%  { border-color: #0F9D58; } /* Google Green */
+            100% { border-color: #4285F4; } /* Google Blue */
+        }
+
         /* --- Header --- */
         /* Center header content, add bottom margin */
         .ai-pricing-calc-wrapper header { text-align: center; margin-bottom: 1.5rem; flex-shrink: 0; /* Prevent header from shrinking */ }
@@ -67,21 +76,49 @@
         }
         /* Keyframes for the title word color animation */
         @keyframes ai-calc-wave-color {
-            0%   { color: #1a73e8; } /* Start Blue */
-            25%  { color: #8ab4f8; } /* Light Blue */
-            50%  { color: #1558b0; } /* Darker Blue */
-            75%  { color: #8ab4f8; } /* Light Blue */
-            100% { color: #1a73e8; } /* End Blue */
+            0%   { color: #4285F4; } /* Google Blue */
+            25%  { color: #DB4437; } /* Google Red */
+            50%  { color: #F4B400; } /* Google Yellow */
+            75%  { color: #0F9D58; } /* Google Green */
+            100% { color: #4285F4; } /* Google Blue */
         }
 
          /* Language Toggle */
         /* Center language buttons, add spacing */
         .ai-pricing-calc-wrapper .lang-toggle { display: flex; justify-content: center; gap: 0.8rem; margin-top: -0.5em; margin-bottom: 1em; }
         /* Language button styling: Transparent background, font size, cursor */
-        .ai-pricing-calc-wrapper .lang-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; opacity: 0.6; transition: opacity 0.2s ease, transform 0.2s ease; padding: 0; line-height: 1; }
+        .ai-pricing-calc-wrapper .lang-btn {
+            background: none;
+            border: 2px solid #4285F4; /* Initial Google Blue border */
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            padding: 0.2em 0.4em; /* Adjusted padding for border and radius */
+            line-height: 1;
+            animation: google-border-wave 8s linear infinite;
+            border-radius: 6px; /* Added border-radius */
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Added base shadow */
+        }
         /* Hover and active state for language buttons */
-        .ai-pricing-calc-wrapper .lang-btn:hover { opacity: 1; transform: scale(1.1); }
-        .ai-pricing-calc-wrapper .lang-btn.active { opacity: 1; transform: scale(1.1); } /* Style for the currently selected language */
+        .ai-pricing-calc-wrapper .lang-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Enhanced shadow on hover */
+        }
+        .ai-pricing-calc-wrapper .lang-btn:active {
+            opacity: 0.9; /* Slightly dim on active */
+            transform: scale(1.05) translateY(1px); /* Press effect */
+            box-shadow: 0 0 1px rgba(0,0,0,0.05); /* Tighter shadow on active */
+        }
+        .ai-pricing-calc-wrapper .lang-btn.active { /* This is for selected state, not pressed state */
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        .ai-pricing-calc-wrapper .lang-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05); /* Focus ring */
+        }
 
         /* --- Configurator Layout --- */
         /* Margin below the token configuration section */
@@ -124,11 +161,44 @@
         /* Label for multiplier buttons */
         .ai-pricing-calc-wrapper .multiplier-label { font-size: 0.85em; color: #5f6368; margin-right: 0.5rem; font-weight: 500; }
         /* Multiplier button styling */
-        .ai-pricing-calc-wrapper .multiplier-btn { padding: 4px 10px; font-size: 0.8em; font-weight: 500; border: 1px solid #ccc; background-color: #f9f9f9; color: #444; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; min-width: 50px; text-align: center; }
+        .ai-pricing-calc-wrapper .multiplier-btn {
+            padding: 4px 10px;
+            font-size: 0.8em;
+            font-weight: 500;
+            border: 2px solid #4285F4; /* Initial Google Blue border */
+            background-color: #f9f9f9;
+            color: #444;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            min-width: 50px;
+            text-align: center;
+            animation: google-border-wave 8s linear infinite;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
         /* Hover state for multiplier buttons */
-        .ai-pricing-calc-wrapper .multiplier-btn:hover { background-color: #f0f0f0; border-color: #bbb; }
-        /* Active state for multiplier buttons */
-        .ai-pricing-calc-wrapper .multiplier-btn.active { background-color: #e8f0fe; border-color: #1a73e8; color: #1a73e8; box-shadow: 0 0 0 1px #1a73e8; }
+        .ai-pricing-calc-wrapper .multiplier-btn:hover {
+            background-color: #f0f0f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        /* Pressed state for multiplier buttons */
+        .ai-pricing-calc-wrapper .multiplier-btn:active {
+            background-color: #e0e0e0;
+            transform: translateY(1px);
+            box-shadow: 0 0 1px rgba(0,0,0,0.05);
+        }
+        /* Active (selected) state for multiplier buttons */
+        .ai-pricing-calc-wrapper .multiplier-btn.active {
+            background-color: #e8f0fe;
+            color: #1a73e8; /* Text color changes */
+            box-shadow: 0 0 0 1px #1a73e8; /* Box shadow remains */
+            transform: translateY(0); /* Ensure selected state is not pressed down */
+            /* border-color is handled by animation */
+        }
+        .ai-pricing-calc-wrapper .multiplier-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+        }
         /* Explanation text about tokens */
         .ai-pricing-calc-wrapper .token-explanation { font-size: 0.85em; color: #5f6368; margin-top: 0.5rem; text-align: center; padding-bottom: 0.8rem; border-bottom: 1px solid #e8eaed; margin-bottom: 1rem; }
 
@@ -144,10 +214,34 @@
         /* Model selection section title */
         .ai-pricing-calc-wrapper .model-selection .section-header h2 { margin-bottom: 0; font-family: 'Google Sans', sans-serif; font-size: clamp(1.2em, 3vw, 1.4em); color: #3c4043; border-bottom: 2px solid #1a73e8; padding-bottom: 0.4em; display: inline-block; }
         /* Select/Deselect All button styling */
-        .ai-pricing-calc-wrapper .select-all-btn { padding: 5px 12px; font-size: 0.8em; font-weight: 500; border: 1px solid #dadce0; background-color: #f8f9fa; color: #5f6368; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease; flex-shrink: 0; }
+        .ai-pricing-calc-wrapper .select-all-btn {
+            padding: 5px 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+            border: 2px solid #4285F4; /* Initial Google Blue border */
+            background-color: #f8f9fa;
+            color: #5f6368;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            flex-shrink: 0;
+            animation: google-border-wave 8s linear infinite;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
         /* Hover/Active states for select all button */
-        .ai-pricing-calc-wrapper .select-all-btn:hover { background-color: #f1f3f4; border-color: #c6c6c6; }
-        .ai-pricing-calc-wrapper .select-all-btn:active { background-color: #e8eaed; }
+        .ai-pricing-calc-wrapper .select-all-btn:hover {
+            background-color: #f1f3f4;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .ai-pricing-calc-wrapper .select-all-btn:active {
+            background-color: #e8eaed;
+            transform: translateY(1px);
+            box-shadow: 0 0 1px rgba(0,0,0,0.05);
+        }
+        .ai-pricing-calc-wrapper .select-all-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+        }
         /* Container for all provider groups */
         .ai-pricing-calc-wrapper #model-groups-container { display: flex; flex-direction: column; gap: 1.2rem; }
         /* Styling for each provider group (Google, OpenAI, etc.) */
@@ -178,9 +272,37 @@
         /* Knowledge cutoff styling (if present) */
         .ai-pricing-calc-wrapper .model-item .details .knowledge-cutoff {} /* No specific style needed now */
         /* Placeholder/button for adding a custom model */
-        .ai-pricing-calc-wrapper .add-model-placeholder { display: block; width: 100%; margin-top: 1rem; padding: 0.6rem; font-size: 0.9em; font-weight: 500; text-align: center; border: 1px dashed #adb5bd; background-color: #f8f9fa; color: #5f6368; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease; }
+        .ai-pricing-calc-wrapper .add-model-placeholder {
+            display: block;
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.6rem;
+            font-size: 0.9em;
+            font-weight: 500;
+            text-align: center;
+            border: 2px solid #4285F4; /* Initial Google Blue border, changed from dashed */
+            background-color: #f8f9fa;
+            color: #5f6368;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            animation: google-border-wave 8s linear infinite;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
         /* Hover state for add model button */
-        .ai-pricing-calc-wrapper .add-model-placeholder:hover { background-color: #f1f3f4; border-color: #9aa0a6; }
+        .ai-pricing-calc-wrapper .add-model-placeholder:hover {
+            background-color: #f1f3f4;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .ai-pricing-calc-wrapper .add-model-placeholder:active {
+            background-color: #e8eaed;
+            transform: translateY(1px);
+            box-shadow: 0 0 1px rgba(0,0,0,0.05);
+        }
+        .ai-pricing-calc-wrapper .add-model-placeholder:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+        }
 
         /* --- Results --- */
         /* Results section container */
@@ -195,11 +317,42 @@
         /* Label for sort buttons */
         .ai-pricing-calc-wrapper .sort-label { font-size: 0.85em; color: #5f6368; font-weight: 500; margin-right: 0.3rem; }
         /* Sort button styling */
-        .ai-pricing-calc-wrapper .sort-btn { padding: 4px 10px; font-size: 0.8em; font-weight: 500; border: 1px solid #ccc; background-color: #f9f9f9; color: #444; border-radius: 4px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+        .ai-pricing-calc-wrapper .sort-btn {
+            padding: 4px 10px;
+            font-size: 0.8em;
+            font-weight: 500;
+            border: 2px solid #4285F4; /* Initial Google Blue border */
+            background-color: #f9f9f9;
+            color: #444;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+            animation: google-border-wave 8s linear infinite;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
         /* Hover state for sort buttons */
-        .ai-pricing-calc-wrapper .sort-btn:hover { background-color: #f0f0f0; border-color: #bbb; }
-        /* Active state for sort buttons */
-        .ai-pricing-calc-wrapper .sort-btn.active { background-color: #e8f0fe; border-color: #1a73e8; color: #1a73e8; box-shadow: 0 0 0 1px #1a73e8; }
+        .ai-pricing-calc-wrapper .sort-btn:hover {
+            background-color: #f0f0f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        /* Pressed state for sort buttons */
+        .ai-pricing-calc-wrapper .sort-btn:active {
+            background-color: #e0e0e0;
+            transform: translateY(1px);
+            box-shadow: 0 0 1px rgba(0,0,0,0.05);
+        }
+        /* Active (selected) state for sort buttons */
+        .ai-pricing-calc-wrapper .sort-btn.active {
+            background-color: #e8f0fe;
+            color: #1a73e8; /* Text color changes */
+            box-shadow: 0 0 0 1px #1a73e8; /* Box shadow remains */
+            transform: translateY(0); /* Ensure selected state is not pressed down */
+            /* border-color is handled by animation */
+        }
+        .ai-pricing-calc-wrapper .sort-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+        }
 
         /* Container for the list of result cards */
         .ai-pricing-calc-wrapper .results-list-container { display: flex; flex-direction: column; gap: 0.6rem; min-height: 60px; /* Prevent collapse when empty */ position: relative; }
@@ -311,13 +464,47 @@
         /* Container for modal action buttons */
         .ai-pricing-calc-wrapper .modal-actions { margin-top: 2rem; display: flex; justify-content: flex-end; gap: 0.8rem; }
         /* General modal button styling */
-        .ai-pricing-calc-wrapper .modal-actions button { padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.95em; font-weight: 500; border: none; cursor: pointer; transition: background-color 0.2s ease, box-shadow 0.2s ease; }
-        /* Primary button (Save) styling */
-        .ai-pricing-calc-wrapper .modal-actions .btn-primary { background-color: #1a73e8; color: white; }
-        .ai-pricing-calc-wrapper .modal-actions .btn-primary:hover { background-color: #1558b0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .ai-pricing-calc-wrapper .modal-actions button { padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.95em; font-weight: 500; border: none; cursor: pointer; transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+        /* Primary button (Save) styling - Google Material Design */
+        .ai-pricing-calc-wrapper .modal-actions .btn-primary {
+            background-color: #4285F4; /* Google Blue */
+            color: #FFFFFF; /* White text */
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Base shadow */
+        }
+        .ai-pricing-calc-wrapper .modal-actions .btn-primary:hover {
+            background-color: #3367D6; /* Darker Google Blue */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15); /* Increased shadow */
+        }
+        .ai-pricing-calc-wrapper .modal-actions .btn-primary:active {
+            background-color: #2A56C6; /* Even darker Google Blue */
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Tighter shadow for pressed feel */
+            transform: translateY(1px);
+        }
+        .ai-pricing-calc-wrapper .modal-actions .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(131, 192, 253, 0.5), 0 1px 2px rgba(0,0,0,0.1); /* Lighter blue focus ring */
+        }
         /* Secondary button (Cancel) styling */
-        .ai-pricing-calc-wrapper .modal-actions .btn-secondary { background-color: #f1f3f4; color: #5f6368; border: 1px solid #dadce0; }
-        .ai-pricing-calc-wrapper .modal-actions .btn-secondary:hover { background-color: #e8eaed; }
+        .ai-pricing-calc-wrapper .modal-actions .btn-secondary {
+            background-color: #f1f3f4;
+            color: #5f6368;
+            border: 2px solid #4285F4; /* Initial Google Blue border */
+            animation: google-border-wave 8s linear infinite;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Base shadow */
+        }
+        .ai-pricing-calc-wrapper .modal-actions .btn-secondary:hover {
+            background-color: #e8eaed;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Enhanced shadow */
+        }
+        .ai-pricing-calc-wrapper .modal-actions .btn-secondary:active {
+            background-color: #dde1e3;
+            transform: translateY(1px);
+            box-shadow: 0 0 1px rgba(0,0,0,0.05); /* Tighter shadow */
+        }
+        .ai-pricing-calc-wrapper .modal-actions .btn-secondary:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05); /* Standard focus ring */
+        }
 
         /* --- Footer --- */
         /* Footer styling */
