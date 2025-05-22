@@ -46,13 +46,25 @@
         /* Fade-in animation keyframes */
         @keyframes ai-calc-fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Keyframes for Google Border Wave animation */
-        @keyframes google-border-wave {
-            0%   { border-color: #4285F4; } /* Google Blue */
-            25%  { border-color: #DB4437; } /* Google Red */
-            50%  { border-color: #F4B400; } /* Google Yellow */
-            75%  { border-color: #0F9D58; } /* Google Green */
-            100% { border-color: #4285F4; } /* Google Blue */
+        /* --- ANIMATIONS FOR BUTTONS --- */
+        /* @property for smooth conic gradient animation */
+        @property --angle {
+          syntax: '<angle>';
+          initial-value: 0deg;
+          inherits: false;
+        }
+
+        /* Keyframes for the flowing border gradient */
+        @keyframes flow-border-gradient {
+          to {
+            --angle: 360deg;
+          }
+        }
+
+        /* Keyframes for the slider track wave animation */
+        @keyframes slider-track-wave {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 200% 50%; } /* Matches background-size for one full cycle */
         }
 
         /* --- Header --- */
@@ -88,17 +100,28 @@
         .ai-pricing-calc-wrapper .lang-toggle { display: flex; justify-content: center; gap: 0.8rem; margin-top: -0.5em; margin-bottom: 1em; }
         /* Language button styling: Transparent background, font size, cursor */
         .ai-pricing-calc-wrapper .lang-btn {
+            position: relative; /* For pseudo-element */
             background: none;
-            border: 2px solid #4285F4; /* Initial Google Blue border */
+            border: 3px solid transparent; /* Space for animated border */
             font-size: 1.5rem;
             cursor: pointer;
             opacity: 0.6;
             transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-            padding: 0.2em 0.4em; /* Adjusted padding for border and radius */
+            padding: 0.15em 0.3em; /* Adjusted for 3px border */
             line-height: 1;
-            animation: google-border-wave 8s linear infinite;
-            border-radius: 6px; /* Added border-radius */
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Added base shadow */
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            background-clip: padding-box; /* Crucial for transparent border technique */
+            overflow: hidden; /* Can help prevent pseudo-element bleed */
+        }
+        .ai-pricing-calc-wrapper .lang-btn::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            z-index: -1;
+            background: conic-gradient(from var(--angle), #DB4437, #F4B400, #0F9D58, #4285F4, #DB4437);
+            animation: flow-border-gradient 4s linear infinite;
+            border-radius: inherit; /* Match button's border-radius */
         }
         /* Hover and active state for language buttons */
         .ai-pricing-calc-wrapper .lang-btn:hover {
@@ -138,12 +161,64 @@
         /* Slider/Number Input Adjustments */
         /* Container for aligning slider and number input */
         .ai-pricing-calc-wrapper .config-controls-container .slider-container { display: flex; align-items: center; gap: 0.8rem; width: 100%; }
-        /* Range slider styling */
-        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"] { flex-grow: 1; min-width: 100px; cursor: pointer; appearance: none; height: 6px; background: linear-gradient(to right, #1a73e8, #8ab4f8); border-radius: 3px; outline: none; transition: background 0.3s ease; }
+        /* Range slider styling - General appearance reset */
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"] {
+            flex-grow: 1;
+            min-width: 100px;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none; /* Reset appearance for WebKit */
+            background: transparent; /* Remove default background for WebKit/Blink */
+            height: 6px; /* Define height for the track area */
+            outline: none;
+        }
+
+        /* --- WebKit/Blink Slider Track Styling --- */
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]::-webkit-slider-runnable-track {
+            height: 6px;
+            background-image: linear-gradient(90deg, #4285F4 0%, #DB4437 25%, #F4B400 50%, #0F9D58 75%, #4285F4 100%, #DB4437 125%, #F4B400 150%, #0F9D58 175%, #4285F4 200%);
+            background-size: 200% 100%;
+            animation: slider-track-wave 4s linear infinite;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        /* --- Mozilla Firefox Slider Track Styling --- */
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]::-moz-range-track {
+            height: 6px;
+            background-image: linear-gradient(90deg, #4285F4 0%, #DB4437 25%, #F4B400 50%, #0F9D58 75%, #4285F4 100%, #DB4437 125%, #F4B400 150%, #0F9D58 175%, #4285F4 200%);
+            background-size: 200% 100%;
+            animation: slider-track-wave 4s linear infinite;
+            border-radius: 3px;
+            cursor: pointer;
+            border: none; /* Ensure no default border interferes */
+        }
+
         /* Slider thumb styling (WebKit) */
-        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; background: #1a73e8; border-radius: 50%; cursor: pointer; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); transition: background 0.3s ease; }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none; /* Explicitly for WebKit */
+            margin-top: -5px; /* Adjust to vertically center thumb on track ( (thumb_height - track_height) / -2 ) */
+            width: 16px;
+            height: 16px;
+            background: #1a73e8; /* Original thumb color */
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease;
+            border: none; /* Ensure no border on thumb */
+        }
         /* Slider thumb styling (Mozilla) */
-        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; background: #1a73e8; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); transition: background 0.3s ease; }
+        .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #1a73e8; /* Original thumb color */
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease;
+        }
         /* Active state for slider thumb */
         .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]:active::-webkit-slider-thumb { background: #1558b0; }
         .ai-pricing-calc-wrapper .config-controls-container .slider-container input[type="range"]:active::-moz-range-thumb { background: #1558b0; }
@@ -162,10 +237,11 @@
         .ai-pricing-calc-wrapper .multiplier-label { font-size: 0.85em; color: #5f6368; margin-right: 0.5rem; font-weight: 500; }
         /* Multiplier button styling */
         .ai-pricing-calc-wrapper .multiplier-btn {
-            padding: 4px 10px;
+            position: relative; /* For pseudo-element */
+            padding: 3px 9px; /* Adjusted for 3px border */
             font-size: 0.8em;
             font-weight: 500;
-            border: 2px solid #4285F4; /* Initial Google Blue border */
+            border: 3px solid transparent; /* Space for animated border */
             background-color: #f9f9f9;
             color: #444;
             border-radius: 4px;
@@ -173,17 +249,27 @@
             transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
             min-width: 50px;
             text-align: center;
-            animation: google-border-wave 8s linear infinite;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            background-clip: padding-box; /* Crucial for transparent border technique */
+            overflow: hidden; /* Can help prevent pseudo-element bleed */
+        }
+        .ai-pricing-calc-wrapper .multiplier-btn::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            z-index: -1;
+            background: conic-gradient(from var(--angle), #DB4437, #F4B400, #0F9D58, #4285F4, #DB4437);
+            animation: flow-border-gradient 4s linear infinite;
+            border-radius: inherit; /* Match button's border-radius */
         }
         /* Hover state for multiplier buttons */
         .ai-pricing-calc-wrapper .multiplier-btn:hover {
-            background-color: #f0f0f0;
+            background-color: #f0f0f0; /* Main button background change */
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         /* Pressed state for multiplier buttons */
-        .ai-pricing-calc-wrapper .multiplier-btn:active {
-            background-color: #e0e0e0;
+        .ai-pricing-calc-wrapper .multiplier-btn:active:not(.active) { /* Do not apply if already selected */
+            background-color: #e0e0e0; /* Main button background change */
             transform: translateY(1px);
             box-shadow: 0 0 1px rgba(0,0,0,0.05);
         }
@@ -191,13 +277,16 @@
         .ai-pricing-calc-wrapper .multiplier-btn.active {
             background-color: #e8f0fe;
             color: #1a73e8; /* Text color changes */
-            box-shadow: 0 0 0 1px #1a73e8; /* Box shadow remains */
+            box-shadow: 0 0 0 1px #1a73e8; /* Specific shadow for selected state */
             transform: translateY(0); /* Ensure selected state is not pressed down */
-            /* border-color is handled by animation */
         }
         .ai-pricing-calc-wrapper .multiplier-btn:focus {
             outline: none;
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+             /* Focus shadow applied to the button itself, border animation continues */
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.3), 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .ai-pricing-calc-wrapper .multiplier-btn.active:focus {
+             box-shadow: 0 0 0 1px #1a73e8, 0 0 0 3px rgba(26, 115, 232, 0.3); /* Combine selected and focus shadow */
         }
         /* Explanation text about tokens */
         .ai-pricing-calc-wrapper .token-explanation { font-size: 0.85em; color: #5f6368; margin-top: 0.5rem; text-align: center; padding-bottom: 0.8rem; border-bottom: 1px solid #e8eaed; margin-bottom: 1rem; }
@@ -215,32 +304,44 @@
         .ai-pricing-calc-wrapper .model-selection .section-header h2 { margin-bottom: 0; font-family: 'Google Sans', sans-serif; font-size: clamp(1.2em, 3vw, 1.4em); color: #3c4043; border-bottom: 2px solid #1a73e8; padding-bottom: 0.4em; display: inline-block; }
         /* Select/Deselect All button styling */
         .ai-pricing-calc-wrapper .select-all-btn {
-            padding: 5px 12px;
+            position: relative; /* For pseudo-element */
+            padding: 4px 11px; /* Adjusted for 3px border */
             font-size: 0.8em;
             font-weight: 500;
-            border: 2px solid #4285F4; /* Initial Google Blue border */
+            border: 3px solid transparent; /* Space for animated border */
             background-color: #f8f9fa;
             color: #5f6368;
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
             flex-shrink: 0;
-            animation: google-border-wave 8s linear infinite;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            background-clip: padding-box; /* Crucial for transparent border technique */
+            overflow: hidden; /* Can help prevent pseudo-element bleed */
+        }
+        .ai-pricing-calc-wrapper .select-all-btn::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            z-index: -1;
+            background: conic-gradient(from var(--angle), #DB4437, #F4B400, #0F9D58, #4285F4, #DB4437);
+            animation: flow-border-gradient 4s linear infinite;
+            border-radius: inherit; /* Match button's border-radius */
         }
         /* Hover/Active states for select all button */
         .ai-pricing-calc-wrapper .select-all-btn:hover {
-            background-color: #f1f3f4;
+            background-color: #f1f3f4; /* Main button background change */
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .ai-pricing-calc-wrapper .select-all-btn:active {
-            background-color: #e8eaed;
+            background-color: #e8eaed; /* Main button background change */
             transform: translateY(1px);
             box-shadow: 0 0 1px rgba(0,0,0,0.05);
         }
         .ai-pricing-calc-wrapper .select-all-btn:focus {
             outline: none;
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+            /* Focus shadow applied to the button itself, border animation continues */
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.3), 0 1px 2px rgba(0,0,0,0.05);
         }
         /* Container for all provider groups */
         .ai-pricing-calc-wrapper #model-groups-container { display: flex; flex-direction: column; gap: 1.2rem; }
@@ -273,35 +374,47 @@
         .ai-pricing-calc-wrapper .model-item .details .knowledge-cutoff {} /* No specific style needed now */
         /* Placeholder/button for adding a custom model */
         .ai-pricing-calc-wrapper .add-model-placeholder {
+            position: relative; /* For pseudo-element */
             display: block;
             width: 100%;
             margin-top: 1rem;
-            padding: 0.6rem;
+            padding: 0.5rem; /* Adjusted for 3px border (approx 8px) */
             font-size: 0.9em;
             font-weight: 500;
             text-align: center;
-            border: 2px solid #4285F4; /* Initial Google Blue border, changed from dashed */
+            border: 3px solid transparent; /* Space for animated border */
             background-color: #f8f9fa;
             color: #5f6368;
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-            animation: google-border-wave 8s linear infinite;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            background-clip: padding-box; /* Crucial for transparent border technique */
+            overflow: hidden; /* Can help prevent pseudo-element bleed */
+        }
+        .ai-pricing-calc-wrapper .add-model-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            z-index: -1;
+            background: conic-gradient(from var(--angle), #DB4437, #F4B400, #0F9D58, #4285F4, #DB4437);
+            animation: flow-border-gradient 4s linear infinite;
+            border-radius: inherit; /* Match button's border-radius */
         }
         /* Hover state for add model button */
         .ai-pricing-calc-wrapper .add-model-placeholder:hover {
-            background-color: #f1f3f4;
+            background-color: #f1f3f4; /* Main button background change */
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .ai-pricing-calc-wrapper .add-model-placeholder:active {
-            background-color: #e8eaed;
+            background-color: #e8eaed; /* Main button background change */
             transform: translateY(1px);
             box-shadow: 0 0 1px rgba(0,0,0,0.05);
         }
         .ai-pricing-calc-wrapper .add-model-placeholder:focus {
             outline: none;
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+            /* Focus shadow applied to the button itself, border animation continues */
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.3), 0 1px 2px rgba(0,0,0,0.05);
         }
 
         /* --- Results --- */
@@ -318,26 +431,37 @@
         .ai-pricing-calc-wrapper .sort-label { font-size: 0.85em; color: #5f6368; font-weight: 500; margin-right: 0.3rem; }
         /* Sort button styling */
         .ai-pricing-calc-wrapper .sort-btn {
-            padding: 4px 10px;
+            position: relative; /* For pseudo-element */
+            padding: 3px 9px; /* Adjusted for 3px border */
             font-size: 0.8em;
             font-weight: 500;
-            border: 2px solid #4285F4; /* Initial Google Blue border */
+            border: 3px solid transparent; /* Space for animated border */
             background-color: #f9f9f9;
             color: #444;
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-            animation: google-border-wave 8s linear infinite;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            background-clip: padding-box; /* Crucial for transparent border technique */
+            overflow: hidden; /* Can help prevent pseudo-element bleed */
+        }
+        .ai-pricing-calc-wrapper .sort-btn::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            z-index: -1;
+            background: conic-gradient(from var(--angle), #DB4437, #F4B400, #0F9D58, #4285F4, #DB4437);
+            animation: flow-border-gradient 4s linear infinite;
+            border-radius: inherit; /* Match button's border-radius */
         }
         /* Hover state for sort buttons */
         .ai-pricing-calc-wrapper .sort-btn:hover {
-            background-color: #f0f0f0;
+            background-color: #f0f0f0; /* Main button background change */
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         /* Pressed state for sort buttons */
-        .ai-pricing-calc-wrapper .sort-btn:active {
-            background-color: #e0e0e0;
+        .ai-pricing-calc-wrapper .sort-btn:active:not(.active) { /* Do not apply if already selected */
+            background-color: #e0e0e0; /* Main button background change */
             transform: translateY(1px);
             box-shadow: 0 0 1px rgba(0,0,0,0.05);
         }
@@ -345,13 +469,16 @@
         .ai-pricing-calc-wrapper .sort-btn.active {
             background-color: #e8f0fe;
             color: #1a73e8; /* Text color changes */
-            box-shadow: 0 0 0 1px #1a73e8; /* Box shadow remains */
+            box-shadow: 0 0 0 1px #1a73e8; /* Specific shadow for selected state */
             transform: translateY(0); /* Ensure selected state is not pressed down */
-            /* border-color is handled by animation */
         }
         .ai-pricing-calc-wrapper .sort-btn:focus {
             outline: none;
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05);
+            /* Focus shadow applied to the button itself, border animation continues */
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.3), 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .ai-pricing-calc-wrapper .sort-btn.active:focus {
+            box-shadow: 0 0 0 1px #1a73e8, 0 0 0 3px rgba(26, 115, 232, 0.3); /* Combine selected and focus shadow */
         }
 
         /* Container for the list of result cards */
@@ -486,24 +613,38 @@
         }
         /* Secondary button (Cancel) styling */
         .ai-pricing-calc-wrapper .modal-actions .btn-secondary {
+            position: relative; /* For pseudo-element */
+            padding: 8px 18px; /* Adjusted for 3px border, from 0.6rem 1.2rem */
             background-color: #f1f3f4;
             color: #5f6368;
-            border: 2px solid #4285F4; /* Initial Google Blue border */
-            animation: google-border-wave 8s linear infinite;
+            border: 3px solid transparent; /* Space for animated border */
             box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Base shadow */
+            background-clip: padding-box; /* Crucial for transparent border technique */
+            overflow: hidden; /* Can help prevent pseudo-element bleed */
+            /* animation: google-border-wave 8s linear infinite; REMOVED */
+        }
+        .ai-pricing-calc-wrapper .modal-actions .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            z-index: -1;
+            background: conic-gradient(from var(--angle), #DB4437, #F4B400, #0F9D58, #4285F4, #DB4437);
+            animation: flow-border-gradient 4s linear infinite;
+            border-radius: inherit; /* Match button's border-radius */
         }
         .ai-pricing-calc-wrapper .modal-actions .btn-secondary:hover {
-            background-color: #e8eaed;
+            background-color: #e8eaed; /* Main button background change */
             box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Enhanced shadow */
         }
         .ai-pricing-calc-wrapper .modal-actions .btn-secondary:active {
-            background-color: #dde1e3;
+            background-color: #dde1e3; /* Main button background change */
             transform: translateY(1px);
             box-shadow: 0 0 1px rgba(0,0,0,0.05); /* Tighter shadow */
         }
         .ai-pricing-calc-wrapper .modal-actions .btn-secondary:focus {
             outline: none;
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2), 0 1px 2px rgba(0,0,0,0.05); /* Standard focus ring */
+            /* Focus shadow applied to the button itself, border animation continues */
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.3), 0 1px 2px rgba(0,0,0,0.05);
         }
 
         /* --- Footer --- */
